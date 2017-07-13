@@ -4,13 +4,11 @@ The nodejs port of the Turner Fenton DECA webapp
 
 # Dependencies
 1. Bootstrap
-* Bootstrap Grid
-* Bootstrap Notify
-* Bootstrap Checkbox Radio
-2. Chartist
-3. jQuery
-4. Typeit
-5. Themify Icons
-6. JSColor
-7. Headroom
-8. jQuery Form Validator
+2. Bootstrap Notify
+3. Chartist
+4. jQuery
+5. Typeit
+6. Themify Icons
+7. JSColor
+8. Headroom
+9. jQuery Form Validator
