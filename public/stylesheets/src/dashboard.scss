@@ -1,0 +1,26 @@
+@import "./partials/variables";
+@import "dashboard-partials/variables";
+@import "dashboard-partials/mixins";
+
+@import "dashboard-partials/typography";
+@import "./partials/text";
+
+// Core CSS
+@import "dashboard-partials/misc";
+@import "dashboard-partials/sidebar-and-main-panel";
+@import "dashboard-partials/buttons";
+@import "dashboard-partials/inputs";
+
+@import "dashboard-partials/alerts";
+@import "dashboard-partials/tables";
+
+@import "dashboard-partials/checkbox-radio";
+@import "dashboard-partials/navbars";
+@import "dashboard-partials/footers";
+
+// Fancy Stuff
+
+@import "dashboard-partials/dropdown";
+@import "dashboard-partials/cards";
+@import "dashboard-partials/chartist";
+@import "dashboard-partials/responsive";

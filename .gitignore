@@ -69,8 +69,6 @@ db.js
 node_modules/
 utilities/
 public/images/
-public/stylesheets/src/dashboard-partials/
-dashboard.*
 public/stylesheets/src/bootstrap-partials/
 public/fonts/
 config.js
