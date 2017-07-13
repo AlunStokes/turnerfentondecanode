@@ -7,7 +7,16 @@ var config = {
   },
   //Encryption secret for cookies
   sessionSecret: "kill fly tissue bowl brown tree.",
-  hashComplexity: 13
+  hashComplexity: 13,
+  mailgun: {
+    apiKey: "key-examplehash",
+    domain: "sandboxhash.mailgun.org"
+  },
+  mail: {
+    name: "Turner Fenton DECA",
+    noReplyAddress: "no-reply@turnerfentondeca.com"
+  },
+  host: "turnerfentondeca.com"
 }
 
 module.exports = config;
