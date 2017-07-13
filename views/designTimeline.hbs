@@ -1,0 +1,35 @@
+<div class="container-fluid" id="body-content">
+  <div id="title-container">
+    <h1 class="text large thin center">Turner Fenton DECA: A History of Design</h1>
+  </div>
+  <section id="timeline" class="container">
+  {{#each errors}}
+  <p class="form-error text thin">
+    {{this}}
+  </p>
+  {{/each}}
+    {{#each timelineData}}
+      <div class="timeline-block">
+        <div class="timeline-img picture">
+          <img src="images/svg/icon-picture.svg" alt="Picture">
+        </div>
+      <div class="timeline-content">
+        <img src="images/design-timeline/{{this.dateDay}}-main.png" align="middle" width="100%" id="landing-centre-logo"></img>
+        <p class="text dark small thin">{{this.title}}</p>
+        <p class="text dark xsmall"><i>{{this.author}}</i></p>
+        <hr>
+        <p class="text dark xsmall">{{this.description}}</p>
+          <div class="row">
+            {{#each this.names}}
+                <div class="col-xs-6 col-md-4">
+                <img src="{{this}}" align="middle" width="100%" id="landing-centre-logo"></img>
+                </div>
+            {{/each}}
+          </div>
+        <span class="date"><p class="text dark xsmall">{{this.dateMonth}}</p></span>
+        </div>
+        </div>
+    {{/each}}
+
+  </section>
+</div>

@@ -1,0 +1,38 @@
+<div class="container-fluid" id="body-content">
+  <div class="login">
+
+    </div>
+  </div>
+
+  <script type="text/javascript">
+  //Check if logged in - logout only present when logged in
+  if (!document.getElementById("logout")) {
+    alert("Maybe log in, and then come back.");
+    window.location = "login";
+  }
+  else {
+    $(".login").html(`
+      <p class="text medium thin light center">Shhhhhhh... This page is a bit of a secret</p>
+      <hr>
+      <p class="text small thin light center">So you noticed the 'turner fenton deca' extension.  Want to add one of your own?</p>
+      <br>
+      <p class="text small thin light center">If you log in to your dashboard, you'll now see a card on the homepage where you can submit an extension.</p>
+      <br>
+      <p class="text small thin light center">Remember, it must be a three word phrase where the first word starts with 't', the second with 'f', and the third with 'd' (ex. three fortunate dachshunds) - like
+        Turner Fenton Deca</p>
+        <br>
+        <p class="text small thin light center italic">Remember, if you keep this secret, your extension is more likely to show up.</p>
+      `);
+    $.ajax({
+      type: "GET",
+      url: "ajax",
+      data: {
+        ajaxid: "allowSubmitExtensions"
+      }
+    }).done(function(data) {
+      if (data.err) {
+        alert(data.err);
+      }
+    });
+  }
+  </script>

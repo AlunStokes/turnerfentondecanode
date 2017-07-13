@@ -1,0 +1,76 @@
+@import "./partials/variables";
+
+@import "./partials/front";
+@import "./partials/navbar";
+@import "./partials/loginForm";
+@import "./partials/text";
+@import "./partials/buttons";
+
+html, body {
+  color: $ivory;
+  background: $landing;
+}
+.landing-section {
+  min-height: 100%;
+  max-width: 1200px;
+  margin: auto;
+  padding-top: 30px;
+  padding-bottom: 100px;
+}
+#body-content {
+  padding-top: 50px;
+  background-color: $blue;
+}
+#executive-section {
+  background-color: $blue;
+}
+
+.plaque {
+  display: block;
+  margin: auto;
+  //height: 400px;
+  max-width: 100%;
+}
+
+.plaque-lg {
+  height: 400px;
+  max-width: none;
+}
+
+.medal {
+  display: block;
+  margin: auto;
+  //height: 400px;
+  max-width: 100%;
+}
+
+.card {
+  box-shadow: 0 3px 6px 0 rgba(0,0,0,0.2);
+  transition: 0.3s;
+  border-radius: 5px; /* 5px rounded corners */
+  margin: 20px 0 10px 0;
+}
+/* On mouse-over, add a deeper shadow */
+.card:hover {
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.3);
+  transform: translate(0px, -10px);
+}
+
+/* Add some padding inside the card container */
+.card-container {
+  color: $grey !important;
+  background-color: $white;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  padding: 2px 16px 6px;
+}
+img {
+  border-radius: 5px 5px 0 0;
+}
+.accolades {
+  padding-bottom: 5px;
+}
+
+#welcome-text {
+  margin-top: 20%;
+}

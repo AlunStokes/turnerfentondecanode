@@ -1,0 +1,13 @@
+var config = {
+  database: {
+    host: "host",
+    user: "username",
+    password: "password",
+    database: "databasename"
+  },
+  //Encryption secret for cookies
+  sessionSecret: "kill fly tissue bowl brown tree.",
+  hashComplexity: 13
+}
+
+module.exports = config;

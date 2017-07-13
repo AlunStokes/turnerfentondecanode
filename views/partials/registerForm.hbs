@@ -1,0 +1,52 @@
+<div class="login-screen">
+  <div class="app-title">
+    <h1 class="login-title">Register</h1>
+  </div>
+  <div class="login-form">
+    <form action="/register" method="post" id="register-form">
+      <div class="control-group">
+        <input type="text" class="login-field text thin" value="{{registrant.firstName}}" placeholder="first name" id="first-name" name="firstName" autocomplete="off" data-validation="required">
+      </div>
+      <div class="control-group">
+        <input type="text" class="login-field text thin" value="{{registrant.lastName}}" placeholder="last name" id="last-name" name="lastName" autocomplete="off" data-validation="required">
+      </div>
+      <div class="control-group">
+        <input type="email" class="login-field text thin" value="{{registrant.email}}" placeholder="email" id="email" name="email" autocomplete="off" data-validation="required email">
+      </div>
+      <div class="control-group">
+        <input type="email" class="login-field text thin" value="{{registrant.email}}" placeholder="email (confirm)" id="email-confirm" name="emailConfirm" autocomplete="off" data-validation="required email">
+      </div>
+      <div class="control-group">
+        <input type="text" class="login-field text thin" value="{{registrant.studentNumber}}" placeholder="student number" id="student-number" name="studentNumber" autocomplete="off" data-validation="required length number" data-validation-length="6">
+      </div>
+      <div class="control-group">
+        <input type="password" class="login-field text thin" value="" placeholder="password" id="password" name="password" autocomplete="off" data-validation="required length" data-validation-length="min8">
+      </div>
+      <div class="control-group">
+        <input type="password" class="login-field text thin" value="" placeholder="password (confirm)" id="password-confirm" name="passwordConfirm" autocomplete="off" data-validation="required">
+      </div>
+      <div class="control-group">
+        <select class="text thin" name="grade">
+          <option class="text thin" value="9" {{#if registrant.gradeNine}}selected="selected"{{/if}}>grade nine</option>
+          <option class="text thin" value="10" {{#if registrant.gradeTen}}selected="selected"{{/if}}>grade ten</option>
+          <option class="text thin" value="11" {{#if registrant.gradeEleven}}selected="selected"{{/if}}>grade eleven</option>
+          <option class="text thin" value="12" {{#if registrant.gradeTwelve}}selected="selected"{{/if}}>grade twelve</option>
+        </select>
+      </div>
+      <div class="control-group">
+        <select class="text thin" name="alum">
+          <option class="text thin" value="false" {{#unless registrant.alum}}selected="selected"{{/unless}}>i am not an alumnus/alumna</option>
+          <option class="text thin" value="true" {{#if registrant.alum}}selected="selected"{{/if}}>i am an alumnus/alumna</option>
+        </select>
+      </div>
+      <button class="btn btn-outline text thin" href="#">register</button>
+    </form>
+    {{#each errors}}
+    <p class="text thin light small">
+      {{this}}
+    </p>
+    {{/each}}
+    <hr>
+    <a class="login-link text thin" href="login">Already registered?</a>
+  </div>
+</div>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>TF DECA | {{title}}</title>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway:200,500,800" rel="stylesheet">
+
+  <!-- CSS -->
+  {{#each cssFiles}}
+  <link href="{{this}}" rel="stylesheet">
+  {{/each}}
+
+  <!--JS -->
+  {{#each jsFiles}}
+  <script src="{{this}}"></script>
+  {{/each}}
+
+
+</head>
+<body>
+  <nav id="navbar">
+      <a href="landing"><img id="navbar-logo" src="/images/deca-logo-letters-medium-dark.png" width="28px" /></a>
+      <p id="tfd-extension"></p>
+      <ul>
+        {{#each navbarEntries}}
+          {{#if this.active}}
+            <li><a href="{{this.link}}" id="{{this.link}}" class="navbar-link active">{{this.title}}</a></li>
+          {{else}}
+            <li><a href="{{this.link}}" id="{{this.link}}" class="navbar-link">{{this.title}}</a></li>
+          {{/if}}
+        {{/each}}
+      </ul>
+    </nav>
+{{{body}}}
+</body>
+</html>

@@ -1,0 +1,98 @@
+/*Navbar*/
+nav {
+  font-weight:500;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 100;
+  position: fixed;
+  margin: auto;
+  transition: 0.4s;
+  background: $white;
+}
+nav.on {
+  opacity: 1;
+}
+nav.off {
+  opacity: 0.2;
+}
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  min-height: 100%;
+}
+li {
+  float: right;
+  min-height: 100%;
+}
+li:first-child {
+
+}
+li a {
+  font-size: 15px;
+  -webkit-transition: all 0.3s ease-in-out;
+  display: block;
+  color: $grey;
+  text-align: center;
+  padding: 13px 32px;
+  text-decoration: none;
+  text-transform: uppercase;
+    min-height: 100%;
+}
+li a:hover:not(.active) {
+  background-color: $grey;
+  text-decoration: none;
+  color: $white;
+}
+a:hover {
+  color: $white;
+}
+.active {
+  background-color: $grey;
+  color: $white;
+}
+#navbar-logo {
+  float: left;
+  display: inline;
+  position: absolute;
+  padding: 3px 0 10px 0;
+  z-index: 1001;
+  left: 1vw;
+}
+#tfd-extension {
+  float: left;
+  display: inline;
+  position: absolute;
+  top: 10px;
+  left: 55px;
+  font-size: 18px;
+  color: #333;
+  -webkit-touch-callout: none;
+-webkit-user-select: none;
+-khtml-user-select: none;
+-moz-user-select: none;
+-ms-user-select: none;
+-o-user-select: none;
+user-select: none;
+}
+#tfd-extension:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+@media screen and (max-width: 1030px) {
+  li {
+    float: none;
+  }
+  li a {
+    padding: 4px 16px;
+  }
+  #navbar-logo {
+    display: none;
+  }
+  #tfd-extension {
+    display:none;
+  }
+}
+/*Navbar end*/

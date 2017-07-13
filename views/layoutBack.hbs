@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>TF DECA | {{title}}</title>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway:200,500,800" rel="stylesheet">
+
+  <!-- CSS -->
+  {{#each cssFiles}}
+  <link href="{{this}}" rel="stylesheet">
+  {{/each}}
+
+  <!--JS -->
+  {{#each jsFiles}}
+  <script src="{{this}}"></script>
+  {{/each}}
+
+
+</head>
+<body>
+  <div class="wrapper">
+    <div class="sidebar" id="sidebar">
+      <div class="sidebar-wrapper" style="background-color:#{{sidebarBackground}}">
+        <div class="logo">
+          <a href="home" class="simple-text" style="color:#{{sidebarText}} !important">
+            Turner Fenton DECA
+          </a>
+        </div>
+
+        <ul class="nav">
+          {{#each navbarEntries}}
+            {{#if this.active}}
+            <li class="active">
+              <a href="{{this.link}}" style="color:#{{../sidebarActive}} !important">
+            {{else}}
+              <li>
+                <a href="{{this.link}}" style="color:#{{../sidebarText}} !important">
+            {{/if}}
+                  <i class="fa fa-{{this.icon}}"></i>
+                    <p>{{this.title}}</p>
+                </a>
+              </li>
+          {{/each}}
+        </ul>
+          </div>
+        </div>
+        <div class="main-panel">
+          <nav class="navbar navbar-default">
+            <div class="container-fluid">
+              <div class="navbar-header">
+                <button type="button" class="navbar-toggle">
+                  <span class="sr-only">Toggle navigation</span>
+                  <span class="icon-bar bar1"></span>
+                  <span class="icon-bar bar2"></span>
+                  <span class="icon-bar bar3"></span>
+                </button>
+                <a class="navbar-brand" href="#">{{title}}</a>
+              </div>
+              <div class="collapse navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                  <li style="color:#{{sidebarText}}">
+                    <a href="logout">
+                      <i class="fa fa-key"></i>
+                      <p>Logout</p>
+                    </a>
+                  </li>
+                  <li style="color:#{{sidebarText}}">
+                    <a href="landing">
+                      <i class="fa fa-power-off"></i>
+                      <p>Quit</p>
+                    </a>
+                  </li>
+                </ul>
+
+              </div>
+            </div>
+          </nav>
+          <div class="content">
+            {{{body}}}
+          </div>
+          <footer class="footer">
+            <div class="container-fluid">
+              <nav class="pull-left">
+                <ul>
+
+                  <li>
+                    <a href="https://github.com/Alunsto/turnerfentondecanode">
+                      GitHub
+                      <i class="fa fa-github"></i>
+                    </a>
+                  </li>
+                </ul>
+              </nav>
+              <div class="copyright pull-right">
+                &copy; <script>document.write(new Date().getFullYear())</script>, assembled by <a href="https://github.com/Alunsto">Alun Stokes <i class="fa fa fa-cog"></i></a>
+              </div>
+            </div>
+          </footer>
+        </div>
+      </div>
+    </body>
+    </html>
+
+    <script>
+      {{#each errors}}
+      $.notify({
+        icon: 'fa fa-exclamation-triangle',
+        message: "{{this}}"
+      },
+      {
+        type: "danger",
+        timer: 3000,
+        placement: {
+          from: "bottom",
+          align: "right"
+        }
+      });
+      {{/each}}
+    </script>

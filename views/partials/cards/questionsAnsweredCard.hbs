@@ -1,0 +1,44 @@
+<div class="col-lg-3 col-sm-6">
+  <div class="card">
+    <div class="content">
+      <div class="row">
+        <div class="col-xs-4">
+          <div class="icon-big icon-success text-center">
+            <i class="fa fa-pencil"></i>
+          </div>
+        </div>
+        <div class="col-xs-8">
+          <div class="numbers">
+            <p>Questions Answered</p>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12">
+          <h5 class="num-card-text" id="questionsAnswered"></h5>
+        </div>
+      </div>
+      <div class="footer">
+        <hr />
+        <div class="stats">
+          <i class="fa fa-refresh"></i> just now
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <script>
+  var questionsAnsweredText = $("#questionsAnswered");
+    $.ajax({
+      url: "ajax",
+      type: "GET",
+      data: {
+        ajaxid: "questionsAnswered"
+      }
+    }).done(function(data) {
+      if (!data.err) {
+        questionsAnsweredText.html(data.numQuestionsAnswered);
+      }
+    });
+  </script>

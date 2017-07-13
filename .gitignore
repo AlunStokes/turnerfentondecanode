@@ -45,3 +45,35 @@ $RECYCLE.BIN/
 Network Trash Folder
 Temporary Items
 .apdisk
+
+#Project specific
+*.min.css
+*.css
+bootstrap.*
+bootstrap.*
+bootstrap-grid.*
+bootstrap-notify.*
+bootstrap-checkbox-radio.*
+chartist.*
+config.js
+jquery.*
+typeit.*
+scripts.*
+styles.*
+animate.*
+themify-icons.*
+jscolor.*
+todo.*
+db.js
+
+node_modules/
+utilities/
+public/images/
+public/stylesheets/src/dashboard-partials/
+dashboard.*
+public/stylesheets/src/bootstrap-partials/
+public/fonts/
+config.js
+headroom.*
+validator.*
+package-lock.json
