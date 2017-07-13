@@ -51,7 +51,6 @@ Temporary Items
 *.css
 bootstrap.*
 bootstrap.*
-bootstrap-grid.*
 bootstrap-notify.*
 chartist.*
 config.js
