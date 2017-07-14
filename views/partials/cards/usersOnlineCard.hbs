@@ -15,7 +15,7 @@
       </div>
       <div class="row">
         <div class="col-xs-12">
-          <h5 class="num-card-text" id="usersConnected"></h5>
+          <h5 class="num-card-text" id="usersOnline"></h5>
         </div>
       </div>
       <div class="footer">
@@ -28,7 +28,7 @@
   </div>
 </div>
 <script>
-socket.on('usersConnected', function(data) {
-  $('#usersConnected').html(data);
+socket.on('usersOnline', function(data) {
+  $('#usersOnline').html(data.usersOnline);
 });
 </script>

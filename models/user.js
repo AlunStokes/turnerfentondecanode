@@ -413,14 +413,19 @@ user.getUserSettings = function(user, callback) {
         callback("Server error, try again later");
         return;
       }
+      //REMEMBER TO ADD ANY MEMBER INTO MEMBER SETTINGS TABLE
+      if (typeof(rows[0]) == "undefined") {
+        callback("Error loading user settings - no entry in table");
+        return;
+      }
 
       var settings = {
         //Colour preference
-        sidebarText: rows[0].sidebarText,
+        sidebarText: rows[0].sidebarText || "333333",
         sidebarActive: rows[0].sidebarActive || "8FD6E8",
-        sidebarBackground: rows[0].sidebarBackground,
+        sidebarBackground: rows[0].sidebarBackground || "FFFFFF",
         //Shows submit extension card on homepage
-        canSubmitExtensions: rows[0].canSubmitExtensions
+        canSubmitExtensions: rows[0].canSubmitExtensions || 0
       }
 
       callback(null, settings);

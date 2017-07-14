@@ -10,7 +10,7 @@ module.exports = function(req, res, next) {
 
   User.getUserSettings(user, function(err, settings) {
     if (err) {
-      res.locals.errors.push("Could not load user settings");
+      res.locals.errors.push(err);
       next();
       return;
     }

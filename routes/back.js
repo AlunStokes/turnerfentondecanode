@@ -32,7 +32,7 @@ router.use(loadJS([
   "js/dist/dashboard.min.js",
   "js/dist/chartist.min.js",
   "js/dist/jscolor.min.js",
-  //"js/dist/keep-alive.min.js",
+  "js/dist/keep-alive.min.js",
   "https://use.fontawesome.com/4a55e6f24a.js"
 ]));
 

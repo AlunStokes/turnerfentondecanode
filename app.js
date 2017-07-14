@@ -6,11 +6,13 @@ var bodyParser = require('body-parser');
 var hbs = require('hbs');
 var session = require('cookie-session');
 
-//Various config variables
-var config = require("./config.js");
-
 //Initialise applicaiton
 var app = express();
+//Import socketio
+app.io = require("socket.io")();
+
+//Various config variables
+var config = require("./config.js");
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

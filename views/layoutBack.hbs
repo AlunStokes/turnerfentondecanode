@@ -17,11 +17,16 @@
   <link href="{{this}}" rel="stylesheet">
   {{/each}}
 
+  <script>
+    //Gives student number to client for use in ajax
+    //Runs before all other js in case they make use of it
+    var studentNumber = {{studentNumber}};
+  </script>
+
   <!--JS -->
   {{#each jsFiles}}
   <script src="{{this}}"></script>
   {{/each}}
-
 
 </head>
 <body>
