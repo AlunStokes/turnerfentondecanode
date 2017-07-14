@@ -28,13 +28,32 @@ statistics.loadClusterProficiencyPieChart = function(studentNumber, callback) {
       stats.hospitalityPercentage = stats.hospitalityPercentage.toFixed(2);
       stats.businessadminPercentage = stats.businessadminPercentage.toFixed(2);
 
-      callback(false, stats);
+      callback(null, stats);
     });
   });
 }
 
 statistics.getMostIncorrectlyAnswered = function(studentNumber, callback) {
-  var statQuery = 'SELECT question, optionA, optionB, optionC, optionD, answer FROM questionsattempted JOIN questions ON questionsattempted.questionid = questions.questionid JOIN questionanswers ON questionsattempted.questionid = questionanswers.questionid JOIN questionoptions ON questionsattempted.questionid = questionoptions.questionid GROUP BY questionsattempted.questionid ORDER BY SUM(IF(questionsattempted.correct = 0, 1, 0)) DESC LIMIT 1';
+  var statQuery = 'SELECT question, optionA, optionB, optionC, optionD, answer FROM questionsattempted JOIN questions ON questionsattempted.questionid = questions.questionid JOIN questionanswers ON questionsattempted.questionid = questionanswers.questionid JOIN questionoptions ON questionsattempted.questionid = questionoptions.questionid GROUP BY questionsattempted.questionid ORDER BY SUM(IF(questionsattempted.correct = 0, 1, 0)) DESC LIMIT 1'
+  db.poo;.getConnection(function(err, connection) {
+    connection.query(statQuery, function(err, rows, fields) {
+      connection.release();
+      if (err) {
+        callback(err);
+        return;
+      }
+      var question = {
+        question: rows[0].question,
+        optionA: rows[0].optionA,
+        optionB: rows[0].optionB,
+        optionC: rows[0].optionC,
+        optionD: rows[0].optionD,
+        answer: rows[0].answer,
+      }
+      callback(null, question);
+      return;
+    });
+  });
 }
 
 statistics.getNumQuestionsAnswered = function(callback) {
@@ -46,7 +65,7 @@ statistics.getNumQuestionsAnswered = function(callback) {
         callback(err);
         return;
       }
-      callback(false, rows[0].numRows);
+      callback(null, rows[0].numRows);
     });
   });
 }
