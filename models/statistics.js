@@ -34,7 +34,7 @@ statistics.loadClusterProficiencyPieChart = function(studentNumber, callback) {
 }
 
 statistics.getMostIncorrectlyAnswered = function(studentNumber, callback) {
-  var statQuery = 'SELECT questionid, SUM(IF(correct = 0, 1, 0)) AS manyWrong FROM questionsattempted GROUP BY question_id ORDER BY manyWrong DESC'
+  var statQuery = 'SELECT question, optionA, optionB, optionC, optionD, answer FROM questionsattempted JOIN questions ON questionsattempted.questionid = questions.questionid JOIN questionanswers ON questionsattempted.questionid = questionanswers.questionid JOIN questionoptions ON questionsattempted.questionid = questionoptions.questionid GROUP BY questionsattempted.questionid ORDER BY SUM(IF(questionsattempted.correct = 0, 1, 0)) DESC LIMIT 1';
 }
 
 statistics.getNumQuestionsAnswered = function(callback) {
