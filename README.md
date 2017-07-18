@@ -12,3 +12,4 @@ The nodejs port of the Turner Fenton DECA webapp
 7. JSColor
 8. Headroom
 9. jQuery Form Validator
+10. SimpleMDE
