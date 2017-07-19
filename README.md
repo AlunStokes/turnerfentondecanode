@@ -5,7 +5,6 @@ The nodejs port of the Turner Fenton DECA webapp
 # Dependencies
 1. Bootstrap
 2. Bootstrap Notify
-3. Bootstrap Confirmation
 3. Chartist
 4. jQuery
 5. Typeit
