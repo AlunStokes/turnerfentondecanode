@@ -158,7 +158,7 @@
 /*Post markdown typography*/
 .timeline-post-body p,
 .splendor-p {
-  font-size: 1rem;
+  font-size: 1.7rem;
   margin-bottom: 1.3rem;
 }
 
@@ -269,4 +269,15 @@ a:visited {
 a:focus,
 a:active {
   color: #2980b9;
+}
+
+.edit, .delete {
+  float: right;
+  color: #666;
+  transition: 0.3s;
+}
+
+.edit:hover, .delete:hover {
+  color: #222;
+  cursor: pointer;
 }

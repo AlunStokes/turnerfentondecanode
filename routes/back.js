@@ -24,7 +24,6 @@ router.use(loadCSS([
   "stylesheets/dist/dashboard.min.css"
 ]));
 router.use(loadJS([
-  "js/dist/jquery.min.js",
   "https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.1/socket.io.slim.js",
   "js/dist/bootstrap.min.js",
   "js/dist/bootstrap-notify.min.js",

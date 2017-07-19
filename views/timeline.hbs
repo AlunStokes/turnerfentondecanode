@@ -5,8 +5,16 @@
   <div class="row">
     <div class="col-md-12">
       <div id="timeline">
-
+        {{#if admin}}
+        {{>cards/newPostCard}}
+        {{/if}}
       </div>
     </div>
   </div>
 </div>
+
+<style media="screen">
+  body {
+    min-height: 100%;
+  }
+</style>

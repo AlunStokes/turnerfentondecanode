@@ -1,0 +1,83 @@
+<div class="col-lg-12 col-sm-12">
+  <div class="card">
+    <div class="header">
+      <h4 class="title">New Post</h4>
+      <p class="category">Post something on the timeline</p>
+    </div>
+    <div class="content">
+      <textarea name="name" id="new-post-box"></textarea>
+      <div class="footer">
+        <hr>
+        <select class="form-control" id="post-class" style="width:50%; display:inline;">
+          <option value="all">All Classes</option>
+          <option value="writtens">Writtens</option>
+          <option value="marketing">Marketing</option>
+          <option value="businessadmin">Business Administration</option>
+          <option value="finance">Finance</option>
+          <option value="hospitality">Hospitality & Tourism</option>
+        </select>
+        <button type="button" class="btn btn-default" id="submit-post-btn" style="display:inline; float:right;">Submit Post</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- changes minimum hieght for new post box -->
+<style media="screen">
+.CodeMirror, .CodeMirror-scroll {
+  min-height: 100px;
+}
+</style>
+
+<script>
+var newPostBox = new SimpleMDE(
+  {
+    element: $("#new-post-box")[0],
+    toolbar: ["bold", "italic", "heading", "strikethrough", "quote", "unordered-list", "ordered-list", "link", "|", "preview", "guide"]
+  }
+);
+
+$("#submit-post-btn").on("click", function() {
+  $.ajax({
+    type: "POST",
+    url: "ajax",
+    data: {
+      ajaxid: "submitNewPost",
+      messageHTML: newPostBox.options.previewRender(newPostBox.value()),
+      messageMarkdown: newPostBox.value(),
+      messageClass: $("#post-class").val()
+    }
+  }).done(function(data) {
+    if(data.err) {
+      $.notify({
+        icon: 'fa fa-exclamation-triangle',
+        message: data.err
+      },
+      {
+        type: "danger",
+        timer: 3000,
+        placement: {
+          from: "bottom",
+          align: "right"
+        }
+      });
+    }
+    else {
+      newPostBox.value("");
+      $("#post-class").val("all");
+      $.notify({
+        icon: 'fa fa-check',
+        message: "Your post was successfully posted"
+      },
+      {
+        type: "success",
+        timer: 3000,
+        placement: {
+          from: "bottom",
+          align: "right"
+        }
+      });
+    }
+  });
+});
+</script>

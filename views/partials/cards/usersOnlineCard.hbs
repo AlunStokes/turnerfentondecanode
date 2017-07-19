@@ -29,6 +29,8 @@
 </div>
 <script>
 socket.on('usersOnline', function(data) {
-  $('#usersOnline').html(data.usersOnline);
+  $(document).ready(function() {
+    $('#usersOnline').html(data.usersOnline);
+  });
 });
 </script>

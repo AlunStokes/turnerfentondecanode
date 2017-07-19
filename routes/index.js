@@ -18,7 +18,7 @@ router.use(loadCSS([
   "stylesheets/dist/bootstrap.min.css"
 ]));
 router.use(loadJS([
-  "js/dist/jquery.min.js"
+  "https://code.jquery.com/jquery-3.2.1.min.js"
 ]));
 
 //Redirect root route

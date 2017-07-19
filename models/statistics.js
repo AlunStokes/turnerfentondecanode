@@ -56,6 +56,7 @@ statistics.getMostIncorrectlyAnswered = function(studentNumber, callback) {
   });
 }
 
+
 statistics.getNumQuestionsAnswered = function(callback) {
   var statQuery = "SELECT COUNT(*) as numRows FROM questionsattempted";
   db.pool.getConnection(function(err, connection) {

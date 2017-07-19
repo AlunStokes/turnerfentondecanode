@@ -6,6 +6,7 @@ var cssmin = require('gulp-minify-css');
 var rename = require("gulp-rename");
 var sass = require('gulp-sass');
 var uglify = require('gulp-uglify');
+var babel = require('gulp-babel');
 
 //Default
 gulp.task('default', ['scripts', 'styles', 'watch']);

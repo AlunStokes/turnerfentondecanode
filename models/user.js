@@ -58,6 +58,7 @@ user.login = function(user, callback) {
   });
 }
 
+
 //Registrant is an object with fields for firstName, lastName, email, emailConfirm, studentNumber, password, passwordConfirm, grade, and alum
 //each field is an object containing value, and valid
 user.register = function(registrant, callback) {

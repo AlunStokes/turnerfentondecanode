@@ -87,6 +87,81 @@ router.post("/", function(req, res, next) {
       break;
 
 
+      case "submitNewPost":
+      if (!req.session.admin) {
+        res.json({
+          err: "Requires administrative privileges"
+        });
+        return;
+      }
+      var messageHTML = req.body.messageHTML;
+      var messageMarkdown = req.body.messageMarkdown;
+      var poster = req.session.studentNumber;
+      var messageClass = req.body.messageClass;
+      connection.query("INSERT INTO timeline (poster, messageHTML, messageMarkdown, class) VALUES (?, ?, ?, ?)", [poster, messageHTML, messageMarkdown, messageClass], function(err, rows, fields) {
+        if (err) {
+          res.json({
+            err: "Server error - try again later"
+          });
+        }
+        else{
+          res.json({
+            err: null
+          });
+        }
+      });
+      break;
+
+      case "updatePost":
+      if (!req.session.admin) {
+        res.json({
+          err: "Requires administrative privileges"
+        });
+        return;
+      }
+      var messageHTML = req.body.messageHTML;
+      var messageMarkdown = req.body.messageMarkdown;
+      var messageClass = req.body.messageClass;
+      var postid = req.body.postid;
+      connection.query("UPDATE timeline SET messageHTML = ?, messageMarkdown = ?, class = ? WHERE id = ?", [messageHTML, messageMarkdown, messageClass, postid], function(err, rows, fields) {
+        if (err) {
+          console.log(err);
+          res.json({
+            err: "Post not updated - try again later"
+          });
+        }
+        else {
+          res.json({
+            err: null
+          });
+        }
+      });
+      break;
+
+      case "deletePost":
+      if (!req.session.admin) {
+        res.json({
+          err: "Requires administrative privileges"
+        });
+        return;
+      }
+      var postid = req.body.postid;
+      connection.query("DELETE FROM timeline WHERE id = ?", [postid], function(err, rows, fields) {
+        if (rows.affectedRows == 1) {
+          res.json({
+            err: null
+          });
+          return;
+        }
+        else {
+          res.json({
+            err: "Could not delete post"
+          });
+          return;
+        }
+      });
+      break;
+
       case "submitExtension":
       var extension = req.body.extension;
       connection.query("INSERT INTO tfdextensions (extension, author) VALUES (?, ?)", [extension, req.session.studentNumber], function(err, rows, fields) {
