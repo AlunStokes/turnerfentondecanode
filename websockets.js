@@ -14,16 +14,61 @@ var sessions = [
 
 ];
 
+var examWriters = [];
+
 io.on('connection', function(socket){
 
-    socket.on('identifyUser', function(data) {
-      newConnection(socket, data.studentNumber);
-    });
+  socket.on('identifyUser', function(data) {
+    newConnection(socket, data.studentNumber);
+  });
 
-    socket.on('disconnect', function() {
-      droppedConnection(socket);
-    })
+  socket.on('disconnect', function() {
+    droppedConnection(socket);
+  });
+
+  //Check exam writers
+  socket.on('writingExam', function(studentNumber) {
+    addExamWriter(studentNumber);
+  });
+
+  socket.on('stillWritingExam', function(studentNumber) {
+    retainExamWriter(studentNumber);
+  });
+
+  socket.on('checkWritingExam', function(studentNumber, callback) {
+    if (typeof(examWriters[examWriters.map(function(e) {return e.studentNumber}).indexOf(studentNumber)]) != "undefined" && examWriters[examWriters.map(function(e) {return e.studentNumber}).indexOf(studentNumber)] != -1) {
+      callback(true);
+    }
+    else {
+      callback(false);
+    }
+  });
 });
+
+setInterval(function() {
+  var now = Date.now();
+  for (var i = 0; i < examWriters.length; i++) {
+    if (now - examWriters[i].lastCheckIn > 10000) {
+      examWriters.splice(i , 1);
+    }
+  }
+  return;
+}, 5000);
+
+function addExamWriter(studentNumber) {
+  examWriters.push({
+    studentNumber: studentNumber,
+    lastCheckIn: Date.now()
+  });
+  return;
+}
+
+function retainExamWriter(studentNumber) {
+  var index = examWriters.map(function(e) {return e.studentNumber}).indexOf(studentNumber);
+  if (index != -1 && typeof(index) != "undefined") {
+    examWriters[index].lastCheckIn = Date.now();
+  }
+}
 
 function newConnection(socket, studentNumber) {
   //Index of user with given studentNumber in sessions array
@@ -96,7 +141,7 @@ function usersOnlineChange() {
 
 /*
 ws.sendNotification = function() {
-    io.sockets.emit('hello', {msg: 'Hello World!'});
+io.sockets.emit('hello', {msg: 'Hello World!'});
 }
 */
 

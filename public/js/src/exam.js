@@ -144,3 +144,10 @@ submitExamBtn.on('click', function() {
   }
 
 });
+
+
+//Notify server via websockets that user has exam page open (every minute)
+  socket.emit("writingExam", studentNumber);
+setInterval(function() {
+  socket.emit("stillWritingExam", studentNumber);
+}, 3000);

@@ -18,3 +18,33 @@
     </div>
   </div>
 </div>
+
+<!--Load corresponding modal -->
+{{>modals/searchQuestionsModal}}
+
+<script>
+$("#find-question-btn").on('click', function() {
+  isWritingExam(function(isWriting) {
+    if (!isWriting) {
+      $("#find-question-modal").modal('show');
+    }
+    else {
+      alert("You cannot look up questions while writing an exam");
+    }
+  });
+});
+
+function isWritingExam(callback) {
+  socket.emit('checkWritingExam', studentNumber, function(writingExam) {
+    if (writingExam) {
+      callback(true);
+      return;
+    }
+    else {
+      callback(false);
+      return;
+    }
+  });
+}
+
+</script>

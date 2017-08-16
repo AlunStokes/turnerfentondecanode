@@ -1,0 +1,209 @@
+<div class="modal fade" id="find-question-modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content" style="padding: 11px">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Search Exam Questions</h4>
+      </div>
+      <br>
+      <div class="row">
+        <div class="col-lg-8 col-xs-7">
+          <input tpye="text" id="search-input" class="question-search" placeholder="Write words in question" style="width:100%; font-size:14px; height:30px;" />
+        </div>
+        <div class="col-lg-4 col-xs-5">
+          <select style="text-align:right; min-height:30px; width:100%; width:100%;" id="load-questions-cluster">
+            <option value="mix">All Clusters</option>
+            <option value="marketing">Marketing</option>
+            <option value="businessadmin">Business Administration</option>
+            <option value="finance">Finance</option>
+            <option value="hospitality">Hospitality & Tourism</option>
+          </select>
+        </div>
+      </div>
+      <br>
+      <div id="question-area-not-added" class="question-area">
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+
+var loadQuestionsCluster;
+var searchInput;
+var questionAreaNotAdded;
+
+
+//Holds questions that are currently loaded through the search AND not in the exam
+var loadedQuestions = [];
+//Number of questions currently loaded
+var questionsLoaded = 0;
+//Number of questions to be fetched per search
+var questionsPer = 25;
+//Current cluster being searched
+var questionsCluster;
+//String used to modify and specify search
+var search;
+
+$(document).ready(function() {
+
+  loadQuestionsCluster = $("#load-questions-cluster");
+  searchInput = $("#search-input");
+  questionAreaNotAdded = $("#question-area-not-added");
+  questionAreaAdded = $("#question-area-added");
+
+  questionsCluster = loadQuestionsCluster.val();
+  search = searchInput.val();
+
+  //Initialise questions
+  var questionList = loadQuestions(questionsCluster, search, questionsLoaded, function(questionList) {
+    addQuestionsNotAdded(questionList);
+  });
+
+
+  $(document).on('click', "#load-more", function() {
+    questionList = loadQuestions(questionsCluster, search, questionsLoaded, function(questionList) {
+      addQuestionsNotAdded(questionList);
+    });
+  });
+
+  searchInput.on('keyup', function() {
+    search = searchInput.val();
+    //Set to zero to reset num questions
+    questionsLoaded = 0;
+    loadedQuestions = [];
+    questionList = loadQuestions(questionsCluster, search, questionsLoaded, function(questionList) {
+      replaceQuestionsNotAdded(questionList);
+    });
+  });
+
+  loadQuestionsCluster.on('change', function() {
+    questionsCluster = loadQuestionsCluster.val();
+    //Set to zero to reset num questions
+    questionsLoaded = 0;
+    loadedQuestions = [];
+    questionList = loadQuestions(questionsCluster, search, questionsLoaded, function(questionList) {
+      replaceQuestionsNotAdded(questionList);
+    });
+  });
+});
+
+function loadQuestions(cluster, search, offset, callback) {
+  $.ajax({
+    type: "GET",
+    url: "ajax",
+    data: {
+      ajaxid: "getQuestionList",
+      cluster: cluster,
+      offset: offset,
+      search: search,
+      questionsPer: questionsPer
+    }
+  }).done(function(data) {
+    questionsLoaded += data.length;
+    loadedQuestions = loadedQuestions.concat(data);
+    callback(data);
+    return;
+  });
+}
+
+//Add questions to add questions box
+function addQuestionsNotAdded(questions) {
+  //Remove current load more button
+  if ($("#load-more")) {
+    $("#load-more").remove();
+  }
+
+  var html = '';
+
+  if (questions.length == 0) {
+    html = '<h1 class="text small thin dark">no more results</h1>';
+  }
+  else {
+    html += generateQuestionsHTML(questions);
+    //Add more button
+    html += '<button class="btn btn-lg btn-block active-color" id="load-more">Load more</button>';
+  }
+  questionAreaNotAdded.append(html);
+}
+
+//Replace questions in add question box
+function replaceQuestionsNotAdded(questions) {
+  questionsLoaded = questionsPer;
+  var html = '';
+  if (questions.length == 0) {
+    html = '<h1 class="text small thin dark">0 results returned</h1>';
+  }
+  else {
+    html += generateQuestionsHTML(questions);
+    //Add more button
+    html += '<button class="btn btn-lg btn-block active-color" id="load-more">Load more</button>';
+  }
+  questionAreaNotAdded.html(html);
+}
+
+//inExam determines if questions currently in exam (show remove button) or just loaded (show add button)
+function generateQuestionsHTML(questions) {
+  var html = '';
+  var optionLetters = ['A', 'B', 'C', 'D'];
+  for (var i = 0; i < questions.length; i++) {
+    html += generateQuestionHTML(questions[i], i)
+  }
+  return html;
+}
+
+function generateQuestionHTML(question, number) {
+  var html = '';
+  var optionLetters = ['A', 'B', 'C', 'D'];
+  html += '<div class="question" id="question-' + question.questionid + '">' +
+  '<div class="row">' +
+  '<div class="col-lg-10 col-xs-9">' +
+  '<h1 class="text small thin dark">';
+    html += '<i><b>' + ((questionsLoaded - questionsPer) + number + 1) + '. </b></i>';
+  html += question.question + '</h1>' +
+  '</div>' +
+  '<div class="col-lg-2 col-xs-3">';
+  html += '</div>' +
+  '</div>' +
+  '<br>';
+  //Add options
+  for (var j = 0; j < 4; j++) {
+    html += '<div class="row">' +
+    '<div class="col-lg-8 col-xs-10">' +
+    '<label for="rb-' + number + '-' + optionLetters[j] + '">' +
+    '<h1 class="text xsmall thin dark"><i><b>' + optionLetters[j] + '. </b></i>' + question['option' + optionLetters[j]] + '</h1>' +
+    '</div>' +
+    '</div>';
+  }
+  html += '<div class="row">' +
+  '<div class="col-lg-8 col-xs-10"' +
+  '<h1 class="text xsmall thin dark"><i>Answer: ' + question.answer + '</i></h1>' +
+  '</div>' +
+  '</div>' +
+  '<hr>' +
+  '</div>';
+  return html;
+}
+
+
+
+
+
+//Returns integers in a string
+function getNum(string) {
+  var num = string.match(/\d+/)[0];
+  return num;
+}
+
+//Returns index of objects containing a property with the given value
+function indexInArrayObject(array, prop, value) {
+  for (var i = 0; i < array.length; i++) {
+    if (array[i][prop] == value) {
+      return i;
+    }
+  }
+  return -1;
+}
+
+</script>
