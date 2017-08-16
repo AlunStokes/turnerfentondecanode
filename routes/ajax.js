@@ -5,6 +5,8 @@ var db = require("../db");
 
 //Models
 var Statistics = require("../models/statistics");
+var Utilities = require("../models/utilities");
+var Exam = require("../models/exam");
 
 router.get("/", function(req, res, next) {
 
@@ -55,6 +57,75 @@ router.get("/", function(req, res, next) {
           res.json({canSubmitExtensions: rows[0].canSubmitExtensions == 1});
         }
       });
+      break;
+
+
+      case "checkIncompleteExam":
+      if (req.session.examHash) {
+        res.json({
+          examStarted: true
+        });
+      }
+      else {
+        res.json({
+          examStarted: false
+        });
+      }
+      break;
+
+      case "removeIncompleteExam":
+      connection.query("UPDATE examresults SET cancelled = 1 WHERE examHash = ?", [req.session.examHash], function(err, rows, fields) {
+        if (err) {
+          res.json({
+            err: "Server error - try again later"
+          });
+        }
+        req.session.examHash = null;
+        res.json({
+          err: null
+        });
+      });
+      break;
+
+
+      case "getQuestionList":
+      var cluster = req.query.cluster;
+      var offset = parseInt(req.query.offset);
+      var questionsPer = parseInt(req.query.questionsPer);
+      var search = "%" + req.query.search + "%";
+      var questions = [];
+      if (cluster == "mix") {
+        connection.query("SELECT questions.questionid, question, optionA, optionB, optionC, optionD, answer FROM questions LEFT JOIN questionoptions ON questionoptions.questionid = questions.questionid LEFT JOIN questionanswers ON questionanswers.questionid = questions.questionid LEFT JOIN questionclusters ON questionclusters.questionid = questions.questionid WHERE question LIKE ? OR optionA LIKE ? OR optionB LIKE ? OR optionC LIKE ? OR optionD LIKE ? LIMIT ? OFFSET ?", [search, search, search, search, search, questionsPer, offset], function(err, rows, fields) {
+          for (var i = 0; i < rows.length; i++) {
+            questions.push({
+              questionid: rows[i].questionid,
+              question: rows[i].question,
+              optionA: rows[i].optionA,
+              optionB: rows[i].optionB,
+              optionC: rows[i].optionC,
+              optionD: rows[i].optionD,
+              answer: rows[i].answer
+            });
+          }
+          res.json(questions);
+        });
+      }
+      else {
+        connection.query("SELECT questions.questionid, question, optionA, optionB, optionC, optionD, answer FROM questions LEFT JOIN questionoptions ON questionoptions.questionid = questions.questionid LEFT JOIN questionanswers ON questionanswers.questionid = questions.questionid LEFT JOIN questionclusters ON questionclusters.questionid = questions.questionid WHERE cluster = ? AND (question LIKE ? OR optionA LIKE ? OR optionB LIKE ? OR optionC LIKE ? OR optionD LIKE ?) LIMIT ? OFFSET ?", [cluster, search, search, search, search, search, questionsPer, offset], function(err, rows, fields) {
+          for (var i = 0; i < rows.length; i++) {
+            questions.push({
+              questionid: rows[i].questionid,
+              question: rows[i].question,
+              optionA: rows[i].optionA,
+              optionB: rows[i].optionB,
+              optionC: rows[i].optionC,
+              optionD: rows[i].optionD,
+              answer: rows[i].answer
+            });
+          }
+          res.json(questions);
+        });
+      }
       break;
 
 
@@ -159,6 +230,79 @@ router.post("/", function(req, res, next) {
           });
           return;
         }
+      });
+      break;
+
+      //Add error checking
+      case "checkExam":
+      var givenAnswers = JSON.parse(req.body.givenAnswers);
+      connection.query("SELECT modulus, increment, seed, multiplier, offset FROM examresults WHERE examHash = ?", [req.session.examHash], function(err, rows, fields) {
+        Utilities.linConGen(rows[0].modulus, rows[0].increment, rows[0].seed, rows[0].multiplier, givenAnswers.length, rows[0].offset, function(questionList) {
+          connection.query("SELECT answer FROM questionanswers WHERE questionid IN (" + questionList.join() + ") ORDER BY FIND_IN_SET(questionid, '" + questionList.join() + "')", function(err, rows, fields) {
+            var answers = [];
+            var numCorrect = 0
+            for (var i = 0; i < rows.length; i++) {
+              answers[i] = rows[i].answer;
+              if (givenAnswers[i] == answers[i]) {
+                numCorrect++;
+              }
+            }
+            Exam.saveExam(req.session.examHash, numCorrect, function(err) {
+              req.session.examHash = null;
+              if (!err) {
+                res.json({
+                  answers: answers
+                });
+              }
+              else {
+                res.json({
+                  err: "Server error - try again later"
+                });
+              }
+            });
+          });
+        });
+      });
+      break;
+
+      case "createExam":
+      var examName = req.body.examName;
+      var examCluster = req.body.examCluster;
+      var examShowScore = JSON.parse(req.body.examShowScore) ? 1 : 0;
+      var examUnlocked = JSON.parse(req.body.examUnlocked) ? 1 : 0;
+      var examQuestions = JSON.parse(req.body.examQuestions);
+      connection.query("SELECT name FROM createdexams WHERE name = ?", [examName], function(err, rows, fields) {
+        if (rows.length != 0) {
+          res.json({
+            err: "Exam with same name already exists"
+          });
+          return;
+        }
+        connection.query("INSERT INTO createdexams (name, numQuestions, cluster, unlocked, showScore) VALUES (?, ?, ?, ?, ?);", [examName, examQuestions.length, examCluster, examUnlocked, examShowScore], function(err, rows, fields) {
+          if (err) {
+            connection.release();
+            res.json({
+              err: "Serer error - exam not created"
+            });
+            return;
+          }
+          var insertArray = [];
+          for (var i = 0; i < examQuestions.length; i++) {
+            insertArray.push([rows.insertId, examQuestions[i]]);
+          }
+          connection.query("INSERT INTO createdexamquestions (examid, questionid) VALUES ?", [insertArray], function(err, rows, fields) {
+            connection.release();
+            if (err) {
+              res.json({
+                err: "Serer error - exam not created"
+              });
+              return;
+            }
+            res.json({
+              err: null
+            });
+          });
+        });
       });
       break;
 

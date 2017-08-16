@@ -37,6 +37,9 @@ router.use("/submit-extension", require("./submitExtension"));
 //Back
 router.use("/home", require("./home"));
 router.use("/timeline", require("./timeline"));
+router.use("/practice", require("./practice"));
+router.use("/exam", require("./exam"));
+router.use("/create-exam", require("./createExam"));
 
 //404 error
 router.use(require("./404"));

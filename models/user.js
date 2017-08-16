@@ -423,10 +423,24 @@ user.getUserSettings = function(user, callback) {
       var settings = {
         //Colour preference
         sidebarText: rows[0].sidebarText || "333333",
-        sidebarActive: rows[0].sidebarActive || "8FD6E8",
-        sidebarBackground: rows[0].sidebarBackground || "FFFFFF",
+        sidebarActive: rows[0].sidebarActive || "FFFFFF",
+        sidebarBackground: rows[0].sidebarBackground || "aacfff",
         //Shows submit extension card on homepage
         canSubmitExtensions: rows[0].canSubmitExtensions || 0
+      }
+
+      //Check for chosen colour that is not white to set as active colour for icons
+      if (settings.sidebarActive.toUpperCase() != "FFFFFF") {
+        settings.activeColor = settings.sidebarActive;
+      }
+      else if (settings.sidebarBackground.toUpperCase() != "FFFFFF") {
+        settings.activeColor = settings.sidebarBackground;
+      }
+      else if (settings.sidebarText.toUpperCase() != "FFFFFF") {
+        settings.activeColor = settings.sidebarText;
+      }
+      else {
+        settings.activeColor = "#aacfff";
       }
 
       callback(null, settings);

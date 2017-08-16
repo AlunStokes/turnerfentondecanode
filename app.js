@@ -26,6 +26,10 @@ hbs.registerHelper("for", function(times, block) {
   }
   return html;
 });
+//1 index counter
+hbs.registerHelper("counter", function (index){
+    return index + 1;
+});
 
 app.use(favicon(path.join(__dirname, 'public/images', 'favicon.ico')));
 app.use(bodyParser.json());

@@ -74,7 +74,7 @@ function startEditPost(postid) {
   '<option value="finance">Finance</option>' +
   '<option value="hospitality">Hospitality & Tourism</option>' +
   '</select>' +
-  '<button type="button" class="btn btn-default save-edit-btn" id="save-edit-btn-' + postid + '" style="display:inline; float:right;">Save Post</button>');
+  '<button type="button" class="btn btn-default save-edit-btn active-color" id="save-edit-btn-' + postid + '" style="display:inline; float:right;">Save Post</button>');
 
   $("#edit-" + postid).css("display", "none");
   $("#post-class-" + postid).val(postClassValue)

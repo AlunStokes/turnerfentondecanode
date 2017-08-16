@@ -1,0 +1,75 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-lg-12 col-xs-12">
+      <h1 class="text medium center thin" id="score"></h1>
+    </div>
+  </div>
+  <br />
+  <div id="exam-div">
+    {{#each exam}}
+    <!--Question -->
+    <div class="question">
+      <div class="row">
+        <div class="col-lg-9 col-xs-10">
+          <h1 class="text medium thin dark"><i><b>{{counter @index}}. </b></i>{{question}}</h1>
+        </div>
+        <div class="col-lg-1 col-lg-offset-2 col-xs-2">
+          <h1 class="text large thick dark" id="given-answer-{{@index}}"></h1>
+        </div>
+      </div>
+      <br>
+      <!-- Option A -->
+      <div class="row">
+        <div class="col-lg-1 col-xs-2">
+          <input type="radio" name="rb-{{@index}}" id="rb-{{@index}}-A" value="A">
+        </div>
+        <div class="col-lg-8 col-xs-10">
+          <label for="rb-{{@index}}-A">
+            <h1 class="text small thin dark"><i><b>A. </b></i>{{optionA}}</h1>
+          </label>
+        </div>
+      </div>
+      <!-- Option B -->
+      <div class="row">
+        <div class="col-lg-1 col-xs-2">
+          <input type="radio" name="rb-{{@index}}" id="rb-{{@index}}-B" value="B">
+        </div>
+        <div class="col-lg-8 col-xs-10">
+          <label for="rb-{{@index}}-B">
+            <h1 class="text small thin dark"><i><b>B. </b></i>{{optionB}}</h1>
+          </label>
+        </div>
+      </div>
+      <!-- Option C -->
+      <div class="row">
+        <div class="col-lg-1 col-xs-2">
+          <input type="radio" name="rb-{{@index}}" id="rb-{{@index}}-C" value="C">
+        </div>
+        <div class="col-lg-8 col-xs-10">
+          <label for="rb-{{@index}}-C">
+            <h1 class="text small thin dark"><i><b>C. </b></i>{{optionC}}</h1>
+          </label>
+        </div>
+      </div>
+      <!-- Option D -->
+      <div class="row">
+        <div class="col-lg-1 col-xs-2">
+          <input type="radio" name="rb-{{@index}}" id="rb-{{@index}}-D" value="D">
+        </div>
+        <div class="col-lg-8 col-xs-10">
+          <label for="rb-{{@index}}-D">
+            <h1 class="text small thin dark"><i><b>D. </b></i>{{optionD}}</h1>
+          </label>
+        </div>
+      </div>
+      <hr>
+    </div>
+    {{/each}}
+  </div>
+  <hr>
+  <div class="row">
+    <div class="col-lg-12 col-xs-12">
+      <button type="button" id="submit-exam-btn" class="btn btn-default active-color" disabled>Submit</button>
+    </div>
+  </div>
+</div>

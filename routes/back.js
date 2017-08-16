@@ -27,7 +27,7 @@ router.use(loadJS([
   "https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.1/socket.io.slim.js",
   "js/dist/bootstrap.min.js",
   "js/dist/bootstrap-notify.min.js",
-  "js/dist/bootstrap-checkbox-radio.min.js",
+  //"js/dist/bootstrap-checkbox-radio.min.js",
   "js/dist/dashboard.min.js",
   "js/dist/chartist.min.js",
   "js/dist/jscolor.min.js",

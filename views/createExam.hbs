@@ -1,0 +1,100 @@
+<div class="container-fluid" id="top-div">
+
+  <h1 class="text large dark thin center">Create An Exam</h1>
+  <br>
+  <div class="step-container">
+    <h1 class="text medium dark thin center">1. Add Questions</h1>
+    <h1 class="text small dark thin center">Toggle switch to add question to exam</h1>
+    <br>
+    <div class="row">
+      <div class="col-lg-8 col-xs-7">
+        <input tpye="text" id="search-input" class="question-search" placeholder="Write words in question" style="width:100%; font-size:14px; height:30px;" />
+      </div>
+      <div class="col-lg-4 col-xs-5">
+        <select style="text-align:right; min-height:30px; width:100%; width:100%;" id="load-questions-cluster">
+          <option value="mix">All Clusters</option>
+          <option value="marketing">Marketing</option>
+          <option value="businessadmin">Business Administration</option>
+          <option value="finance">Finance</option>
+          <option value="hospitality">Hospitality & Tourism</option>
+        </select>
+      </div>
+    </div>
+    <br>
+    <div id="question-area-not-added" class="question-area">
+
+    </div>
+  </div>
+  <br>
+
+  <div class="step-container">
+    <h1 class="text medium dark thin center">2. Review Questions</h1>
+    <h1 class="text small dark thin center">Make sure all questions are meant to be there</h1>
+    <br>
+    <div class="row" id="num_questions" style="align:center; text-align:center;">
+    </div>
+    <div id="question-area-added" class="question-area">
+
+    </div>
+  </div>
+  <br>
+
+  <div class="step-container">
+    <h1 class="text medium dark thin center">3. Choose Exam Cluster</h1>
+    <h1 class="text small dark thin center">Can be a specific cluster, or mixed</h1>
+    <br>
+    <div class="row">
+      <div class="col-lg-12 col-xs-12">
+        <select id="exam-cluster-dropdown" style="min-height:30px; width:100%;">
+          <option value="mix">Mixed Clusters</option>
+          <option value="marketing">Marketing</option>
+          <option value="businessadmin">Business Administration</option>
+          <option value="finance">Finance</option>
+          <option value="hospitality">Hospitality & Tourism</option>
+        </select>
+      </div>
+    </div>
+  </div>
+  <br>
+
+  <div class="step-container">
+    <h1 class="text medium dark thin center">4. Choose Locked v. Unlocked</h1>
+    <h1 class="text small dark thin center">If locked, the exam will only be visible to admins (may change later)</h1>
+    <br>
+    <div class="row">
+      <div class="col-lg-12 col-xs-12">
+        <select id="exam-locked-dropdown" style="min-height:30px; width:100%;">
+          <option value="1">Unlocked</option>
+          <option value="0">Locked</option>
+        </select>
+      </div>
+    </div>
+  </div>
+  <br>
+
+  <div class="step-container">
+    <h1 class="text medium dark thin center">5. Choose Whether Score Will be Shown</h1>
+    <h1 class="text small dark thin center">If not, students will not be shown correct answers or their total score upon completion</h1>
+    <br>
+    <div class="row">
+      <div class="col-lg-12 col-xs-12">
+        <select id="exam-score-dropdown" style="min-height:30px; width:100%;">
+          <option value="1">Show Score</option>
+          <option value="0">Don't Show Score</option>
+        </select>
+      </div>
+    </div>
+  </div>
+  <br>
+
+  <div class="step-container">
+    <h1 class="text medium dark thin center">6. Choose a Name</h1>
+    <h1 class="text small dark thin center">This must be unique, and should describe the specific exam</h1>
+    <form role="form">
+      <input class="text thin dark center" id="exam-name-input" type="type" maxlength=100 style="height:5vh; width:100%; font-size: 24px;" />
+      <button class="btn btn-lg btn-primary btn-block active-color" id="submit-exam-btn" style="margin-top:2vh;">Create Exam</button>
+      <button class="btn btn-lg btn-danger btn-block" id="start-another-exam-btn" style="margin-top:2vh;">Start Another Exam</button>
+    </form>
+  </div>
+</div>
+<br>

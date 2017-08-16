@@ -1,0 +1,15 @@
+<div class="container-fluid">
+    <div class="row">
+      <!--Page specific cards -->
+      {{>cards/startExamCard}}
+      {{>cards/findExamCard}}
+      {{>cards/findQuestionCard}}
+      {{#if admin}}
+        {{>cards/createExamCard}}
+        {{>cards/addQuestionCard}}
+      {{/if}}
+    </div>
+  <div class="row">
+    
+  </div>
+</div>

@@ -1,6 +1,6 @@
 /*Text*/
 .text {
-  margin: 2px 0 2px 0;
+  margin: 0px 0 0px 0;
 }
 .text.light {
   color: #fff;
@@ -69,9 +69,24 @@
   margin-bottom: 40px;
 }
 
-@media screen and (max-width:1030px) {
+@media screen and (max-width:992px) {
   .text.typed-text {
     text-align: center;
+  }
+  .text.xlarge {
+    font-size: 38px;
+  }
+  .text.large {
+    font-size: 36px;
+  }
+  .text.medium {
+    font-size: 28px;
+  }
+  .text.small {
+    font-size: 20px;
+  }
+  .text.xsmall {
+    font-size: 12px;
   }
 }
 

@@ -52,6 +52,7 @@ var pd = {
       var ul_content = '';
 
       // set the bg color and active color from the default sidebar to the off canvas sidebar;
+      //This is redundant due to changing the colours by adding in CSS rules, but may break if taken out
       $off_canvas_sidebar.attr('data-background-color',sidebar_bg_color);
       $off_canvas_sidebar.attr('data-active-color',sidebar_active_color);
 
@@ -174,4 +175,32 @@ function hex(x) {
   var hexDigits = new Array
   ("0","1","2","3","4","5","6","7","8","9","a","b","c","d","e","f");
   return isNaN(x) ? "00" : hexDigits[(x - x % 16) / 16] + hexDigits[x % 16];
+}
+
+//Allows post redirects
+function post(path, parameters) {
+  var form = $('<form></form>');
+  
+  form.attr("method", "post");
+  form.attr("action", path);
+
+  $.each(parameters, function(key, value) {
+    if ( typeof value == 'object' || typeof value == 'array' ){
+      $.each(value, function(subkey, subvalue) {
+        var field = $('<input />');
+        field.attr("type", "hidden");
+        field.attr("name", key+'[]');
+        field.attr("value", subvalue);
+        form.append(field);
+      });
+    } else {
+      var field = $('<input />');
+      field.attr("type", "hidden");
+      field.attr("name", key);
+      field.attr("value", value);
+      form.append(field);
+    }
+  });
+  $(document.body).append(form);
+  form.submit();
 }
