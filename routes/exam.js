@@ -18,7 +18,11 @@ router.get("/", function(req, res, next) {
 });
 
 router.post("/", loadExam, function(req, res, next) {
-    res.render("exam");
+  if (res.locals.errors.length) {
+    res.redirect("practice");
+    return;
+  }
+  res.render("exam");
 });
 
 module.exports = router;

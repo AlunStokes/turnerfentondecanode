@@ -8,7 +8,7 @@
       <br>
       <div class="row">
         <div class="col-lg-8 col-xs-7">
-          <input tpye="text" id="search-input" class="question-search" placeholder="Write words in question" style="width:100%; font-size:14px; height:30px;" />
+          <input tpye="text" id="questions-search-input" class="question-search" placeholder="Write words in question" style="width:100%; font-size:14px; height:30px;" />
         </div>
         <div class="col-lg-4 col-xs-5">
           <select style="text-align:right; min-height:30px; width:100%; width:100%;" id="load-questions-cluster">
@@ -21,7 +21,7 @@
         </div>
       </div>
       <br>
-      <div id="question-area-not-added" class="question-area">
+      <div id="question-area" class="question-area">
 
       </div>
     </div>
@@ -31,7 +31,7 @@
 <script>
 
 var loadQuestionsCluster;
-var searchInput;
+var questionsSearchInput;
 var questionAreaNotAdded;
 
 
@@ -44,36 +44,35 @@ var questionsPer = 25;
 //Current cluster being searched
 var questionsCluster;
 //String used to modify and specify search
-var search;
+var questionsSearch;
 
 $(document).ready(function() {
 
   loadQuestionsCluster = $("#load-questions-cluster");
-  searchInput = $("#search-input");
-  questionAreaNotAdded = $("#question-area-not-added");
-  questionAreaAdded = $("#question-area-added");
+  questionsSearchInput = $("#questions-search-input");
+  questionAreaNotAdded = $("#question-area");
 
   questionsCluster = loadQuestionsCluster.val();
-  search = searchInput.val();
+ questionsSearch= questionsSearchInput.val();
 
   //Initialise questions
-  var questionList = loadQuestions(questionsCluster, search, questionsLoaded, function(questionList) {
+  var questionList = loadQuestions(questionsCluster, questionsSearch, questionsLoaded, function(questionList) {
     addQuestionsNotAdded(questionList);
   });
 
 
-  $(document).on('click', "#load-more", function() {
-    questionList = loadQuestions(questionsCluster, search, questionsLoaded, function(questionList) {
+  $(document).on('click', "#load-more-questions", function() {
+    questionList = loadQuestions(questionsCluster, questionsSearch, questionsLoaded, function(questionList) {
       addQuestionsNotAdded(questionList);
     });
   });
 
-  searchInput.on('keyup', function() {
-    search = searchInput.val();
+  questionsSearchInput.on('keyup', function() {
+   questionsSearch= questionsSearchInput.val();
     //Set to zero to reset num questions
     questionsLoaded = 0;
     loadedQuestions = [];
-    questionList = loadQuestions(questionsCluster, search, questionsLoaded, function(questionList) {
+    questionList = loadQuestions(questionsCluster, questionsSearch, questionsLoaded, function(questionList) {
       replaceQuestionsNotAdded(questionList);
     });
   });
@@ -83,13 +82,13 @@ $(document).ready(function() {
     //Set to zero to reset num questions
     questionsLoaded = 0;
     loadedQuestions = [];
-    questionList = loadQuestions(questionsCluster, search, questionsLoaded, function(questionList) {
+    questionList = loadQuestions(questionsCluster, questionsSearch, questionsLoaded, function(questionList) {
       replaceQuestionsNotAdded(questionList);
     });
   });
 });
 
-function loadQuestions(cluster, search, offset, callback) {
+function loadQuestions(cluster, questionsSearch, offset, callback) {
   $.ajax({
     type: "GET",
     url: "ajax",
@@ -97,7 +96,7 @@ function loadQuestions(cluster, search, offset, callback) {
       ajaxid: "getQuestionList",
       cluster: cluster,
       offset: offset,
-      search: search,
+      search: questionsSearch,
       questionsPer: questionsPer
     }
   }).done(function(data) {
@@ -111,8 +110,8 @@ function loadQuestions(cluster, search, offset, callback) {
 //Add questions to add questions box
 function addQuestionsNotAdded(questions) {
   //Remove current load more button
-  if ($("#load-more")) {
-    $("#load-more").remove();
+  if ($("#load-more-questions")) {
+    $("#load-more-questions").remove();
   }
 
   var html = '';
@@ -123,7 +122,7 @@ function addQuestionsNotAdded(questions) {
   else {
     html += generateQuestionsHTML(questions);
     //Add more button
-    html += '<button class="btn btn-lg btn-block active-color" id="load-more">Load more</button>';
+    html += '<button class="btn btn-lg btn-block active-color" id="load-more-questions">Load more</button>';
   }
   questionAreaNotAdded.append(html);
 }
@@ -138,7 +137,7 @@ function replaceQuestionsNotAdded(questions) {
   else {
     html += generateQuestionsHTML(questions);
     //Add more button
-    html += '<button class="btn btn-lg btn-block active-color" id="load-more">Load more</button>';
+    html += '<button class="btn btn-lg btn-block active-color" id="load-more-questions">Load more</button>';
   }
   questionAreaNotAdded.html(html);
 }

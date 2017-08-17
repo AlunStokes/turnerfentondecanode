@@ -27,7 +27,6 @@ exam.loadRandomExam = function(cluster, numQuestions, callback) {
         return;
       }
       var totalQuestions = rows[0].numQuestions;
-
       //Generate an LCG to determine question order
       Utilities.linCongGenGen(totalQuestions, function(mod, increment, seed, multiplier) {
         var offset = parseInt(Math.random() * (totalQuestions));
@@ -77,6 +76,59 @@ exam.loadRandomExam = function(cluster, numQuestions, callback) {
             });
           });
         });
+      });
+    });
+  });
+}
+
+exam.checkExamUnlocked = function(examid, callback) {
+  db.pool.getConnection(function(err, connection) {
+    if (err) {
+      callback("Server error - try again later");
+      return;
+    }
+    connection.query("SELECT unlocked FROM createdexams WHERE id = ?", [examid], function(err, rows, fields) {
+      if (err) {
+        callback("Server error - try again later");
+        return;
+      }
+      if (rows[0].length == 0) {
+        callback(null, false);
+        return;
+      }
+      else if (rows[0].unlocked == 0) {
+        callback(null, false);
+        return;
+      }
+      callback(null, true);
+    });
+  });
+}
+
+exam.loadExam = function(examid, callback) {
+  exam.getidList(examid, function(err, ids) {
+    if (err) {
+      callback("Server error - try again later");
+      return;
+    }
+    db.pool.getConnection(function(err, connection) {
+      connection.query("SELECT questions.questionid, question, optionA, optionB, optionC, optionD FROM questions LEFT JOIN questionoptions ON questionoptions.questionid = questions.questionid WHERE questions.questionid IN (" + ids.join() + ") ORDER BY FIND_IN_SET(questions.questionid, '" + ids.join() + "');", function(err, rows, fields) {
+        if (err) {
+          callback("Server error - try again later");
+          return;
+        }
+        var exam = [];
+        for (var i = 0; i < rows.length; i++) {
+          exam[i] = {};
+          exam[i].questionid = rows[i].questionid;
+          exam[i].question = rows[i].question;
+          exam[i].optionA = rows[i].optionA;
+          exam[i].optionB = rows[i].optionB;
+          exam[i].optionC = rows[i].optionC;
+          exam[i].optionD = rows[i].optionD;
+        }
+        callback(null, exam);
+        return;
       });
     });
   });
@@ -158,21 +210,65 @@ exam.resumeExam = function(examHash, callback) {
   });
 }
 
-exam.startExam = function(studentNumber, mod, increment, seed, multiplier, offset, numQuestions, cluster, callback) {
+exam.startExam = function(studentNumber, examData, callback) {
+  //Check if examData is object (random exam) or examid (precreated exam)
+  if (Number.isInteger(examData)) {
+    db.pool.getConnection(function(err, connection) {
+      if(err) {
+        callback("Server error- try again later");
+        return;
+      }
+      connection.query("SELECT numQuestions, cluster FROM createdexams WHERE id = ?", [examData], function(err, rows, fields) {
+        Utilities.generateRandomString(32, function(examHash) {
+          connection.query("INSERT INTO examResults (examid, total, studentNumber, examHash, cluster) VALUES (?, ?, ?, ?, ?);", [examData, rows[0].numQuestions, studentNumber, examHash, rows[0].cluster], function(err, rows, fields) {
+            if(err) {
+              callback("Server error- try again later");
+              return;
+            }
+            callback(null, examHash);
+            return;
+          });
+        });
+      });
+    });
+  }
+  else {
+    db.pool.getConnection(function(err, connection) {
+      if(err) {
+        callback("Server error- try again later");
+        return;
+      }
+      Utilities.generateRandomString(32, function(examHash) {
+        connection.query("INSERT INTO examResults (modulus, increment, seed, multiplier, offset, total, studentNumber, examHash, cluster) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);", [mod, increment, seed, multiplier, offset, numQuestions, studentNumber, examHash, cluster], function(err, rows, fields) {
+          if(err) {
+            callback("Server error- try again later");
+            return;
+          }
+          callback(null, examHash);
+          return;
+        });
+      });
+    });
+  }
+}
+
+exam.getidList = function(examid, callback) {
   db.pool.getConnection(function(err, connection) {
-    if(err) {
-      callback("Server error- try again later");
+    if (err) {
+      callback("Server error - try again later");
       return;
     }
-    Utilities.generateRandomString(32, function(examHash) {
-      connection.query("INSERT INTO examResults (modulus, increment, seed, multiplier, offset, total, studentNumber, examHash, cluster) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);", [mod, increment, seed, multiplier, offset, numQuestions, studentNumber, examHash, cluster], function(err, rows, fields) {
-        if(err) {
-          callback("Server error- try again later");
-          return;
-        }
-        callback(null, examHash);
+    connection.query("SELECT questionid FROM createdexamquestions WHERE examid = ?", [examid], function(err, rows, fields) {
+      if (err) {
+        callback("Server error - try again later");
         return;
-      });
+      }
+      var ids = [];
+
+      for (var i = 0; i < rows.length; i++) {
+        ids.push(rows[i].questionid);
+      }
+      callback(null, ids);
     });
   });
 }

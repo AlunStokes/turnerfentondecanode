@@ -51,7 +51,7 @@ var utilities = {
     var increment;
     var seed = parseInt(Math.random() * (mod - 2) + 1);
     var multiplier;
-    utilities.getCoprimeTo(mod, 1, mod-1, function(coprime) {
+    utilities.getCoprimeTo(mod, mod-1, function(coprime) {
       increment = coprime;
       utilities.getPrimeFactorsOf(mod, function(modFactors) {
         utilities.getModularlyCongruentToSet(1, modFactors, 1, mod-1, mod % 4 == 0, function(b) {
@@ -115,6 +115,10 @@ var utilities = {
   },
   //Returns an array of the prime factors of a (does not repeat factors or list exponents)
   getPrimeFactorsOf: function(a, callback) {
+    if (a == 0 || a == 1) {
+      callback([]);
+      return;
+    }
     var primes = [];
     utilities.getFactorizationOf(a, function(factors) {
       for (var i = 0; i < factors.length; i++) {
@@ -128,16 +132,33 @@ var utilities = {
       return;
     });
   },
+  getPrimeFactorsOfUpTo: function(max, callback) {
+    var pFactors = [];
+    for (var i = 0; i < max; i++) {
+      utilities.getPrimeFactorsOf(i, function(factors) {
+        pFactors[i] = factors;
+      });
+    }
+    callback(pFactors);
+    return;
+  },
   //Returns a coprime integer to the given input between the max and min values given
-  getCoprimeTo(a, min, max, callback) {
-    var b = parseInt(Math.random() * (max - min) + min, 10);
-    utilities.checkCoprimality(a, b, function(coprime) {
-      if (coprime) {
-        callback(b);
+  getCoprimeTo(a, max, callback) {
+    var viable = [];
+    utilities.getPrimeFactorsOf(a, function(pFactorsA) {
+      utilities.getPrimeFactorsOfUpTo(max, function(pFactors) {
+        //Remove 0 and 1 from array -> no prime factors
+        pFactors.splice(0,2);
+        for (var i = 0; i < pFactors.length; i++) {
+          if (!pFactorsA.compare(pFactors[i])) {
+            //+2 to account for removing 0 and 1
+            viable.push(i + 2);
+          }
+        }
+        var index = parseInt(Math.random() * (viable.length), 10);
+        callback(viable[index]);
         return;
-      }
-      utilities.getCoprimeTo(a, min, max, callback);
-      return;
+      });
     });
   },
   //Checks if a and b are congruent modulo n; returns true if so, false if not
@@ -296,60 +317,64 @@ var utilities = {
   lcm: function(arr) {
     var len = arr.length;
     // Convert any negative integers to positive integers...
-	for ( i = 0; i < len; i++ ) {
-		a = arr[ i ];
-		if ( a < 0 ) {
-			arr[ i ] = -a;
-		}
-	}
-  // Exploit the fact that the lcm is an associative function...
-	a = arr[ 0 ];
-	for ( i = 1; i < len; i++ ) {
-		b = arr[ i ];
-		if ( a === 0 || b === 0 ) {
-			return 0;
-		}
-		a = ( a/utilities.gcd(a,b) ) * b;
-	}
-	return a;
-},
-gcd: function( a, b ) {
-	var k = 1,
-		t;
-	// Simple cases:
-	if ( a === 0 ) {
-		return b;
-	}
-	if ( b === 0 ) {
-		return a;
-	}
-	// Reduce `a` and/or `b` to odd numbers and keep track of the greatest power of 2 dividing both `a` and `b`...
-	while ( a%2 === 0 && b%2 === 0 ) {
-		a = a / 2; // right shift
-		b = b / 2; // right shift
-		k = k * 2; // left shift
-	}
-	// Reduce `a` to an odd number...
-	while ( a%2 === 0 ) {
-		a = a / 2; // right shift
-	}
-	// Henceforth, `a` is always odd...
-	while ( b ) {
-		// Remove all factors of 2 in `b`, as they are not common...
-		while ( b%2 === 0 ) {
-			b = b / 2; // right shift
-		}
-		// `a` and `b` are both odd. Swap values such that `b` is the larger of the two values, and then set `b` to the difference (which is even)...
-		if ( a > b ) {
-			t = b;
-			b = a;
-			a = t;
-		}
-		b = b - a; // b=0 iff b=a
-	}
-	// Restore common factors of 2...
-	return k * a;
+    for ( i = 0; i < len; i++ ) {
+      a = arr[ i ];
+      if ( a < 0 ) {
+        arr[ i ] = -a;
+      }
+    }
+    // Exploit the fact that the lcm is an associative function...
+    a = arr[ 0 ];
+    for ( i = 1; i < len; i++ ) {
+      b = arr[ i ];
+      if ( a === 0 || b === 0 ) {
+        return 0;
+      }
+      a = ( a/utilities.gcd(a,b) ) * b;
+    }
+    return a;
+  },
+  gcd: function( a, b ) {
+    var k = 1,
+    t;
+    // Simple cases:
+    if ( a === 0 ) {
+      return b;
+    }
+    if ( b === 0 ) {
+      return a;
+    }
+    // Reduce `a` and/or `b` to odd numbers and keep track of the greatest power of 2 dividing both `a` and `b`...
+    while ( a%2 === 0 && b%2 === 0 ) {
+      a = a / 2; // right shift
+      b = b / 2; // right shift
+      k = k * 2; // left shift
+    }
+    // Reduce `a` to an odd number...
+    while ( a%2 === 0 ) {
+      a = a / 2; // right shift
+    }
+    // Henceforth, `a` is always odd...
+    while ( b ) {
+      // Remove all factors of 2 in `b`, as they are not common...
+      while ( b%2 === 0 ) {
+        b = b / 2; // right shift
+      }
+      // `a` and `b` are both odd. Swap values such that `b` is the larger of the two values, and then set `b` to the difference (which is even)...
+      if ( a > b ) {
+        t = b;
+        b = a;
+        a = t;
+      }
+      b = b - a; // b=0 iff b=a
+    }
+    // Restore common factors of 2...
+    return k * a;
+  }
 }
+
+Array.prototype.compare = function(arr) {
+  return this.filter(function(item){ return arr.indexOf(item) > -1}) > 0;
 }
 
 module.exports = utilities;

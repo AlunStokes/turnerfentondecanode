@@ -18,3 +18,12 @@
     </div>
   </div>
 </div>
+
+<!--Load corresponding modal -->
+{{>modals/searchExamsModal}}
+
+<script>
+$("#find-exam-btn").on('click', function() {
+  $("#find-exams-modal").modal('show');
+});
+</script>

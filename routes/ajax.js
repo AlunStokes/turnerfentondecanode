@@ -96,6 +96,13 @@ router.get("/", function(req, res, next) {
       var questions = [];
       if (cluster == "mix") {
         connection.query("SELECT questions.questionid, question, optionA, optionB, optionC, optionD, answer FROM questions LEFT JOIN questionoptions ON questionoptions.questionid = questions.questionid LEFT JOIN questionanswers ON questionanswers.questionid = questions.questionid LEFT JOIN questionclusters ON questionclusters.questionid = questions.questionid WHERE question LIKE ? OR optionA LIKE ? OR optionB LIKE ? OR optionC LIKE ? OR optionD LIKE ? LIMIT ? OFFSET ?", [search, search, search, search, search, questionsPer, offset], function(err, rows, fields) {
+          if (err) {
+            console.log(err);
+            res.json({
+              err: err
+            });
+            return;
+          }
           for (var i = 0; i < rows.length; i++) {
             questions.push({
               questionid: rows[i].questionid,
@@ -107,11 +114,19 @@ router.get("/", function(req, res, next) {
               answer: rows[i].answer
             });
           }
+          connection.release();
           res.json(questions);
         });
       }
       else {
         connection.query("SELECT questions.questionid, question, optionA, optionB, optionC, optionD, answer FROM questions LEFT JOIN questionoptions ON questionoptions.questionid = questions.questionid LEFT JOIN questionanswers ON questionanswers.questionid = questions.questionid LEFT JOIN questionclusters ON questionclusters.questionid = questions.questionid WHERE cluster = ? AND (question LIKE ? OR optionA LIKE ? OR optionB LIKE ? OR optionC LIKE ? OR optionD LIKE ?) LIMIT ? OFFSET ?", [cluster, search, search, search, search, search, questionsPer, offset], function(err, rows, fields) {
+          if (err) {
+            console.log(err);
+            res.json({
+              err: err
+            });
+            return;
+          }
           for (var i = 0; i < rows.length; i++) {
             questions.push({
               questionid: rows[i].questionid,
@@ -123,7 +138,83 @@ router.get("/", function(req, res, next) {
               answer: rows[i].answer
             });
           }
+          connection.release();
           res.json(questions);
+        });
+      }
+      break;
+
+      case "searchExams":
+      var cluster = req.query.cluster;
+      var search = '%' + req.query.search + '%';
+      var offset = parseInt(req.query.offset);
+      var examsPer = parseInt(req.query.examsPer);
+
+      var exams = [];
+      if (cluster == "mix") {
+        connection.query("SELECT id, name, numQuestions, cluster, DATE_FORMAT(dateCreated, '%M %D %Y') as date, unlocked, showScore FROM createdexams WHERE name LIKE ? ORDER BY dateCreated DESC LIMIT ? OFFSET ?;", [search, examsPer, offset], function(err, rows, fields) {
+          connection.release();
+          if (err) {
+            res.json({
+              err: err
+            });
+            return;
+          }
+          for (var i = 0; i < rows.length; i++) {
+            exams.push(
+              {
+                id: rows[i].id,
+                name: rows[i].name,
+                numQuestions: rows[i].numQuestions,
+                date: rows[i].date,
+                unlocked: rows[i].unlocked == 1 ? true : false,
+                showScore: rows[i].showScore == 1 ? true : false,
+              }
+            );
+            switch (rows[i].cluster) {
+              case "mix":
+              exams[i].cluster = "Mixed Clusters";
+              break;
+              case "marketing":
+              exams[i].cluster = "Marketing";
+              break;
+              case "businessadmin":
+              exams[i].cluster = "Business Administration";
+              break;
+              case "hospitality":
+              exams[i].cluster = "Hospitality & Tourism";
+              break;
+              case "finance":
+              exams[i].cluster = "Finance";
+              break;
+            }
+          }
+          res.json(exams);
+        });
+      }
+      else {
+        connection.query("SELECT id, name, numQuestions, cluster, DATE_FORMAT(dateCreated, '%M %D %Y') as date, unlocked, showScore FROM createdexams WHERE name LIKE ? AND cluster = ? LIMIT ? OFFSET ?;", [search, cluster, examsPer, offset], function(err, rows, fields) {
+          connection.release();
+          if (err) {
+            res.json({
+              err: err
+            });
+            return;
+          }
+          for (var i = 0; i < rows.length; i++) {
+            exams.push(
+              {
+                id: rows[i].id,
+                name: rows[i].name,
+                numQuestions: rows[i].numQuestions,
+                cluster: rows[i].cluster,
+                date: rows[i].date,
+                unlocked: rows[i].unlocked == 1 ? true : false,
+                showScore: rows[i].showScore == 1 ? true : false,
+              }
+            );
+          }
+          res.json(exams);
         });
       }
       break;
@@ -236,32 +327,86 @@ router.post("/", function(req, res, next) {
       //Add error checking
       case "checkExam":
       var givenAnswers = JSON.parse(req.body.givenAnswers);
-      connection.query("SELECT modulus, increment, seed, multiplier, offset FROM examresults WHERE examHash = ?", [req.session.examHash], function(err, rows, fields) {
-        Utilities.linConGen(rows[0].modulus, rows[0].increment, rows[0].seed, rows[0].multiplier, givenAnswers.length, rows[0].offset, function(questionList) {
-          connection.query("SELECT answer FROM questionanswers WHERE questionid IN (" + questionList.join() + ") ORDER BY FIND_IN_SET(questionid, '" + questionList.join() + "')", function(err, rows, fields) {
-            var answers = [];
-            var numCorrect = 0
-            for (var i = 0; i < rows.length; i++) {
-              answers[i] = rows[i].answer;
-              if (givenAnswers[i] == answers[i]) {
-                numCorrect++;
-              }
+      connection.query("SELECT examid, modulus, increment, seed, multiplier, offset FROM examresults WHERE examHash = ?", [req.session.examHash], function(err, rows, fields) {
+        if (err) {
+          res.json({
+            err: "Server error - try again later"
+          });
+          return;
+        }
+        if (rows[0].examid != 0) {
+          var examid = rows[0].examid;
+          connection.query("SELECT id, showScore, includeStats FROM createdexams WHERE id = ?", [examid], function(err, rows, fields) {
+            if (err) {
+              res.json({
+                err: "Server error - try again later"
+              });
+              return;
             }
-            Exam.saveExam(req.session.examHash, numCorrect, function(err) {
-              req.session.examHash = null;
-              if (!err) {
-                res.json({
-                  answers: answers
+            var showScore = rows[0].showScore;
+            var includeStats = rows[0].includeStats;
+            Exam.getidList(examid, function(err, ids) {
+              connection.query("SELECT answer FROM questionanswers WHERE questionid IN (" + ids.join() + ") ORDER BY FIND_IN_SET(questionid, '" + ids.join() + "')", function(err, rows, fields) {
+                var answers = [];
+                var numCorrect = 0;
+                for (var i = 0; i < rows.length; i++) {
+                  answers[i] = rows[i].answer;
+                  if (givenAnswers[i] == answers[i]) {
+                    numCorrect++;
+                  }
+                }
+                Exam.saveExam(req.session.examHash, numCorrect, function(err) {
+                  req.session.examHash = null;
+                  if (!err) {
+                    if (showScore) {
+                      res.json({
+                        answers: answers,
+                        showScore: true
+                      });
+                    }
+                    else {
+                      res.json({
+                        showScore: false
+                      })
+                    }
+                  }
+                  else {
+                    res.json({
+                      err: "Server error - try again later"
+                    });
+                  }
                 });
-              }
-              else {
-                res.json({
-                  err: "Server error - try again later"
-                });
-              }
+              });
             });
           });
-        });
+        }
+        else {
+          Utilities.linConGen(rows[0].modulus, rows[0].increment, rows[0].seed, rows[0].multiplier, givenAnswers.length, rows[0].offset, function(questionList) {
+            connection.query("SELECT answer FROM questionanswers WHERE questionid IN (" + questionList.join() + ") ORDER BY FIND_IN_SET(questionid, '" + questionList.join() + "')", function(err, rows, fields) {
+              var answers = [];
+              var numCorrect = 0
+              for (var i = 0; i < rows.length; i++) {
+                answers[i] = rows[i].answer;
+                if (givenAnswers[i] == answers[i]) {
+                  numCorrect++;
+                }
+              }
+              Exam.saveExam(req.session.examHash, numCorrect, function(err) {
+                req.session.examHash = null;
+                if (!err) {
+                  res.json({
+                    answers: answers
+                  });
+                }
+                else {
+                  res.json({
+                    err: "Server error - try again later"
+                  });
+                }
+              });
+            });
+          });
+        }
       });
       break;
 

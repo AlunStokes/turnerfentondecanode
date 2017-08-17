@@ -74,6 +74,11 @@ submitExamBtn.on('click', function() {
         alert(data.err);
         return;
       }
+      if (!data.showScore) {
+        alert("Your exam score is not shown for this exam, but it has been submitted and you may leave the page.");
+        $("html, body").animate({ scrollTop: 0 }, "slow");
+        return;
+      }
       var answers = data.answers;
       var numCorrect = 0;
       submitExamBtn.prop('disabled', true);

@@ -1,18 +1,7 @@
 var Exam = require("../models/Exam");
 
 module.exports = function(req, res, next) {
-  /*
-  if (req.session.examHash) {
-    Exam.resumeExam(req.session.examHash, function(exam) {
-      res.locals.exam = exam;
-      next();
-      return;
-    });
-  }
-  */
-
-  //else {
-    //Loads exam data
+  if (req.body.cluster) {
     var numQuestions = 100;
     var cluster = req.body.cluster;
     Exam.loadRandomExam(cluster, numQuestions, function(err, mod, increment, seed, multiplier, offset, exam) {
@@ -21,8 +10,19 @@ module.exports = function(req, res, next) {
         next();
         return;
       }
+      //Add exam data to res.locals object
+      //THIS IS HOW THE EXAM IS LOADED
       res.locals.exam = exam;
-      Exam.startExam(req.session.studentNumber, mod, increment, seed, multiplier, offset, numQuestions, cluster, function(err, examHash) {
+      var examData = {
+        mod: mod,
+        increment: increment,
+        seed: seed,
+        multiplier: multiplier,
+        offset: offset,
+        numQuestions: numQuestions,
+        cluster: cluster
+      };
+      Exam.startExam(req.session.studentNumber, examData, function(err, examHash) {
         if(err) {
           res.locals.errors.push("Server error- try again later");
           next();
@@ -34,6 +34,37 @@ module.exports = function(req, res, next) {
         return;
       });
     });
-  //}
-
+  }
+  else {
+    var examid = parseInt(req.body.examid, 10);
+    Exam.checkExamUnlocked(examid, function(err, unlocked) {
+      if (err) {
+        res.locals.errors.push(err);
+        next();
+        return;
+      }
+      if (!unlocked && !req.session.admin) {
+        next();
+        return;
+      }
+      Exam.loadExam(examid, function(err, exam) {
+        if (err) {
+          res.locals.errors.push(err);
+          next();
+          return;
+        }
+        res.locals.exam = exam;
+        Exam.startExam(req.session.studentNumber, examid, function(err, examHash) {
+          if(err) {
+            res.locals.errors.push(err);
+            next();
+            return;
+          }
+          req.session.examHash = examHash;
+          next();
+          return;
+        });
+      });
+    });
+  }
 }

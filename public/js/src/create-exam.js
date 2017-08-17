@@ -3,7 +3,7 @@ var searchInput;
 var questionAreaNotAdded;
 var questionAreaAdded;
 
-var examCluster = "mixed";
+var examCluster = "mix";
 var examUnlocked = 1;
 var examShowScore = 1;
 var examName;
@@ -137,6 +137,9 @@ function validateExam(callback) {
   if (typeof(examName) == "undefined" || examName == "") {
     callback("Exam must have a name");
     return;
+  }
+  if (examName.length < 3) {
+    callback("Exam name must be at least 3 characters");
   }
   if (inExam.length == 0) {
     callback("Exam must have questions in it");
