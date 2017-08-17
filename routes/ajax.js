@@ -474,6 +474,28 @@ router.post("/", function(req, res, next) {
       });
       break;
 
+      case "switchExamLock":
+      var examid = parseInt(req.body.examid, 10);
+      var a = connection.query("UPDATE createdexams SET unlocked = IF(unlocked=1, 0, 1) WHERE id = ?;", [examid], function(err, rows, fields) {
+        if (err) {
+          res.json({
+            err: "Server error - try again later"
+          });
+          return;
+        }
+        if (rows.affectedRows != 1) {
+          res.json({
+            err: "Server error - try again later"
+          });
+          return;
+        }
+        res.json({
+          err: null
+        });
+        return;
+      });
+      break;
+
 
       default:
 
