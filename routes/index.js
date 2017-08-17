@@ -40,6 +40,7 @@ router.use("/timeline", require("./timeline"));
 router.use("/practice", require("./practice"));
 router.use("/exam", require("./exam"));
 router.use("/create-exam", require("./createExam"));
+router.use("/add-question", require("./addQuestion"));
 
 //404 error
 router.use(require("./404"));

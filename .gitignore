@@ -62,7 +62,6 @@ animate.*
 themify-icons.*
 jscolor.*
 todo.*
-db.js
 simplemde.*
 
 node_modules/
@@ -74,3 +73,7 @@ config.js
 headroom.*
 validator.*
 package-lock.json
+
+pem passphrase app.txt
+key.pem
+cert.pem

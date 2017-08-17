@@ -476,7 +476,7 @@ router.post("/", function(req, res, next) {
 
       case "switchExamLock":
       var examid = parseInt(req.body.examid, 10);
-      var a = connection.query("UPDATE createdexams SET unlocked = IF(unlocked=1, 0, 1) WHERE id = ?;", [examid], function(err, rows, fields) {
+      connection.query("UPDATE createdexams SET unlocked = IF(unlocked=1, 0, 1) WHERE id = ?;", [examid], function(err, rows, fields) {
         if (err) {
           res.json({
             err: "Server error - try again later"
@@ -484,6 +484,29 @@ router.post("/", function(req, res, next) {
           return;
         }
         if (rows.affectedRows != 1) {
+          res.json({
+            err: "Server error - try again later"
+          });
+          return;
+        }
+        res.json({
+          err: null
+        });
+        return;
+      });
+      break;
+
+      case "submitNewQuestion":
+      var questionData = JSON.parse(req.body.questionData);
+      var a = connection.query("BEGIN;" +
+      "INSERT INTO questions (question) VALUES (?);" +
+      "INSERT INTO questionoptions (questionid, optionA, optionB, optionC, optionD) VALUES (LAST_INSERT_ID(), ?, ?, ?, ?);" +
+      "INSERT INTO questionanswers (questionid, answer) VALUES (LAST_INSERT_ID(), ?);" +
+      "INSERT INTO questionclusters (questionid, cluster) VALUES (LAST_INSERT_ID(), ?);" +
+      "COMMIT;",
+      [questionData.question, questionData.optionA, questionData.optionB, questionData.optionC, questionData.optionD, questionData.answer, questionData.cluster], function(err, rows, fields) {
+        connection.release();
+        if (err) {
           res.json({
             err: "Server error - try again later"
           });
