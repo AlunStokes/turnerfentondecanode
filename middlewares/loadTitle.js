@@ -1,13 +1,13 @@
+var Utilities = require("../models/utilities");
+
 module.exports = function(req, res, next) {
   if (req.originalUrl == "/") {
     next();
     return;
   }
-  if (res.locals.navbarActiveIndex != -1 && res.locals.navbarEntries[res.locals.navbarActiveIndex]) {
-      res.locals.title = res.locals.navbarEntries[res.locals.navbarActiveIndex].title;
-  }
-  else {
-    res.locals.title = "";
-  }
+  Utilities.removeUrlParameters(url.split('/')[1], function(page) {
+    var title = page.replace(/-/g, ' ').replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+    res.locals.title = title;
+  });
   next();
 }
