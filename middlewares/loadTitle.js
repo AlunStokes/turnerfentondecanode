@@ -5,7 +5,7 @@ module.exports = function(req, res, next) {
     next();
     return;
   }
-  Utilities.removeUrlParameters(url.split('/')[1], function(page) {
+  Utilities.removeUrlParameters(req.originalUrl.split('/')[1], function(page) {
     var title = page.replace(/-/g, ' ').replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
     res.locals.title = title;
   });
