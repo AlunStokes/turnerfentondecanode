@@ -239,7 +239,7 @@ exam.startExam = function(studentNumber, examData, callback) {
         return;
       }
       Utilities.generateRandomString(32, function(examHash) {
-        connection.query("INSERT INTO examResults (modulus, increment, seed, multiplier, offset, total, studentNumber, examHash, cluster) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);", [mod, increment, seed, multiplier, offset, numQuestions, studentNumber, examHash, cluster], function(err, rows, fields) {
+        connection.query("INSERT INTO examResults (modulus, increment, seed, multiplier, offset, total, studentNumber, examHash, cluster) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);", [examData.mod, examData.increment, examData.seed,examData. multiplier, examData.offset, examData.numQuestions, studentNumber, examHash, examData.cluster], function(err, rows, fields) {
           if(err) {
             callback("Server error- try again later");
             return;

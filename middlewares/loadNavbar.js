@@ -13,23 +13,38 @@ module.exports = function(route) {
         res.locals.navbarEntries = [
           {
             link: "landing",
-            title: "Landing"
+            title: "Landing",
+            alias: [
+              "landing"
+            ]
           },
           {
             link: "design-timeline",
-            title: "Design Timeline"
+            title: "Design Timeline",
+            alias: [
+              "design-timeline"
+            ]
           },
           {
             link: "login",
-            title: "Login"
+            title: "Login",
+            alias: [
+              "login"
+            ]
           },
           {
             link: "register",
-            title: "Register"
+            title: "Register",
+            alias: [
+              "register"
+            ]
           },
           {
             link: "reset-password",
-            title: "Reset Password"
+            title: "Reset Password",
+            alias: [
+              "reset-password"
+            ]
           }
         ];
       }
@@ -37,19 +52,31 @@ module.exports = function(route) {
         res.locals.navbarEntries = [
           {
             link: "home",
-            title: "Home"
+            title: "Home",
+            alias: [
+              "home"
+            ]
           },
           {
             link: "landing",
-            title: "Landing"
+            title: "Landing",
+            alias: [
+              "landing"
+            ]
           },
           {
             link: "design-timeline",
-            title: "Design Timeline"
+            title: "Design Timeline",
+            alias: [
+              "design-timeline"
+            ]
           },
           {
             link: "logout",
-            title: "Logout"
+            title: "Logout",
+            alias: [
+              "logout"
+            ]
           }
         ]
       }
@@ -59,27 +86,45 @@ module.exports = function(route) {
         {
           link: "home",
           title: "Home",
-          icon: "home"
+          icon: "home",
+          alias: [
+            "home"
+          ]
         },
         {
           link: "timeline",
           title: "Timeline",
-          icon: "clock-o"
+          icon: "clock-o",
+          alias: [
+            "timeline"
+          ]
         },
         {
           link: "practice",
-          title: "Exams",
-          icon: "pencil"
+          title: "Practice",
+          icon: "pencil",
+          alias: [
+            "practice",
+            "create-exam",
+            "exam",
+            "add-question"
+          ]
         },
         {
           link: "attendance",
           title: "Attendance",
-          icon: "clipboard"
+          icon: "clipboard",
+          alias: [
+            "attendance"
+          ]
         },
         {
           link: "account",
           title: "Account",
-          icon: "user"
+          icon: "user",
+          alias: [
+            "account"
+          ]
         }
       ]
       if (res.locals.admin) {

@@ -5,9 +5,11 @@ var utilities = {
   getActivePage: function(url, navbarArray, callback) {
     this.removeUrlParameters(url.split('/')[1], function(page) {
       for (var i = 0; i < navbarArray.length; i++) {
-        if (navbarArray[i].link == page) {
-          callback(i);
-          return;
+        for (var j = 0; j < navbarArray[i].alias.length; j++) {
+          if (navbarArray[i].alias[j] == page) {
+            callback(i);
+            return;
+          }
         }
       }
       callback(-1);
