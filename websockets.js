@@ -17,7 +17,6 @@ var sessions = [
 var examWriters = [];
 
 io.on('connection', function(socket){
-
   socket.on('identifyUser', function(data) {
     newConnection(socket, data.studentNumber);
   });

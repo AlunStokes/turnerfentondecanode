@@ -1,0 +1,71 @@
+<div class="col-lg-4 col-xs-12" id="attendance-card">
+  <div class="card">
+    <div class="content">
+
+      <div class="row">
+        <div class="col-xs-3">
+          <div class="icon-big icon-success text-center" id="attendance-icon">
+            <i class="fa fa-clipboard"></i>
+          </div>
+        </div>
+        <div class="col-xs-9">
+          <div class="numbers">
+            <p class="text thin medium dark">Attendance</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-6 col-xs-6">
+          <h1 class="text small left attendance-option noselect" id="attendance-option-A"></h1>
+        </div>
+        <div class="col-lg-6 col-xs-6">
+          <h1 class="text small right attendance-option noselect" id="attendance-option-B"></h1>
+        </div>
+      </div>
+      <br>
+      <div class="row">
+        <div class="col-lg-6 col-xs-6">
+          <h1 class="text small left attendance-option noselect" id="attendance-option-C"></h1>
+        </div>
+        <div class="col-lg-6 col-xs-6">
+          <h1 class="text small right attendance-option noselect" id="attendance-option-D"></h1>
+        </div>
+      </div>
+      <br>
+
+      <div class="footer">
+        <hr />
+        <div class="stats">
+          <i class="fa fa-refresh"></i><p class="text thin xsmall" id="attendance-status" style="display: inline"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style media="screen">
+.attendance-option {
+  cursor: pointer; 
+}
+.attendance-selected {
+  color: #5bc0de;
+}
+.attendance-confirmed {
+  color: #5cb85c;
+}
+.attendance-incorrect {
+  color: #d9534f;
+}
+.noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently
+  supported by Chrome and Opera */
+}
+</style>
+
+<script src="js/dist/user-attendance-card.min.js" charset="utf-8"></script>

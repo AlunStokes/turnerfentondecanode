@@ -220,6 +220,119 @@ router.get("/", function(req, res, next) {
       break;
 
 
+      case "getAttendanceData":
+      var studentNumber = req.session.studentNumber;
+      //Check if session open
+      connection.query("SELECT id, optionA, optionB, optionC, optionD, answer FROM attendancesessions WHERE endTime IS NULL", function(err, rows, fields) {
+        if (err) {
+          res.json({
+            err: "Server error - try again later"
+          });
+          return;
+        }
+        if (rows.length == 0) {
+          res.json({
+            err: null,
+            attendanceOpen: false
+          });
+          return;
+        }
+        var attendanceid = rows[0].id;
+        var attendanceAnswer = rows[0].answer;
+        var attendanceOptions = {
+          optionA: rows[0].optionA,
+          optionB: rows[0].optionB,
+          optionC: rows[0].optionC,
+          optionD: rows[0].optionD,
+        };
+        //Check if user has completed session
+        connection.query("SELECT correct FROM attendancerecords WHERE attendanceSessionid = ? AND studentNumber = ?", [attendanceid, studentNumber], function(err, rows, fields) {
+          if (err) {
+            res.json({
+              err: "Server error - try again later"
+            });
+            return;
+          }
+          if (rows.length > 0) {
+            var completed = false;
+            for (var i = 0; i < rows.length; i++) {
+              if (rows[i].correct == 1) {
+                completed = true;
+              }
+            }
+            if (completed) {
+              res.json({
+                err: null,
+                attendanceOpen: true,
+                attendanceCompleted: true,
+                triesLeft: 2 - rows.length,
+                attendanceid: attendanceid,
+                attendanceAnswer: attendanceAnswer,
+                attendanceOptions: attendanceOptions
+              });
+              return;
+            }
+            else {
+              res.json({
+                err: null,
+                attendanceOpen: true,
+                attendanceCompleted: false,
+                triesLeft: 2 - rows.length,
+                attendanceid: attendanceid,
+                attendanceOptions: attendanceOptions
+              });
+              return;
+            }
+          }
+          else {
+            res.json({
+              err: null,
+              attendanceOpen: true,
+              attendanceCompleted: false,
+              triesLeft: 2,
+              attendanceid: attendanceid,
+              attendanceOptions: attendanceOptions
+            });
+            return;
+          }
+        });
+      });
+      break;
+
+
+      case "getAttendanceSession":
+      connection.query("SELECT id, optionA, optionB, optionC, optionD, answer, DATE_FORMAT(startTime, '%D of %M, %Y at %r') AS startTime, createdBy FROM attendancesessions WHERE endTime IS NULL", function(err, rows, fields) {
+        if (err) {
+          res.json({
+            err: "Sever error - try again later"
+          });
+          return;
+        }
+        if (rows.length == 0) {
+          res.json({
+            err: null,
+            currentSession: null
+          });
+          return;
+        }
+        res.json({
+          err: null,
+          currentSession: {
+            id: rows[0].id,
+            optionA: rows[0].optionA,
+            optionB: rows[0].optionB,
+            optionC: rows[0].optionC,
+            optionD: rows[0].optionD,
+            answer: rows[0].answer,
+            startTime: rows[0].startTime,
+            createdBy: rows[0].createdBy
+          }
+        });
+        return;
+      });
+      break;
+
+
       default:
       res.send({
         err: "No valid ajax id defined"
@@ -519,6 +632,94 @@ router.post("/", function(req, res, next) {
       });
       break;
 
+
+      case "checkAttendanceAnswer":
+      var givenAnswer = req.body.answer;
+      connection.query("SELECT id, answer FROM attendancesessions WHERE endTime IS NULL", function(err, rows, fields) {
+        if (err) {
+          res.json({
+            err: "Server error - try again later"
+          });
+          return;
+        }
+        if (rows.length == 0) {
+          res.json({
+            err: "No attendance session is open"
+          });
+          return;
+        }
+        var id = rows[0].id;
+        var answer = rows[0].answer;
+        connection.query("SELECT studentNumber FROM attendancerecords WHERE studentNumber = ? AND attendanceSessionid = ?", [req.session.studentNumber, id], function(err, rows, fields) {
+          if (err) {
+            res.json({
+              err: "Server error - try again later"
+            });
+            return;
+          }
+          if (rows >= 2) {
+            if (err) {
+              res.json({
+                err: "You cannot attempt this session again"
+              });
+              return;
+            }
+          }
+          connection.query("INSERT INTO attendancerecords (studentNumber, attendanceSessionid, answer, time, correct) VALUES (?, ?, ?, NOW(), ?);", [req.session.studentNumber, id, givenAnswer, givenAnswer == answer ? 1 : 0], function(err, rows, fields) {
+            if (err) {
+              res.json({
+                err: "Server error - try again later"
+              });
+              return;
+            }
+            res.json({
+              err: null,
+              correct: givenAnswer == answer
+            });
+            return;
+          });
+        });
+      });
+      break;
+
+      case "startAttendanceSession":
+      var sessionData = JSON.parse(req.body.sessionData);
+      connection.query("SELECT id FROM attendancesessions WHERE endTime IS NULL", function (err, rows, fields) {
+        if (rows.length > 0) {
+          res.json({
+            err: "Session already in progress"
+          });
+          return;
+        }
+        connection.query("INSERT INTO attendancesessions (optionA, optionB, optionC, optionD, answer, createdBy) VALUES (?, ?, ?, ?, ?, ?);", [sessionData.optionA, sessionData.optionB, sessionData.optionC, sessionData.optionD, sessionData.answer, req.session.studentNumber], function(err, rows, fields) {
+          if (err) {
+            res.json({
+              err: "Server error - try again later"
+            });
+            return;
+          }
+          res.json({
+            err: null
+          });
+          return;
+        });
+      });
+      break;
+
+      case "endAttendanceSession":
+      connection.query("UPDATE attendancesessions SET endTime = NOW() WHERE endTime IS NULL", function (err, rows, fields) {
+        if (err) {
+          res.json({
+            err: "Server error - try again later"
+          });
+          return;
+        }
+        res.json({
+          err: null
+        });
+        return;
+      });
+      break;
 
       default:
 

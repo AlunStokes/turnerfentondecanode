@@ -111,14 +111,6 @@ module.exports = function(route) {
           ]
         },
         {
-          link: "attendance",
-          title: "Attendance",
-          icon: "clipboard",
-          alias: [
-            "attendance"
-          ]
-        },
-        {
           link: "account",
           title: "Account",
           icon: "user",
@@ -130,9 +122,21 @@ module.exports = function(route) {
       if (res.locals.admin) {
         res.locals.navbarEntries.push(
           {
+            link: "attendance",
+            title: "Attendance",
+            icon: "clipboard",
+            alias: [
+              "attendance",
+              "check-attendance"
+            ]
+          },
+          {
             link: "admin",
             title: "Admin",
-            icon: "wrench"
+            icon: "wrench",
+            alias: [
+              "admin"
+            ]
           }
         );
       }

@@ -6,7 +6,18 @@ $("#submitExtensionForm").on("submit", function(evt) {
   evt.preventDefault();
   var ext = extensionInput.val();
   if (!ext.match(/^[t]\w*\s[f]\w*\s[d]\w*$/)) {
-    errorText.html("malformed extension");
+    $.notify({
+      icon: 'fa fa-exclamation',
+      message: "Extension doesn't match rules."
+    },
+    {
+      type: "danger",
+      timer: 3000,
+      placement: {
+        from: "bottom",
+        align: "right"
+      }
+    });
   }
   else {
     $.ajax({

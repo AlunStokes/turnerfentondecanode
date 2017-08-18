@@ -1,0 +1,31 @@
+<div class="col-lg-12 col-sm-12">
+  <div class="card">
+    <div class="content">
+      <div class="row">
+        <div class="col-xs-7">
+          <p class="text dark left small">
+            <i class="fa fa-times icon-success active-color"></i>
+            &nbsp;
+            End Attendance Session
+          </p>
+        </div>
+        <div class="card-btn-right-div">
+            <button class="btn btn-default card-btn-right active-color" id="end-session-btn">End Session</button>
+        </div>
+      </div>
+      <div class="footer">
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--Load corresponding modal -->
+{{>modals/endAttendanceSessionModal}}
+
+<script>
+$("#end-session-btn").on('click', function() {
+  prepEndModal(function() {
+    $("#end-session-modal").modal('show');
+  });
+});
+</script>

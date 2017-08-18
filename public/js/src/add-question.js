@@ -107,21 +107,6 @@ function resetForm() {
   clusterInput.val("marketing");
 }
 
-function notify(message, color, icon) {
-  $.notify({
-    icon: 'fa fa-' + icon,
-    message: message
-  },
-  {
-    type: color,
-    timer: 5000,
-    placement: {
-      from: "bottom",
-      align: "right"
-    }
-  });
-}
-
 function hasDuplicates(arr)  {
   var newArr = arr.sort();
   for (var i = 0; i < newArr.length; i++) {

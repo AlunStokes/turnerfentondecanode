@@ -1,0 +1,31 @@
+<div class="col-lg-12 col-sm-12">
+  <div class="card">
+    <div class="content">
+      <div class="row">
+        <div class="col-xs-7">
+          <p class="text dark left small">
+            <i class="fa fa-plus icon-success active-color"></i>
+            &nbsp;
+            Start Attendance Session
+          </p>
+        </div>
+        <div class="card-btn-right-div">
+            <button class="btn btn-default card-btn-right active-color" id="start-session-btn">Start Session</button>
+        </div>
+      </div>
+      <div class="footer">
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--Load corresponding modal -->
+{{>modals/startAttendanceSessionModal}}
+
+<script>
+$("#start-session-btn").on('click', function() {
+  prepStartModal(function() {
+    $("#start-session-modal").modal('show');
+  });
+});
+</script>

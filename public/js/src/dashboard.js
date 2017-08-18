@@ -180,7 +180,7 @@ function hex(x) {
 //Allows post redirects
 function post(path, parameters) {
   var form = $('<form></form>');
-  
+
   form.attr("method", "post");
   form.attr("action", path);
 
@@ -203,4 +203,20 @@ function post(path, parameters) {
   });
   $(document.body).append(form);
   form.submit();
+}
+
+
+function notify(message, color, icon) {
+  $.notify({
+    icon: 'fa fa-' + icon,
+    message: message
+  },
+  {
+    type: color,
+    timer: 5000,
+    placement: {
+      from: "bottom",
+      align: "right"
+    }
+  });
 }

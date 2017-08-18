@@ -8,6 +8,12 @@
 .text.dark {
   color: #343434;
 }
+.text.red {
+  color: #d9534f;
+}
+.text.green {
+  color: #5cb85c;
+}
 .text.error {
   color: #ff0033;
 }
@@ -78,6 +84,27 @@
   }
   .text.large {
     font-size: 36px;
+  }
+  .text.medium {
+    font-size: 28px;
+  }
+  .text.small {
+    font-size: 20px;
+  }
+  .text.xsmall {
+    font-size: 14px;
+  }
+}
+
+@media screen and (min-width:1200px) {
+  .text.typed-text {
+    text-align: center;
+  }
+  .text.xlarge {
+    font-size: 38px;
+  }
+  .text.large {
+    font-size: 32px;
   }
   .text.medium {
     font-size: 28px;
