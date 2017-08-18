@@ -13,3 +13,4 @@ The nodejs port of the Turner Fenton DECA webapp
 8. Headroom
 9. jQuery Form Validator
 10. SimpleMDE
+11. Datatables for Bootstrap
