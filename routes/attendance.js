@@ -4,11 +4,9 @@ var router = express.Router();
 //Load default back middlewares
 router.use(require("./back"));
 
-var loadCSS = require("../middlewares/loadCSS");
+var adminRoute = require("../middlewares/adminRoute");
 
-router.use(loadCSS([
-
-]));
+router.use(adminRoute);
 
 router.get("/", function(req, res, next) {
   res.render("attendance");

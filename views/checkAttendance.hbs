@@ -1,0 +1,61 @@
+<div class="container-fluid">
+  <h1 class="text thin medium left">{{attendanceDate}}</h1>
+  <div class="box">
+    <div class="box-header">
+      <select id="session-id-input" style="float:left; height:30px;">
+        {{#each sessionids}}
+          {{#if this.selected}}
+            <option value='{{this.id}}' selected>{{this.date}}</option>
+          {{else}}
+            <option value='{{this.id}}'>{{this.date}}</option>
+          {{/if}}
+        {{/each}}
+      </select>
+      <br>
+      <br>
+    </div>
+  </div>
+  <div class="box-body">
+    <table id="attendance-table" class="table table-bordered table-hover">
+      <thead>
+        <tr>
+          <th>Present</th>
+          <th>First Name</th>
+          <th>Last Name</th>
+          <th>Student Number</th>
+          <th>Cluster</th>
+        </tr>
+      </thead>
+      <tbody id="table-body">
+        {{#each sessionResults}}
+        <tr>
+          {{#if this.present}}
+          <td>X</td>
+          {{else}}
+          <td></td>
+          {{/if}}
+          <td>{{this.firstName}}</td>
+          <td>{{this.lastName}}</td>
+          <td>{{this.studentNumber}}</td>
+          <td>{{this.cluster}}</td>
+        </tr>
+        {{/each}}
+      </tbody>
+      <tfoot id="table-footer">
+        <tr>
+          <th>Present</th>
+          <th>First Name</th>
+          <th>Last Name</th>
+          <th>Student Number</th>
+          <th>Cluster</th>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+</div>
+
+<style media="screen">
+.btn-group {
+  display: inline;
+}
+</style>

@@ -67,6 +67,7 @@ simplemde.*
 node_modules/
 utilities/
 public/images/
+public/stylesheets/fonts
 public/stylesheets/src/bootstrap-partials/
 public/fonts/
 config.js
