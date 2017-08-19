@@ -352,11 +352,24 @@ router.post("/", function(req, res, next) {
 
 
       case "getTimelineData":
-      var firstIndex = parseInt(req.body.firstIndex);
-      var limit = parseInt(req.body.limit);
+      var postsPer = parseInt(req.body.postsPer);
       var offset = parseInt(req.body.offset);
-      connection.query("SELECT timeline.id, timeline.messageHTML, timeline.messageMarkdown, DATE_FORMAT(timeline.date, '%M %D %Y') as date, DATE_FORMAT(timeline.date, '%H:%i') as time, members.firstName as posterFirstName, members.lastName as posterLastName, timeline.poster as posterStudentNumber, timeline.class FROM timeline JOIN members ON members.studentNumber = timeline.poster ORDER BY UNIX_TIMESTAMP(timeline.date) DESC LIMIT ? OFFSET ?", [limit, offset], function(err, rows, fields) {
-        res.json(rows);
+      connection.query("SELECT timeline.id, timeline.messageHTML, timeline.messageMarkdown, DATE_FORMAT(timeline.date, '%M %D %Y') as date, DATE_FORMAT(timeline.date, '%H:%i') as time, members.firstName as posterFirstName, members.lastName as posterLastName, timeline.poster as posterStudentNumber, timeline.class FROM timeline JOIN members ON members.studentNumber = timeline.poster ORDER BY UNIX_TIMESTAMP(timeline.date) DESC LIMIT ? OFFSET ?", [postsPer, offset], function(err, rows, fields) {
+        if (err) {
+          res.json(
+            {
+              err: "Can't load posts - try again later"
+            }
+          );
+          return;
+        }
+        res.json(
+          {
+            err: null,
+            posts: rows
+          }
+        );
+        return;
       });
       break;
 

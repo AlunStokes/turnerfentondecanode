@@ -1,46 +1,60 @@
 var timeline = $("#timeline");
 
-var firstIndex = 0;
-var offset = 0;
-var limit = 1000;
+var questionsLoaded = 0;
+var postsPer = 12;
 
 var editPostBoxArray = [];
 
 var posts;
 
 $(document).ready(function() {
-  loadPosts(firstIndex, offset, limit);
+  loadPosts(questionsLoaded, postsPer);
 });
 
-function loadPosts(firstIndex, offset, limit) {
+function loadPosts(offset, postsPer) {
   $.ajax({
     type: "POST",
     url: "ajax",
     data: {
       ajaxid: "getTimelineData",
-      firstIndex: firstIndex,
       offset: offset,
-      limit: limit
+      postsPer: postsPer
     }
   }).done(function(data) {
-    posts = data;
-    var timelineHTML = "";
-    for (var i = 0; i < data.length; i++) {
+    if (data.err) {
+      notify(err, "danger", "exclamation");
+      return;
+    }
+    posts = data.posts;
 
-      data[i].class = valueToCluster(data[i].class);
+    questionsLoaded += postsPer;
+    var timelineHTML = "";
+    for (var i = 0; i < posts.length; i++) {
+
+      posts[i].class = valueToCluster(posts[i].class);
 
       //Check if new date should be displayed
       //If not first post, and this message's date comes earlier than the previous OR if first post
-      if ((i > 0 && data[i].date != data[i-1].date) || (i == 0)) {
-        timelineHTML += '<div class="timeline-header"><div class="timeline-header-title bg-success">' + data[i].date + '</div></div>';
+      if ((i > 0 && posts[i].date != posts[i-1].date) || (i == 0)) {
+        timelineHTML += '<div class="timeline-header"><div class="timeline-header-title bg-success">' + posts[i].date + '</div></div>';
       }
 
-      timelineHTML += buildPost(data[i].id, data[i].posterStudentNumber, data[i].time, data[i].posterFirstName, data[i].posterLastName, data[i].messageHTML, data[i].class);
+      timelineHTML += buildPost(posts[i].id, posts[i].posterStudentNumber, posts[i].time, posts[i].posterFirstName, posts[i].posterLastName, posts[i].messageHTML, posts[i].class);
     }
-
+    if (posts.length < postsPer) {
+      timelineHTML += '<h1 class="text large thin dark center">no more posts</h1>';
+    }
+    else {
+      timelineHTML += '<button class="btn btn-lg btn-block active-color" id="load-more-posts">Load more</button>';
+    }
     $("#timeline").append(timelineHTML);
   });
 }
+
+$(document).on('click', '#load-more-posts', function() {
+  $("#load-more-posts").remove();
+  loadPosts(questionsLoaded, postsPer);
+});
 
 //Wait for press of edit button
 $(document).on('click', ".edit", function() {
