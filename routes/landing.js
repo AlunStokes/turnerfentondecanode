@@ -28,7 +28,43 @@ router.get("/", function(req, res, next) {
       imgPath: "images/exec-images/alun.jpg",
       numMedals: 10,
       numPlaques: 3
-    }
+    },
+    {
+      name: "Arooba Muhammad",
+      position: "VP of Education",
+      decaEvent: "Professional Selling",
+      decaCluster: "Marketing",
+      imgPath: "images/exec-images/arooba.jpg",
+      numMedals: 6,
+      numPlaques: 1
+    },
+    {
+      name: "Saba Manzoor",
+      position: "Writtens Director",
+      decaEvent: "Fashion Merchandising Promotional Plan",
+      decaCluster: "Marketing",
+      imgPath: "images/exec-images/saba.jpg",
+      numMedals: 8,
+      numPlaques: 3
+    },
+    {
+      name: "Zoey Aliasgari",
+      position: "President",
+      decaEvent: "Hospitality Event",
+      decaCluster: "Hospitality & Tourism",
+      imgPath: "images/exec-images/zoey.jpg",
+      numMedals: 8,
+      numPlaques: 2
+    },
+    {
+      name: "Pranjan Gandhi",
+      position: "Vice-President",
+      decaEvent: "Marketing Event",
+      decaCluster: "Marketing",
+      imgPath: "images/exec-images/pranjan.jpg",
+      numMedals: 12,
+      numPlaques: 2
+    },
   ]
 
   res.render("landing");

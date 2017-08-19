@@ -1,0 +1,27 @@
+<div class="col-lg-4 col-sm-6 col-xs-12">
+  <div class="card">
+    <img src="{{this.imgPath}}" alt="{{this.name}}" style="width:100%">
+    <div class="card-container">
+      <h1 class="text medium normal left dark">{{this.name}}</h1>
+      <h1 class="text small normal left dark"><i>{{this.position}}</i></h1>
+      <br>
+      <p class="text small thin left dark">{{this.decaEvent}} - {{this.decaCluster}}</p>
+      <br>
+      <div class="row">
+        {{#for this.numPlaques}}
+          <div class="col-lg-3 col-xs-3">
+            {{>plaqueSVG}}
+          </div>
+        {{/for}}
+      </div>
+      <br>
+      <div class="row">
+        {{#for this.numMedals}}
+          <div class="col-lg-2 col-xs-2">
+            {{>medalSVG}}
+          </div>
+        {{/for}}
+      </div>
+    </div>
+  </div>
+</div>
