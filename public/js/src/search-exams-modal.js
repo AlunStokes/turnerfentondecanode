@@ -53,7 +53,7 @@ $(document).ready(function() {
     var examid = getNum(this.id);
     switchUnlock(examid, function(err) {
       if (err) {
-        alert(err);
+        notify(err, "danger", "exclamation");
         return;
       }
       if ($("#lock-text-" + examid).text() == "Locked") {
@@ -98,7 +98,7 @@ function loadExams(cluster, search, offset, callback) {
     }
   }).done(function(data) {
     if (data.err) {
-      alert ("Server error - try again later");
+      notify("Server error - try again later", "danger", "exclamation");
       return;
     }
     examsLoaded += data.length;

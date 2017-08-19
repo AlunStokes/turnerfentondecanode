@@ -118,15 +118,15 @@ $(document).ready(function() {
       if (!err) {
         submitExam(function(err) {
           if (!err) {
-            alert("Exam successfully created - you may leave this page");
+            notify("Exam successfully created - you may leave this page", "success", "check");
           }
           else {
-            alert(err);
+            notify(err, "danger", "exclamation");
           }
         });
       }
       else {
-        alert(err);
+        notify(err, "danger", "exclamation");
       }
     });
   });

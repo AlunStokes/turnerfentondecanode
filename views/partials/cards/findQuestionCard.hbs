@@ -29,7 +29,7 @@ $("#find-question-btn").on('click', function() {
       $("#find-question-modal").modal('show');
     }
     else {
-      alert("You cannot look up questions while writing an exam");
+      notify("You cannot look up questions while writing an exam", "warning", "cross");
     }
   });
 });

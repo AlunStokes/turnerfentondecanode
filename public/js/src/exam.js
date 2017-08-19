@@ -59,7 +59,7 @@ submitExamBtn.on('click', function() {
   //If not all questions answered
   if (count(givenAnswers) < $(".question").length) {
     submitExamBtn.prop('disabled', true);
-    alert("Answer all questions before submitting");
+    notify("Answer all questions before submitting", "warning", "exclamation");
   }
   else {
     $.ajax({
@@ -71,11 +71,11 @@ submitExamBtn.on('click', function() {
       }
     }).done(function(data) {
       if (data.err) {
-        alert(data.err);
+        notify(data.err, "danger", "exclamation");
         return;
       }
       if (!data.showScore) {
-        alert("Your exam score is not shown for this exam, but it has been submitted and you may leave the page.");
+        notify("Your exam score is not shown for this exam, but it has been submitted and you may leave the page.", "success", "check");
         $("html, body").animate({ scrollTop: 0 }, "slow");
         return;
       }
@@ -108,7 +108,7 @@ submitExamBtn.on('click', function() {
         else {
           $("#score").css("color", "#d9534f");
         }
-        alert("Your exam has been submitted.  You may leave the page.");
+        notify("Your exam has been submitted.  You may leave the page.", "success", "check");
         $("html, body").animate({ scrollTop: 0 }, "slow");
       });
     }

@@ -2,7 +2,7 @@ var Exam = require("../models/Exam");
 
 module.exports = function(req, res, next) {
   if (req.body.cluster) {
-    var numQuestions = 100;
+    var numQuestions = req.body.numQuestions;
     var cluster = req.body.cluster;
     Exam.loadRandomExam(cluster, numQuestions, function(err, mod, increment, seed, multiplier, offset, exam) {
       if(err) {
