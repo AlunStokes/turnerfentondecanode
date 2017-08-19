@@ -1,5 +1,5 @@
 <div class="container-fluid">
-    <div class="row">
+    <div class="row equal">
       <!--Page specific cards -->
       {{#if admin}}
         {{#if attendanceSessionOpen}}
@@ -18,3 +18,47 @@
       {{>cards/userAttendanceCard}}
     </div>
 </div>
+
+<style media="screen">
+
+.row {
+ -moz-column-width: 35em;
+ -webkit-column-width: 35em;
+ -moz-column-gap: 1em;
+ -webkit-column-gap:1em;
+
+}
+
+
+.row > .col-xs-12 {
+ display: inline-block;
+ width:  100%;
+ float:none;
+}
+.row > .col-sm-6 {
+ display: inline-block;
+ width:  100%;
+ float:none;
+}
+.row > .col-lg-4 {
+ display: inline-block;
+ width:  100%;
+ float:none;
+}
+.row > .col-lg-6 {
+ display: inline-block;
+ width:  100%;
+ float:none;
+}
+.row > .col-lg-12 {
+ display: inline-block;
+ width:  100%;
+ float:none;
+}
+
+
+.well {
+ position:relative;
+ display: block;
+}
+</style>
