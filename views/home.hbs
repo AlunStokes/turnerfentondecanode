@@ -9,13 +9,13 @@
         {{/if}}
       {{/if}}
       {{>cards/startExamCard}}
-      {{#if canSubmitExtensions}}
-        {{>cards/submitExtensionCard}}
-      {{/if}}
+      {{>cards/userAttendanceCard}}
       {{>cards/usersOnlineCard}}
       {{>cards/changeColorCard}}
       {{>cards/numQuestionsAnsweredCard}}
-      {{>cards/userAttendanceCard}}
+      {{#if canSubmitExtensions}}
+        {{>cards/submitExtensionCard}}
+      {{/if}}
     </div>
 </div>
 
