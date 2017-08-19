@@ -170,4 +170,55 @@ attendance.getSessionResults = function(sessionid, callback) {
   });
 }
 
+//Returns error and boolean to indicated openness of attendance session (true for open, false for not)
+attendance.checkOpenSession = function(callback) {
+  db.pool.getConnection(function(err, connection) {
+    if (err) {
+      callback(err);
+      return;
+    }
+    connection.query("SELECT id FROM attendancesessions WHERE endTime IS NULL;", function(err, rows, fields) {
+      connection.release();
+      if (err) {
+        callback(err);
+        return;
+      }
+      if (rows.length == 0) {
+        callback(null, false);
+      }
+      else {
+        callback(null, true);
+      }
+      return;
+    });
+  });
+}
+
+attendance.getAbsences = function(studentNumber, callback) {
+  db.pool.getConnection(function(err, connection) {
+    if (err) {
+      callback(err);
+      return;
+    }
+    connection.query("SELECT COUNT(id) AS totalSessions FROM attendancesessions WHERE endTime IS NOT NULL;", function(err, rows, fields) {
+      if (err) {
+        callback(err);
+        return;
+      }
+      var absenceData = {
+        totalSessions: rows[0].totalSessions
+      };
+      connection.query("SELECT COUNT(correct) AS attended FROM attendancerecords WHERE correct = 1 AND studentNumber = ?;", [studentNumber], function(err, rows, fields) {
+        if (err) {
+          callback(err);
+          return;
+        }
+        absenceData.absences = absenceData.totalSessions - rows[0].attended;
+        callback(null, absenceData);
+        return;
+      });
+    });
+  });
+}
+
 module.exports = attendance;

@@ -1,0 +1,85 @@
+<div class="col-lg-4 col-sm-6">
+  <div class="card">
+    <div class="header">
+      <h4 class="title">Choose a Colour</h4>
+      <p class="category">Customize your dashboard</p>
+    </div>
+    <div class="content">
+      <div class="line-margin">
+        <div class="row">
+          <div class="col-xs-6">
+            <p>Sidebar Colour</p>
+          </div>
+          <div class="col-xs-6">
+            <input class="btn btn-default btn-color-select jscolor {onFineChange:'changeSidebarBackground(this)',value:'{{sidebarBackground}}'}"></input>
+          </div>
+        </div>
+      </div>
+      <div class="line-margin">
+        <div class="row">
+          <div class="col-xs-6">
+            <p>Text Colour</p>
+          </div>
+          <div class="col-xs-6">
+            <input class="btn btn-default btn-color-select jscolor {onFineChange:'changeSidebarText(this)',value:'{{sidebarText}}'}"></input>
+          </div>
+        </div>
+      </div>
+      <div class="line-margin">
+        <div class="row">
+          <div class="col-xs-6">
+            <p>Active Colour</p>
+          </div>
+          <div class="col-xs-6">
+            <input class="btn btn-default btn-color-select jscolor {onFineChange:'changeSidebarActive(this)',value:'{{sidebarActive}}'}"></input>
+          </div>
+        </div>
+      </div>
+      <div class="line-margin">
+        <div class="row">
+          <div class="col-xs-12">
+            <button class="btn btn-default btn-block active-color" type="button" onClick="saveColors()">Save Changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+
+//Updates background colour of sidebar from jscolor input
+function changeSidebarBackground(jscolor) {
+$(".sidebar-wrapper").css('background-color', '#'+jscolor);
+}
+//Updates text colour in sidebar from jscolor input
+function changeSidebarText(jscolor) {
+$(".sidebar-wrapper li:not(.active) a").css('color', '#'+jscolor);
+$(".sidebar-wrapper .logo a").css('color', '#'+jscolor);
+}
+//Updates active colour in sidebar from jscolor input
+function changeSidebarActive(jscolor) {
+$(".active a").css('color', '#'+jscolor);
+}
+//Sends ajax requrest to save colour preferences into database
+function saveColors() {
+$.ajax ({
+  type: "POST",
+  url: "ajax",
+  data: {
+    ajaxid: "updateColorPreference",
+    sidebarBackground: rgb2hex($(".sidebar-wrapper").css("background-color")),
+    sidebarText: rgb2hex($(".sidebar-wrapper li:not(.active) a").css("color")),
+    sidebarActive: rgb2hex($(".active a").css("color"))
+  }
+}).done (function(data) {
+  if (data.err) {
+    notify(data.err, "warning", "exclamation");
+    return;
+  }
+  notify("Your colour preferences have been saved", "success", "floppy-o");
+  return;
+});
+}
+
+</script>

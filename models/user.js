@@ -449,6 +449,23 @@ user.getUserSettings = function(user, callback) {
   });
 }
 
+user.updateColorPreference = function(studentNumber, colors, callback) {
+  db.pool.getConnection(function(err, connection) {
+    if (err) {
+      callback("Server error, try again later");
+      return;
+    }
+    connection.query("UPDATE membersettings SET sidebarBackground = ?, sidebarText = ?, sidebarActive = ? WHERE studentNumber = ?", [colors.sidebarBackground, colors.sidebarText, colors.sidebarActive, studentNumber], function(err, rows, fields) {
+      connection.release();
+      if (err) {
+        callback("Server error, try again later");
+        return;
+      }
+      callback(null);
+    });
+  });
+}
+
 //Takes user object containing confirmEmailCode as input
 //Returns err in callback function
 user.confirmEmail = function(user, callback) {

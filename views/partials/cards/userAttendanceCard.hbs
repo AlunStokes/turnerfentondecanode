@@ -15,23 +15,31 @@
         </div>
       </div>
 
-      <div class="row">
-        <div class="col-lg-6 col-xs-6">
-          <h1 class="text small left attendance-option noselect" id="attendance-option-A"></h1>
+      {{#if attendanceSessionOpen}}
+        <div class="row">
+          <div class="col-lg-6 col-xs-6">
+            <h1 class="text small left attendance-option noselect" id="attendance-option-A"></h1>
+          </div>
+          <div class="col-lg-6 col-xs-6">
+            <h1 class="text small right attendance-option noselect" id="attendance-option-B"></h1>
+          </div>
         </div>
-        <div class="col-lg-6 col-xs-6">
-          <h1 class="text small right attendance-option noselect" id="attendance-option-B"></h1>
+        <br>
+        <div class="row">
+          <div class="col-lg-6 col-xs-6">
+            <h1 class="text small left attendance-option noselect" id="attendance-option-C"></h1>
+          </div>
+          <div class="col-lg-6 col-xs-6">
+            <h1 class="text small right attendance-option noselect" id="attendance-option-D"></h1>
+          </div>
         </div>
-      </div>
-      <br>
-      <div class="row">
-        <div class="col-lg-6 col-xs-6">
-          <h1 class="text small left attendance-option noselect" id="attendance-option-C"></h1>
+      {{else}}
+        <div class="row">
+          <div class="col-xs-12 col-lg-12">
+            <h1 class="text medium thin dark right">You have missed {{absenceData.absences}} out of {{absenceData.totalSessions}} days!</h1>
+          </div>
         </div>
-        <div class="col-lg-6 col-xs-6">
-          <h1 class="text small right attendance-option noselect" id="attendance-option-D"></h1>
-        </div>
-      </div>
+      {{/if}}
       <br>
 
       <div class="footer">
@@ -46,7 +54,7 @@
 
 <style media="screen">
 .attendance-option {
-  cursor: pointer; 
+  cursor: pointer;
 }
 .attendance-selected {
   color: #5bc0de;

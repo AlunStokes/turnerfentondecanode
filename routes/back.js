@@ -12,9 +12,13 @@ var loadCSS = require("../middlewares/loadCSS");
 var loadJS = require("../middlewares/loadJS");
 var auth = require("../middlewares/auth");
 var getUserSettings = require("../middlewares/getUserSettings");
+var loadAttendanceState = require("../middlewares/loadAttendanceState");
+var loadStatistics = require("../middlewares/loadStatistics");
 
 router.use(auth(true));
 router.use(getUserSettings);
+router.use(loadAttendanceState);
+router.use(loadStatistics);
 router.use(setLayout("back"));
 router.use(loadNavbar("back"));
 router.use(loadTitle);

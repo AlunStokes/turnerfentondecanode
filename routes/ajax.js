@@ -7,6 +7,7 @@ var db = require("../db");
 var Statistics = require("../models/statistics");
 var Utilities = require("../models/utilities");
 var Exam = require("../models/exam");
+var User = require("../models/user");
 
 router.get("/", function(req, res, next) {
 
@@ -97,7 +98,6 @@ router.get("/", function(req, res, next) {
       if (cluster == "mix") {
         connection.query("SELECT questions.questionid, question, optionA, optionB, optionC, optionD, answer FROM questions LEFT JOIN questionoptions ON questionoptions.questionid = questions.questionid LEFT JOIN questionanswers ON questionanswers.questionid = questions.questionid LEFT JOIN questionclusters ON questionclusters.questionid = questions.questionid WHERE question LIKE ? OR optionA LIKE ? OR optionB LIKE ? OR optionC LIKE ? OR optionD LIKE ? LIMIT ? OFFSET ?", [search, search, search, search, search, questionsPer, offset], function(err, rows, fields) {
           if (err) {
-            console.log(err);
             res.json({
               err: err
             });
@@ -121,7 +121,6 @@ router.get("/", function(req, res, next) {
       else {
         connection.query("SELECT questions.questionid, question, optionA, optionB, optionC, optionD, answer FROM questions LEFT JOIN questionoptions ON questionoptions.questionid = questions.questionid LEFT JOIN questionanswers ON questionanswers.questionid = questions.questionid LEFT JOIN questionclusters ON questionclusters.questionid = questions.questionid WHERE cluster = ? AND (question LIKE ? OR optionA LIKE ? OR optionB LIKE ? OR optionC LIKE ? OR optionD LIKE ?) LIMIT ? OFFSET ?", [cluster, search, search, search, search, search, questionsPer, offset], function(err, rows, fields) {
           if (err) {
-            console.log(err);
             res.json({
               err: err
             });
@@ -400,7 +399,6 @@ router.post("/", function(req, res, next) {
       var postid = req.body.postid;
       connection.query("UPDATE timeline SET messageHTML = ?, messageMarkdown = ?, class = ? WHERE id = ?", [messageHTML, messageMarkdown, messageClass, postid], function(err, rows, fields) {
         if (err) {
-          console.log(err);
           res.json({
             err: "Post not updated - try again later"
           });
@@ -456,8 +454,8 @@ router.post("/", function(req, res, next) {
               });
               return;
             }
-            var showScore = rows[0].showScore;
-            var includeStats = rows[0].includeStats;
+            var showScore = rows[0].showScore == 1 ? true : false;
+            var includeStats = rows[0].includeStats == 1 ? true : false;
             Exam.getidList(examid, function(err, ids) {
               connection.query("SELECT answer FROM questionanswers WHERE questionid IN (" + ids.join() + ") ORDER BY FIND_IN_SET(questionid, '" + ids.join() + "')", function(err, rows, fields) {
                 var answers = [];
@@ -508,7 +506,8 @@ router.post("/", function(req, res, next) {
                 req.session.examHash = null;
                 if (!err) {
                   res.json({
-                    answers: answers
+                    answers: answers,
+                    showScore: true
                   });
                 }
                 else {
@@ -711,6 +710,26 @@ router.post("/", function(req, res, next) {
         if (err) {
           res.json({
             err: "Server error - try again later"
+          });
+          return;
+        }
+        res.json({
+          err: null
+        });
+        return;
+      });
+      break;
+
+      case "updateColorPreference":
+      var colors = {
+        sidebarBackground: req.body.sidebarBackground,
+        sidebarText: req.body.sidebarText,
+        sidebarActive: req.body.sidebarActive
+      }
+      User.updateColorPreference(req.session.studentNumber, colors, function(err) {
+        if (err) {
+          res.send({
+            err: err
           });
           return;
         }

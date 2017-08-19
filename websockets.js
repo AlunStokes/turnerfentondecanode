@@ -44,6 +44,7 @@ io.on('connection', function(socket){
   });
 });
 
+//Check in on exam writers
 setInterval(function() {
   var now = Date.now();
   for (var i = 0; i < examWriters.length; i++) {
@@ -63,6 +64,7 @@ function addExamWriter(studentNumber) {
 }
 
 function retainExamWriter(studentNumber) {
+  //Find object in examWriters array with studentNumber value of parameter studentNumber
   var index = examWriters.map(function(e) {return e.studentNumber}).indexOf(studentNumber);
   if (index != -1 && typeof(index) != "undefined") {
     examWriters[index].lastCheckIn = Date.now();
@@ -80,7 +82,7 @@ function newConnection(socket, studentNumber) {
     }
   }
   //If user already in array
-  if (typeof(userIndex) != 'undefined') {
+  if (typeof(userIndex) != "undefined") {
     sessions[userIndex].socketids.push(socket.id);
     //Tell only this socket num users online
     socket.emit('usersOnline', {usersOnline: app.locals.usersOnline});
@@ -137,11 +139,5 @@ function usersOnlineChange() {
   //Update all clients
   io.emit('usersOnline', {usersOnline: app.locals.usersOnline});
 }
-
-/*
-ws.sendNotification = function() {
-io.sockets.emit('hello', {msg: 'Hello World!'});
-}
-*/
 
 module.exports = ws;
