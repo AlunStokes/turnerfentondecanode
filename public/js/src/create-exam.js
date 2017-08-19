@@ -4,8 +4,9 @@ var questionAreaNotAdded;
 var questionAreaAdded;
 
 var examCluster = "mix";
-var examUnlocked = 1;
-var examShowScore = 1;
+var examUnlocked = true;
+var examShowScore = true;
+examShowTimer = true;
 var examName;
 
 
@@ -101,6 +102,10 @@ $(document).ready(function() {
     examShowScore = this.value == 1;
   });
 
+  $(document).on('change', '#exam-timer-dropdown', function() {
+    examShowTimer = this.value == 1;
+  });
+
   $("#exam-name-input").on('keyup', function() {
     examName = $("#exam-name-input").val();
   });
@@ -163,6 +168,7 @@ function submitExam(callback) {
       examCluster: examCluster,
       examShowScore: examShowScore,
       examUnlocked: examUnlocked,
+      examShowTimer: examShowTimer,
       examName: examName,
       examQuestions: JSON.stringify(examQuestions)
     }

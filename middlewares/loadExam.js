@@ -50,22 +50,31 @@ module.exports = function(req, res, next) {
         next();
         return;
       }
-      Exam.loadExam(examid, function(err, exam) {
+      Exam.checkShowTimer(examid, function(err, showTimer) {
         if (err) {
           res.locals.errors.push(err);
           next();
           return;
         }
-        res.locals.exam = exam;
-        Exam.startExam(req.session.studentNumber, examid, function(err, examHash) {
-          if(err) {
+        res.locals.examTimer = showTimer;
+        Exam.loadExam(examid, function(err, exam) {
+          if (err) {
             res.locals.errors.push(err);
             next();
             return;
           }
-          req.session.examHash = examHash;
-          next();
-          return;
+          res.locals.examTimeLimit = exam.length * 0.75 * 60;
+          res.locals.exam = exam;
+          Exam.startExam(req.session.studentNumber, examid, function(err, examHash) {
+            if(err) {
+              res.locals.errors.push(err);
+              next();
+              return;
+            }
+            req.session.examHash = examHash;
+            next();
+            return;
+          });
         });
       });
     });

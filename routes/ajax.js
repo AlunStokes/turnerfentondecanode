@@ -540,6 +540,7 @@ router.post("/", function(req, res, next) {
       var examCluster = req.body.examCluster;
       var examShowScore = JSON.parse(req.body.examShowScore) ? 1 : 0;
       var examUnlocked = JSON.parse(req.body.examUnlocked) ? 1 : 0;
+      var examShowTimer = JSON.parse(req.body.examShowTimer) ? 1 : 0;
       var examQuestions = JSON.parse(req.body.examQuestions);
       connection.query("SELECT name FROM createdexams WHERE name = ?", [examName], function(err, rows, fields) {
         if (rows.length != 0) {
@@ -548,7 +549,7 @@ router.post("/", function(req, res, next) {
           });
           return;
         }
-        connection.query("INSERT INTO createdexams (name, numQuestions, cluster, unlocked, showScore) VALUES (?, ?, ?, ?, ?);", [examName, examQuestions.length, examCluster, examUnlocked, examShowScore], function(err, rows, fields) {
+        connection.query("INSERT INTO createdexams (name, numQuestions, cluster, unlocked, showScore, showTimer) VALUES (?, ?, ?, ?, ?, ?);", [examName, examQuestions.length, examCluster, examUnlocked, examShowScore, examShowTimer], function(err, rows, fields) {
           if (err) {
             connection.release();
             res.json({

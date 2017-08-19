@@ -273,5 +273,21 @@ exam.getidList = function(examid, callback) {
   });
 }
 
+exam.checkShowTimer = function(examid, callback) {
+  db.pool.getConnection(function(err, connection) {
+    if (err) {
+      callback("Server error - try again later");
+      return;
+    }
+    connection.query("SELECT showTimer FROM createdexams WHERE id = ?", [examid], function(err, rows, fields) {
+      if (err) {
+        callback("Server error - try again later");
+        return;
+      }
+      callback(null, rows[0].showTimer == 1);
+    });
+  });
+}
+
 
 module.exports = exam;

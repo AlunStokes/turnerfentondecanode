@@ -19,6 +19,7 @@ router.get("/", function(req, res, next) {
 });
 
 router.post("/", loadExam, function(req, res, next) {
+  console.log(res.locals.errors);
   if (res.locals.errors.length) {
     res.redirect("practice");
     return;
