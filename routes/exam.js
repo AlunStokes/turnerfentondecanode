@@ -10,6 +10,7 @@ router.use(require("./back"));
 
 
 router.use(loadJS([
+  "js/dist/jquery-simple-timer.min.js",
   "js/dist/exam.min.js"
 ]));
 
