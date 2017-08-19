@@ -133,7 +133,21 @@ attendance.getSessionResults = function(sessionid, callback) {
           );
         }
         var sessionData = [];
-        for (var i = 0; i <= rawData.length; i++) {
+        //+1 is for special case of final
+        for (var i = 0; i <= rawData.length + 1; i++) {
+          //Special case for last index if wrong or not present
+          if (i == rawData.length + 1) {
+            sessionData.push(
+              {
+                studentNumber: users[i].studentNumber,
+                firstName: users[i].firstName,
+                lastName: users[i].lastName,
+                cluster: users[i].cluster,
+                present: false
+              }
+            );
+            continue;
+          }
           if (users[i].studentNumber == rawData[0].studentNumber) {
             if (rawData[0].correct == true) {
               sessionData.push(
