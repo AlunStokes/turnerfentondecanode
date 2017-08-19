@@ -113,7 +113,7 @@ attendance.getSessionResults = function(sessionid, callback) {
           }
         );
       }
-      connection.query("SELECT attendancerecords.id AS id, attendancerecords.studentNumber as studentNumber, firstName, lastName, decaCluster as cluster, correct FROM attendancerecords JOIN members ON members.studentNumber = attendancerecords.studentNumber WHERE attendanceSessionid = ? ORDER BY studentNumber", [sessionid], function(err, rows, fields) {
+      connection.query("SELECT attendancerecords.id AS id, attendancerecords.studentNumber as studentNumber, firstName, lastName, decaCluster as cluster, correct FROM attendancerecords JOIN members ON members.studentNumber = attendancerecords.studentNumber WHERE attendanceSessionid = ? ORDER BY studentNumber ASC, correct ASC", [sessionid], function(err, rows, fields) {
         connection.release();
         if (err) {
           callback(err);
@@ -133,8 +133,10 @@ attendance.getSessionResults = function(sessionid, callback) {
           );
         }
         var sessionData = [];
+        console.log(rawData);
         //+1 is for special case of final
         for (var i = 0; i <= rawData.length + 1; i++) {
+          console.log(i);
           //Special case for last index if wrong or not present
           if (i == rawData.length + 1) {
             sessionData.push(
