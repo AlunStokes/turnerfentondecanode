@@ -14,4 +14,4 @@ The nodejs port of the Turner Fenton DECA webapp
 9. jQuery Form Validator
 10. SimpleMDE
 11. Datatables for Bootstrap
-12. jQuery Countdown
+12. jQuery Simple Timer
