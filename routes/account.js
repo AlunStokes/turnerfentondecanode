@@ -9,7 +9,7 @@ router.use(require("./back"));
 
 
 router.use(loadJS([
-  "js/dist/account.min.js"
+  
 ]));
 router.use(loadCSS([
 

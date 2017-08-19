@@ -754,7 +754,45 @@ router.post("/", function(req, res, next) {
       });
       break;
 
+      case "changePassword":
+      var password = req.body.password;
+      User.setPassword({password: password, studentNumber: req.session.studentNumber}, function(err) {
+        if (err) {
+          res.json({
+            err: err
+          });
+          return;
+        }
+        res.json({
+          err: null
+        });
+        return;
+      });
+      break;
+
+      case "changeEmail":
+      var email = req.body.email;
+      User.setEmail({email: email, studentNumber: req.session.studentNumber}, function(err) {
+        if (err) {
+          res.json({
+            err: err
+          });
+          return;
+        }
+        //So email updates to user
+        req.session.email = email;
+        res.locals.email = email;
+        res.json({
+          err: null
+        });
+        return;
+      });
+      break;
+
       default:
+      res.send({
+        err: "No valid ajax id defined"
+      });
 
 
     }

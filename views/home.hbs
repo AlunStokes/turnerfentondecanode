@@ -1,9 +1,6 @@
 <div class="container-fluid">
     <div class="row">
       <!--Page specific cards -->
-      {{#if canSubmitExtensions}}
-        {{>cards/submitExtensionCard}}
-      {{/if}}
       {{#if admin}}
         {{#if attendanceSessionOpen}}
           {{>cards/endAttendanceSessionCard}}
@@ -12,12 +9,12 @@
         {{/if}}
       {{/if}}
       {{>cards/startExamCard}}
+      {{#if canSubmitExtensions}}
+        {{>cards/submitExtensionCard}}
+      {{/if}}
       {{>cards/usersOnlineCard}}
       {{>cards/changeColorCard}}
       {{>cards/numQuestionsAnsweredCard}}
       {{>cards/userAttendanceCard}}
     </div>
-  <div class="row">
-
-  </div>
 </div>

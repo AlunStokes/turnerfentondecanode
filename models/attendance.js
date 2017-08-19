@@ -133,10 +133,8 @@ attendance.getSessionResults = function(sessionid, callback) {
           );
         }
         var sessionData = [];
-        console.log(rawData);
         //+1 is for special case of final
         for (var i = 0; i <= rawData.length + 1; i++) {
-          console.log(i);
           //Special case for last index if wrong or not present
           if (i == rawData.length + 1) {
             sessionData.push(

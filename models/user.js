@@ -306,7 +306,7 @@ user.setPassword = function(user, callback) {
             return;
           }
         });
-      })
+      });
     });
   }
   //If normally changing password
@@ -317,7 +317,7 @@ user.setPassword = function(user, callback) {
           callback("Server error, try again later");
           return;
         }
-        connection.query("UPDATE members SET password = ?, passwordResetCode = NULL WHERE studentNumber = ?", [hash, user.studentNumber], function(err, rows, fields) {
+        connection.query("UPDATE members SET password = ? WHERE studentNumber = ?", [hash, user.studentNumber], function(err, rows, fields) {
           connection.release();
           if (err) {
             callback("Server error, try again later");
@@ -328,10 +328,29 @@ user.setPassword = function(user, callback) {
             return;
           }
         });
-      })
+      });
     });
   }
+}
 
+user.setEmail = function(user, callback) {
+  db.pool.getConnection(function(err, connection) {
+    if (err) {
+      callback("Server error, try again later");
+      return;
+    }
+    connection.query("UPDATE members SET email = ? WHERE studentNumber = ?", [user.email, user.studentNumber], function(err, rows, fields) {
+      connection.release();
+      if (err) {
+        callback("Server error, try again later");
+        return;
+      }
+      if (rows.affectedRows != 0) {
+        callback(null);
+        return;
+      }
+    });
+  });
 }
 
 //Takes user object containing studentNumber as input and generates and inserts a password resetCode for corresponding user
@@ -523,7 +542,7 @@ user.addSession = function(user, callback) {
       callback("Server error, try again later");
       return;
     }
-    connection.query("SELECT firstName, lastName, decaCluster, decaEvent, admin FROM members WHERE studentNumber = ?", [user.studentNumber], function(err, rows, fields) {
+    connection.query("SELECT firstName, lastName, email, decaCluster, decaEvent, admin FROM members WHERE studentNumber = ?", [user.studentNumber], function(err, rows, fields) {
     connection.release();
       if (err) {
         callback("Server error, try again later");
@@ -532,6 +551,7 @@ user.addSession = function(user, callback) {
 
       user.firstName = rows[0].firstName;
       user.lastName = rows[0].lastName;
+      user.email = rows[0].email;
       user.decaCluster = rows[0].decaCluster;
       user.decaEvent = rows[0].decaEvent;
       user.admin = rows[0].admin == 1;

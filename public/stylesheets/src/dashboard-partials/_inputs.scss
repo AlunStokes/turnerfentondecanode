@@ -196,3 +196,15 @@ input.input-simple.dark {
   color: $color-text-dark;
   border: 1px solid $color-text-dark;
 }
+
+input {
+  border-style: solid;
+}
+
+input.block, select.block {
+  height: 37px;
+  border-radius: 20px;
+  width: 100%;
+  text-align: center;
+  margin-bottom: 5px;
+}

@@ -8,10 +8,10 @@
     <br>
     <div class="row">
       <div class="col-lg-8 col-xs-7">
-        <input tpye="text" id="search-input" class="question-search" placeholder="Write words in question" style="width:100%; font-size:14px; height:30px;" />
+        <input type="text" id="search-input" class="block active-color" placeholder="Write words in question" />
       </div>
       <div class="col-lg-4 col-xs-5">
-        <select style="text-align:right; min-height:30px; width:100%; width:100%;" id="load-questions-cluster">
+        <select class="block active-color" id="load-questions-cluster">
           <option value="mix">All Clusters</option>
           <option value="marketing">Marketing</option>
           <option value="businessadmin">Business Administration</option>
@@ -45,7 +45,7 @@
     <br>
     <div class="row">
       <div class="col-lg-12 col-xs-12">
-        <select id="exam-cluster-dropdown" style="min-height:30px; width:100%;">
+        <select id="exam-cluster-dropdown" class="block active-color">
           <option value="mix">Mixed Clusters</option>
           <option value="marketing">Marketing</option>
           <option value="businessadmin">Business Administration</option>
@@ -63,7 +63,7 @@
     <br>
     <div class="row">
       <div class="col-lg-12 col-xs-12">
-        <select id="exam-locked-dropdown" style="min-height:30px; width:100%;">
+        <select id="exam-locked-dropdown" class="block active-color">
           <option value="1">Unlocked</option>
           <option value="0">Locked</option>
         </select>
@@ -78,7 +78,7 @@
     <br>
     <div class="row">
       <div class="col-lg-12 col-xs-12">
-        <select id="exam-score-dropdown" style="min-height:30px; width:100%;">
+        <select id="exam-score-dropdown" class="block active-color">
           <option value="1">Show Score</option>
           <option value="0">Don't Show Score</option>
         </select>
@@ -93,7 +93,7 @@
     <br>
     <div class="row">
       <div class="col-lg-12 col-xs-12">
-        <select id="exam-timer-dropdown" style="min-height:30px; width:100%;">
+        <select id="exam-timer-dropdown" class="block active-color">
           <option value="1">Use Timer</option>
           <option value="0">Don't Use Timer</option>
         </select>
@@ -105,10 +105,11 @@
   <div class="step-container">
     <h1 class="text medium dark thin center">7. Choose a Name</h1>
     <h1 class="text small dark thin center">This must be unique, and should describe the specific exam</h1>
+    <br>
     <form role="form">
-      <input class="text thin dark center" id="exam-name-input" type="type" maxlength=100 style="height:5vh; width:100%; font-size: 24px;" />
-      <button class="btn btn-lg btn-primary btn-block active-color" id="submit-exam-btn" style="margin-top:2vh;">Create Exam</button>
-      <button class="btn btn-lg btn-danger btn-block" id="start-another-exam-btn" style="margin-top:2vh;">Start Another Exam</button>
+      <input class="block active-color" id="exam-name-input" type="type" maxlength=100 placeholder="Exam name" />
+      <button class="btn btn-block active-color" id="submit-exam-btn" style="margin-bottom:5px">Create Exam</button>
+      <button class="btn btn-danger btn-block" id="start-another-exam-btn">Start Another Exam</button>
     </form>
   </div>
 </div>

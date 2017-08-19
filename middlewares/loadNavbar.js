@@ -129,7 +129,8 @@ module.exports = function(route) {
               "attendance",
               "check-attendance"
             ]
-          },
+          }
+          /*
           {
             link: "admin",
             title: "Admin",
@@ -138,6 +139,7 @@ module.exports = function(route) {
               "admin"
             ]
           }
+          */
         );
       }
       break;
