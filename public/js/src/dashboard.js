@@ -220,3 +220,10 @@ function notify(message, color, icon) {
     }
   });
 }
+
+Array.prototype.setAll = function(v) {
+  var i, n = this.length;
+  for (i = 0; i < n; ++i) {
+    this[i] = v;
+  }
+}

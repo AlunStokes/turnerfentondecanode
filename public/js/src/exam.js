@@ -1,7 +1,8 @@
 $(document).ready(function() {
 
   var questions;
-  var givenAnswers = [];
+  var givenAnswers = Array($(".question").length);
+  givenAnswers.setAll("");
   var submitExamBtn = $("#submit-exam-btn");
 
   try {
