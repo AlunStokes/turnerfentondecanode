@@ -48,12 +48,12 @@ io.on('connection', function(socket){
 setInterval(function() {
   var now = Date.now();
   for (var i = 0; i < examWriters.length; i++) {
-    if (now - examWriters[i].lastCheckIn > 10000) {
+    if (now - examWriters[i].lastCheckIn > 65000) {
       examWriters.splice(i , 1);
     }
   }
   return;
-}, 5000);
+}, 70000);
 
 function addExamWriter(studentNumber) {
   examWriters.push({

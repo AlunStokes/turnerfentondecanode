@@ -5,7 +5,7 @@ var statistics = function() {
 
 }
 
-
+//Havent implemented inserting these statistics to be read
 statistics.loadClusterProficiencyPieChart = function(studentNumber, callback) {
   var statQuery = "SELECT SUM(correct = 1 && cluster = 'marketing') AS marketingCorrect, SUM(cluster = 'marketing') AS marketingAttempted, SUM( correct = 1 && cluster = 'businessadmin' ) AS businessadminCorrect, SUM(cluster = 'businessadmin') AS businessadminAttempted, SUM( correct = 1 && cluster = 'finance' ) AS financeCorrect, SUM(cluster = 'finance') AS financeAttempted, SUM( correct = 1 && cluster = 'hospitality' ) AS hospitalityCorrect, SUM(cluster = 'hospitality') AS hospitalityAttempted FROM questionsattempted JOIN questionclusters ON questionclusters.questionid = questionsattempted.questionid WHERE studentNumber = ?";
   db.pool.getConnection(function(err, connection) {
@@ -33,6 +33,7 @@ statistics.loadClusterProficiencyPieChart = function(studentNumber, callback) {
   });
 }
 
+//Havent implemented inserting these statistics to be read
 statistics.getMostIncorrectlyAnswered = function(studentNumber, callback) {
   var statQuery = 'SELECT question, optionA, optionB, optionC, optionD, answer FROM questionsattempted JOIN questions ON questionsattempted.questionid = questions.questionid JOIN questionanswers ON questionsattempted.questionid = questionanswers.questionid JOIN questionoptions ON questionsattempted.questionid = questionoptions.questionid GROUP BY questionsattempted.questionid ORDER BY SUM(IF(questionsattempted.correct = 0, 1, 0)) DESC LIMIT 1'
   db.pool.getConnection(function(err, connection) {
@@ -58,7 +59,7 @@ statistics.getMostIncorrectlyAnswered = function(studentNumber, callback) {
 
 
 statistics.getNumQuestionsAnswered = function(callback) {
-  var statQuery = "SELECT COUNT(*) as numRows FROM questionsattempted";
+  var statQuery = "SELECT SUM(total) total FROM examresults WHERE endTime IS NOT NULL";
   db.pool.getConnection(function(err, connection) {
     connection.query(statQuery, function(err, rows, fields) {
       connection.release();
@@ -66,7 +67,7 @@ statistics.getNumQuestionsAnswered = function(callback) {
         callback(err);
         return;
       }
-      callback(null, rows[0].numRows);
+      callback(null, rows[0].total);
     });
   });
 }

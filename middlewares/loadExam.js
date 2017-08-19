@@ -4,6 +4,9 @@ module.exports = function(req, res, next) {
   if (req.body.cluster) {
     var numQuestions = req.body.numQuestions;
     var cluster = req.body.cluster;
+    var timer = req.body.timer == 1 ? 1 : 0;
+    res.locals.examTimer = timer;
+    res.locals.examTimeLimit = numQuestions * 0.75 * 60;
     Exam.loadRandomExam(cluster, numQuestions, function(err, mod, increment, seed, multiplier, offset, exam) {
       if(err) {
         res.locals.errors.push("Server error- try again later");

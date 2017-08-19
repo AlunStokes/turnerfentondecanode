@@ -1,6 +1,13 @@
 <div class="container-fluid">
   <div class="row">
     <div class="col-lg-12 col-xs-12">
+      {{#if examTimer}}
+        <h1 id="timer" class="text large center thin" data-seconds-left={{examTimeLimit}}></h1>
+      {{/if}}
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-12 col-xs-12">
       <h1 class="text medium center thin" id="score"></h1>
     </div>
   </div>
@@ -73,3 +80,9 @@
     </div>
   </div>
 </div>
+
+<style media="screen">
+  .jst-hours, .jst-minutes, .jst-seconds {
+    display: inline;
+  }
+</style>
