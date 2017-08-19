@@ -43,6 +43,7 @@ router.use("/create-exam", require("./createExam"));
 router.use("/add-question", require("./addQuestion"));
 router.use("/attendance", require("./attendance"));
 router.use("/check-attendance", require("./checkAttendance"));
+router.use("/account", require("./account"));
 
 //404 error
 router.use(require("./404"));

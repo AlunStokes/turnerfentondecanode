@@ -145,32 +145,32 @@ function generateExamHTML(exam) {
   var html = '';
   html += '<div class="row exam">';
   if (admin) {
+  html += '<div class="row">' +
+  '<div class="col-xs-6 col-lg-6">' +
+  '<h3 class="truncate text thin dark small left">' + exam.name + '</h3>' +
+  '<p class="text thin dark xsmall left">' + exam.cluster + '</p>' +
+  '<p class="text thin dark xsmall left">' + exam.numQuestions + ' Questions</p>' +
+  '</div>';
     if (exam.unlocked) {
-      html += '<div class="row">' +
-      '<div class="col-xs-6 col-lg-6">' +
+      html += '<div class="col-xs-6 col-lg-6" style="text-align: right;">' +
       '<label class="switch">' +
       '<input type="checkbox" class="slider" id="unlocked-exam-' + exam.id + '" checked>' +
       '<div class="slider round"></div>' +
       '</label>' +
       '<i><p id="lock-text-' + exam.id + '">Unlocked</p></i>' +
+      '</div>' +
       '</div>';
     }
     else {
-      html += '<div class="row">' +
-      '<div class="col-xs-6 col-lg-6">' +
+      html += '<div class="col-xs-6 col-lg-6" style="text-align: right;">' +
       '<label class="switch">' +
       '<input type="checkbox" class="slider" id="locked-exam-' + exam.id + '">' +
       '<div class="slider round"></div>' +
       '</label>' +
       '<i><p id="lock-text-' + exam.id + '">Locked</p></i>' +
+      '</div>' +
       '</div>';
     }
-    html += '<div class="col-xs-6 col-lg-6">' +
-    '<h3 class="truncate text thin dark small exam-name">' + exam.name + '</h3>' +
-    '<p class="text thin dark xsmall exam-name">' + exam.cluster + '</p>' +
-    '<p class="text thin dark xsmall exam-name">' + exam.numQuestions + ' Questions</p>' +
-    '</div>' +
-    '</div>';
     if (!exam.showScore) {
       html += '<div class="row">' +
       '<div class="col-xs-6 col-lg-6">' +
@@ -194,10 +194,10 @@ function generateExamHTML(exam) {
   }
   else {
     html += '<div class="row">' +
-    '<div class="col-xs-6 col-xs-offset-6 col-lg-6 col-lg-offset-6">' +
-    '<h3 class="truncate text thin dark small exam-name">' + exam.name + '</h3>' +
-    '<p class="text thin dark xsmall exam-name">' + exam.cluster + '</p>' +
-    '<p class="text thin dark xsmall exam-name">' + exam.numQuestions + ' Questions</p>' +
+    '<div class="col-xs-6 col-lg-6">' +
+    '<h3 class="truncate text thin dark small left">' + exam.name + '</h3>' +
+    '<p class="text thin dark xsmall left">' + exam.cluster + '</p>' +
+    '<p class="text thin dark xsmall left">' + exam.numQuestions + ' Questions</p>' +
     '</div>' +
     '</div>';
     if (!exam.showScore) {
