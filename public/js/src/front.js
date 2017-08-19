@@ -46,7 +46,7 @@ $(document).ready(function() {
   var backgroundColor = rgbToHex($("html").css("background-color"));
   var lum = hexToLum(backgroundColor);
   var color;
-  if (lum < 150) {
+  if (lum < 180) {
     color = "#FFF";
   }
   else {

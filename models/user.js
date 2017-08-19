@@ -562,5 +562,9 @@ user.addSession = function(user, callback) {
   });
 }
 
+user.uploadPhoto = function(image, callback) {
+
+}
+
 
 module.exports = user;

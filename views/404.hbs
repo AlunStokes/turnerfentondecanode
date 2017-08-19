@@ -1,3 +1,24 @@
-<div class="container-fluid" id="body-content">
-<h1>404, m8</h1>
+<div class="container" id="body-content">
+
+  <div>
+    <p class="text xlarge thin light center">404 </p>
+    <p class="text medium thin light center">You look like you might be a little lost</p>
+    <hr>
+
+    {{#if loggedIn}}
+    <p class="text thin medium light center">You can click one of the links below to either</p>
+    <p class="text thin medium light center"><a class="text underlined" href="home">go to your dashboard homepage, </a> or <a class="text underlined" href="practice">take a chance, and go somewhere else.</a></p>
+    {{else}}
+      <p class="text thin medium light center">You can click one of the links below to either</p>
+      <p class="text thin medium light center"><a class="text underlined" href="landing">go to the landing page, </a> or <a class="text underlined" href="login">proceed to the login page.</a></p>
+    {{/if}}
+
+  </div>
+
 </div>
+
+<style>
+  html, body {
+    background-color: #7AB8FF;
+  }
+</style>
