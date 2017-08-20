@@ -9,7 +9,7 @@ $(document).ready(function() {
     },
   }).done(function(data){
     if (data.err) {
-      notify(data.err, "danger", "exclamation");
+      //notify(data.err, "danger", "exclamation");
       $("#cluster-proficiency-card").css("display", "none");
       return;
     }

@@ -49,9 +49,8 @@ statistics.getChapterExamResults = function(callback) {
       callback(err);
       return;
     }
-    var a = connection.query("SELECT members.studentNumber as studentNumber, firstName, lastName, correct, total, DATE_FORMAT(startTime, '%d %M, %Y') as date, name, examresults.cluster as cluster FROM examresults LEFT JOIN createdexams ON createdexams.id = examresults.examid JOIN members on members.studentNumber = examresults.studentNumber AND correct IS NOT NULL AND (includeStats = 1 OR examresults.examid = 0) ORDER BY startTime DESC;", function(err, rows, fields) {
+    connection.query("SELECT members.studentNumber as studentNumber, firstName, lastName, correct, total, DATE_FORMAT(startTime, '%d %M, %Y') as date, name, examresults.cluster as cluster FROM examresults LEFT JOIN createdexams ON createdexams.id = examresults.examid JOIN members on members.studentNumber = examresults.studentNumber AND correct IS NOT NULL AND (includeStats = 1 OR examresults.examid = 0) ORDER BY startTime DESC;", function(err, rows, fields) {
       connection.release();
-      console.log(a.sql);
       if (err) {
         callback(err);
         return;

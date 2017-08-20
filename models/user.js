@@ -214,9 +214,21 @@ user.register = function(registrant, callback) {
                                             return;
                                           });
                                         }
+
+                                        //Create copy of anon for profile picture
+                                        copyFile("./public/images/users/thumbnail/anon.jpg", "./public/images/users/thumbnail/" + registrant.studentNumber.value + ".jpg", function(err) {
+                                          if (err) {
+                                            console.log(err);
+                                            errors.push("Server error, try again later");
+                                            user.buildRegistrant(registrant, function(returnRegistrant) {
+                                              callback(errors[0], returnRegistrant);
+                                              return;
+                                            });
+                                          }
                                         //Registration completed
                                         callback(null);
                                         return;
+                                        });
                                       });
 
                                     });
@@ -597,12 +609,10 @@ user.getClusterProficiency = function(studentNumber, callback) {
 
 
       var sum = percents.marketing + percents.finance + percents.hospitality + percents.businessadmin;
-
       stats.marketing = ((percents.marketing/sum) * 100).toFixed(2);
       stats.finance = ((percents.finance/sum) * 100).toFixed(2);
       stats.businessadmin = ((percents.businessadmin/sum) * 100).toFixed(2);
       stats.hospitality = ((percents.hospitality/sum) * 100).toFixed(2);
-
       if (isNaN(stats.marketing) || isNaN(stats.finance) || isNaN(stats.businessadmin) || isNaN(stats.hospitality)) {
         callback("Invalid statistics - try again later");
         return;
@@ -621,6 +631,10 @@ user.getExamResultsLine = function(studentNumber, callback) {
     connection.query("SELECT correct, total, DATE_FORMAT(startTime, '%M %Y') as date FROM examresults LEFT JOIN createdexams ON createdexams.id = examresults.examid WHERE studentNumber = ? AND correct IS NOT NULL AND (includestats = 1 OR examresults.examid = 0) ORDER BY startTime ASC", [studentNumber], function(err, rows, fields) {
       if (err) {
         callback(err);
+        return;
+      }
+      if (rows.length == 0) {
+        callback("No exam data");
         return;
       }
 
@@ -816,4 +830,28 @@ function numUnique (arr, prop) {
 Array.prototype.forwardDistance = function(firstValue, lastValue) {
   var dist = (this.length - this.indexOf(firstValue) + this.indexOf(lastValue)) % this.length;
   return dist;
+}
+
+function copyFile(source, target, callback) {
+  var cbCalled = false;
+
+  var rd = fs.createReadStream(source);
+  rd.on("error", function(err) {
+    done(err);
+  });
+  var wr = fs.createWriteStream(target);
+  wr.on("error", function(err) {
+    done(err);
+  });
+  wr.on("close", function(ex) {
+    done();
+  });
+  rd.pipe(wr);
+
+  function done(err) {
+    if (!cbCalled) {
+      callback(err);
+      cbCalled = true;
+    }
+  }
 }

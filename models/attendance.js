@@ -16,6 +16,10 @@ attendance.getLatestSession = function(callback) {
         callback(err);
         return;
       }
+      if (rows.length == 0) {
+        callback("No attendance data");
+        return;
+      }
       var sessionData = {
         id: rows[0].id,
         optionA: rows[0].optionA,

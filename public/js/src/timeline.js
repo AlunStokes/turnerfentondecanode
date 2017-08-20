@@ -22,7 +22,7 @@ function loadPosts(offset, postsPer) {
     }
   }).done(function(data) {
     if (data.err) {
-      notify(err, "danger", "exclamation");
+      notify(data.err, "danger", "exclamation");
       return;
     }
     posts = data.posts;
@@ -131,32 +131,10 @@ function deletePost(postid) {
     }
   }).done(function(data) {
     if (data.err) {
-      $.notify({
-        icon: 'fa fa-exclamation-triangle',
-        message: data.err
-      },
-      {
-        type: "danger",
-        timer: 3000,
-        placement: {
-          from: "bottom",
-          align: "right"
-        }
-      });
+      notify(data.err, "danger", "exclamation");
     }
     else {
-      $.notify({
-        icon: 'fa fa-check',
-        message: "Post was successfully deleted"
-      },
-      {
-        type: "success",
-        timer: 3000,
-        placement: {
-          from: "bottom",
-          align: "right"
-        }
-      });
+      notify("Post was successfully deleted", "success", "check")
       post.replaceWith("");
     }
   });
@@ -175,35 +153,13 @@ function updatePost(postid, messageHTML, messageMarkdown, messageClass, callback
     }
   }).done(function(data) {
     if(data.err) {
-      $.notify({
-        icon: 'fa fa-exclamation-triangle',
-        message: data.err
-      },
-      {
-        type: "danger",
-        timer: 3000,
-        placement: {
-          from: "bottom",
-          align: "right"
-        }
-      });
+      notify(data.err, "danger", "exclamation");
       //Gives error
       callback(data.err);
       return;
     }
     else {
-      $.notify({
-        icon: 'fa fa-check',
-        message: "Post successfully edited"
-      },
-      {
-        type: "success",
-        timer: 3000,
-        placement: {
-          from: "bottom",
-          align: "right"
-        }
-      });
+      notify("Post was successfully edited", "success", "check");
       callback(null);
       return;
     }
