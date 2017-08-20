@@ -64,15 +64,11 @@ simplemde.*
 
 node_modules/
 utilities/
-*.png
+public/images/design-timeline
 498566.*
 123456.*
 654321.*
-public/stylesheets/fonts
-public/stylesheets/src/bootstrap-partials/
-public/fonts/
 config.js
-validator.*
 package-lock.json
 
 pem passphrase app.txt
