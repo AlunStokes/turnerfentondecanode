@@ -16,7 +16,8 @@ var config = {
     name: "Turner Fenton DECA",
     noReplyAddress: "no-reply@turnerfentondeca.com"
   },
-  host: "turnerfentondeca.com"
+  host: "turnerfentondeca.com",
+  nodeEnvironment: "production"
 }
 
 module.exports = config;

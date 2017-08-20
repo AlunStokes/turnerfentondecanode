@@ -9,6 +9,10 @@ var debug = require('debug')('app:server');
 var http = require('http');
 var https = require('https');
 
+var config = require("../config");
+
+process.env.NODE_ENV = config.nodeEnvironment;
+
 var fs = require("fs");
 
 /*

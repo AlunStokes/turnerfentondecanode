@@ -5,6 +5,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var hbs = require('hbs');
 var session = require('cookie-session');
+var compression = require('compression');
 
 //Initialise applicaiton
 var app = express();
@@ -39,9 +40,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({
   name: 'session',
   secret: config.sessionSecret,
-  //2 Days - 48 hours
-  maxAge: 1000*60*60*48
+  //14 Days
+  maxAge: 1000*60*60*24*14
 }));
+//app.use(compression());
 
 app.use(require("./routes"));
 

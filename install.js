@@ -51,6 +51,11 @@ var configSchema = {
       required: true,
       default: "turnerfentondeca.com"
     },
+    nodeEnvironment: {
+      message: "What sort of environment is this (production/development)",
+      required: true,
+      default: "production"
+    }
   }
 }
 
@@ -73,7 +78,8 @@ prompt.get(configSchema, function(err, result) {
       name: "` + result.mailingName + `",
       noReplyAddress: "` + result.mailingNoReply + `"
     },
-    host: "` + result.host + `"
+    host: "` + result.host + `",
+    nodeEnvironment: "` + result.nodeEnvironment + `"
   }`;
 
   fs.writeFile("./config.js", configText, function(err) {
