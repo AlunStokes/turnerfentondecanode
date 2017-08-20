@@ -2,6 +2,7 @@ $(document).ready(function() {
 
   var questions;
   var givenAnswers = Array($(".question").length);
+  var answered = [];
   givenAnswers.setAll("");
   var submitExamBtn = $("#submit-exam-btn");
 
@@ -23,9 +24,10 @@ $(document).ready(function() {
   $('input[type="radio"]').change(function() {
     var num = getNum(this.id);
     givenAnswers[num] = this.value;
+    answered[num] = 1;
     $('#given-answer-' + num).html(this.value);
     //Check if submit button should be disabled/enable
-    if (count(givenAnswers) == $(".question").length) {
+    if (count(answered) == $(".question").length) {
       if (submitExamBtn.prop('disabled')) {
         submitExamBtn.prop('disabled', false);
       }
@@ -55,7 +57,7 @@ $(document).ready(function() {
 
   submitExamBtn.on('click', function() {
     //If not all questions answered
-    if (count(givenAnswers) < $(".question").length) {
+    if (count(answered) < $(".question").length) {
       submitExamBtn.prop('disabled', true);
       notify("Answer all questions before submitting", "warning", "exclamation");
     }

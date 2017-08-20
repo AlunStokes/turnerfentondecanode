@@ -626,6 +626,7 @@ router.post("/", function(req, res, next) {
       break;
 
       case "createExam":
+      //For now, include stats will defualt to the same value as show score when the exam is created
       var examName = req.body.examName;
       var examCluster = req.body.examCluster;
       var examShowScore = JSON.parse(req.body.examShowScore) ? 1 : 0;
@@ -639,7 +640,7 @@ router.post("/", function(req, res, next) {
           });
           return;
         }
-        connection.query("INSERT INTO createdexams (name, numQuestions, cluster, unlocked, showScore, showTimer) VALUES (?, ?, ?, ?, ?, ?);", [examName, examQuestions.length, examCluster, examUnlocked, examShowScore, examShowTimer], function(err, rows, fields) {
+        connection.query("INSERT INTO createdexams (name, numQuestions, cluster, unlocked, showScore, includeStats, showTimer) VALUES (?, ?, ?, ?, ?, ?, ?);", [examName, examQuestions.length, examCluster, examUnlocked, examShowScore, examShowScore, examShowTimer], function(err, rows, fields) {
           if (err) {
             connection.release();
             res.json({
