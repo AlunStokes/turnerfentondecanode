@@ -144,6 +144,9 @@ attendance.getSessionResults = function(sessionid, callback) {
         //+1 is for special case of final
         for (var i = 0; i <= rawData.length + 1; i++) {
           //Special case for last index if wrong or not present
+          if (users.length == i) {
+            break;
+          }
           if (i == rawData.length + 1) {
             sessionData.push(
               {
