@@ -1,4 +1,4 @@
-var Exam = require("../models/Exam");
+var Exam = require("../models/exam");
 
 module.exports = function(req, res, next) {
   if (req.body.cluster) {
