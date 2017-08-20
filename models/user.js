@@ -218,7 +218,6 @@ user.register = function(registrant, callback) {
                                         //Create copy of anon for profile picture
                                         copyFile("./public/images/users/thumbnail/anon.jpg", "./public/images/users/thumbnail/" + registrant.studentNumber.value + ".jpg", function(err) {
                                           if (err) {
-                                            console.log(err);
                                             errors.push("Server error, try again later");
                                             user.buildRegistrant(registrant, function(returnRegistrant) {
                                               callback(errors[0], returnRegistrant);
