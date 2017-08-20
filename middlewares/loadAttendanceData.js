@@ -8,7 +8,7 @@ module.exports = function(req, res, next) {
   if (sessionid < 1) {
     Attendance.getLatestSession(function(err, sessionData) {
       if (err) {
-        res.locals.errors.push("Server error- try again later");
+        res.locals.errors.push(err);
         next();
         return;
       }
@@ -46,7 +46,7 @@ module.exports = function(req, res, next) {
       res.locals.attendanceDate = sessionData.date;
       Attendance.getSessionResults(sessionData.id, function(err, sessionResults) {
         if (err) {
-          res.locals.errors.push("Server error- try again later");
+          res.locals.errors.push(err);
           next();
           return;
         }

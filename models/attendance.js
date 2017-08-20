@@ -7,13 +7,13 @@ var attendance = function() {
 attendance.getLatestSession = function(callback) {
   db.pool.getConnection(function(err, connection) {
     if (err) {
-      callback(err);
+      callback("Database connection error");
       return;
     }
     connection.query("SELECT id, optionA, optionB, optionC, optionD, answer, startTime, endTime, DATE_FORMAT(startTime, '%d %M, %Y') AS date, createdBy FROM attendancesessions ORDER BY id DESC LIMIT 1;", function(err, rows, fields) {
       connection.release();
       if (err) {
-        callback(err);
+        callback("Database query error");
         return;
       }
       if (rows.length == 0) {
@@ -98,12 +98,12 @@ attendance.getSessionids = function(callback) {
 attendance.getSessionResults = function(sessionid, callback) {
   db.pool.getConnection(function(err, connection) {
     if (err) {
-      callback(err);
+      callback("Database connection error");
       return;
     }
     connection.query("SELECT studentNumber, firstName, lastName, decaCluster as cluster FROM members ORDER BY studentNumber", function(err, rows, fields) {
       if (err) {
-        callback(err);
+        callback("Database query error");
         return;
       }
       var users = [];
@@ -120,7 +120,11 @@ attendance.getSessionResults = function(sessionid, callback) {
       connection.query("SELECT attendancerecords.id AS id, attendancerecords.studentNumber as studentNumber, firstName, lastName, decaCluster as cluster, correct FROM attendancerecords JOIN members ON members.studentNumber = attendancerecords.studentNumber WHERE attendanceSessionid = ? ORDER BY studentNumber ASC, correct ASC", [sessionid], function(err, rows, fields) {
         connection.release();
         if (err) {
-          callback(err);
+          callback("Database query error");
+          return;
+        }
+        if (rows.length == 0) {
+          callback("No attendance records");
           return;
         }
         var rawData = [];
