@@ -15,7 +15,7 @@ router.use(loadCSS([
   "stylesheets/dist/register.min.css"
 ]));
 router.use(loadJS([
-  "js/dist/validator.min.js",
+  "http://cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.3.26/jquery.form-validator.min.js",
   "js/dist/register.min.js"
 ]));
 router.use(getRegisterOpen);

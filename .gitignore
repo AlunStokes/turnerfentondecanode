@@ -47,8 +47,6 @@ Temporary Items
 .apdisk
 
 #Project specific
-*.min.css
-*.css
 bootstrap.*
 bootstrap.*
 bootstrap-notify.*
@@ -66,13 +64,14 @@ simplemde.*
 
 node_modules/
 utilities/
-*.jpg
 *.png
+498566.*
+123456.*
+654321.*
 public/stylesheets/fonts
 public/stylesheets/src/bootstrap-partials/
 public/fonts/
 config.js
-headroom.*
 validator.*
 package-lock.json
 

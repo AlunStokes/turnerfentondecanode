@@ -213,7 +213,7 @@ function notify(message, color, icon) {
   },
   {
     type: color,
-    timer: 5000,
+    timer: 50000,
     placement: {
       from: "bottom",
       align: "right"

@@ -23,18 +23,14 @@ router.use(setLayout("back"));
 router.use(loadNavbar("back"));
 router.use(loadTitle);
 router.use(loadCSS([
-  "stylesheets/dist/bootstrap.min.css",
-  "stylesheets/dist/animate.min.css",
+  "https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css",
   "stylesheets/dist/dashboard.min.css"
 ]));
 router.use(loadJS([
   "https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.1/socket.io.slim.js",
-  "js/dist/bootstrap.min.js",
-  "js/dist/bootstrap-notify.min.js",
-  //"js/dist/bootstrap-checkbox-radio.min.js",
+  "https://cdnjs.cloudflare.com/ajax/libs/mouse0270-bootstrap-notify/3.1.7/bootstrap-notify.min.js",
   "js/dist/dashboard.min.js",
-  "js/dist/chartist.min.js",
-  "js/dist/jscolor.min.js",
+  "https://cdnjs.cloudflare.com/ajax/libs/jscolor/2.0.4/jscolor.min.js",
   "js/dist/keep-alive.min.js",
   "https://use.fontawesome.com/4a55e6f24a.js"
 ]));

@@ -12,7 +12,7 @@ router.use(loadCSS([
   "stylesheets/dist/landing.min.css"
 ]))
 router.use(loadJS([
-  "js/dist/typeit.min.js",
+  "https://cdnjs.cloudflare.com/ajax/libs/typeit/4.4.0/typeit.min.js",
   "js/dist/landing.min.js"
 ]))
 
@@ -21,47 +21,47 @@ router.get("/", function(req, res, next) {
   //the execCards array holds all the exec card objects
   res.locals.execCards = [
     {
-      name: "Alun Stokes",
-      position: "VP of Communications",
-      decaEvent: "Fashion Merchandising Promotional Plan",
-      decaCluster: "Marketing",
-      imgPath: "images/exec-images/alun.jpg",
+      name: "Exec Member",
+      position: "Executive Position",
+      decaEvent: "DECA Event",
+      decaCluster: "DECA Cluster",
+      imgPath: "images/exec-images/anon.jpg",
       numMedals: 10,
       numPlaques: 3
     },
     {
-      name: "Arooba Muhammad",
-      position: "VP of Education",
-      decaEvent: "Professional Selling",
-      decaCluster: "Marketing",
-      imgPath: "images/exec-images/arooba.jpg",
+      name: "Exec Member",
+      position: "Executive Position",
+      decaEvent: "DECA Event",
+      decaCluster: "DECA Cluster",
+      imgPath: "images/exec-images/anon.jpg",
       numMedals: 6,
       numPlaques: 1
     },
     {
-      name: "Saba Manzoor",
-      position: "Writtens Director",
-      decaEvent: "Fashion Merchandising Promotional Plan",
-      decaCluster: "Marketing",
-      imgPath: "images/exec-images/saba.jpg",
+      name: "Exec Member",
+      position: "Executive Position",
+      decaEvent: "DECA Event",
+      decaCluster: "DECA Cluster",
+      imgPath: "images/exec-images/anon.jpg",
       numMedals: 8,
       numPlaques: 3
     },
     {
-      name: "Zoey Aliasgari",
-      position: "President",
-      decaEvent: "Hospitality Event",
-      decaCluster: "Hospitality & Tourism",
-      imgPath: "images/exec-images/zoey.jpg",
+      name: "Exec Member",
+      position: "Executive Position",
+      decaEvent: "DECA Event",
+      decaCluster: "DECA Cluster",
+      imgPath: "images/exec-images/anon.jpg",
       numMedals: 8,
       numPlaques: 2
     },
     {
-      name: "Pranjan Gandhi",
-      position: "Vice-President",
-      decaEvent: "Marketing Event",
-      decaCluster: "Marketing",
-      imgPath: "images/exec-images/pranjan.jpg",
+      name: "Exec Member",
+      position: "Executive Position",
+      decaEvent: "DECA Event",
+      decaCluster: "DECA Cluster",
+      imgPath: "images/exec-images/anon.jpg",
       numMedals: 12,
       numPlaques: 2
     },

@@ -15,10 +15,11 @@ var loadJS = require("../middlewares/loadJS");
 //Instatiate default variables on res.locals
 router.use(setDefaultVariables);
 router.use(loadCSS([
-  "stylesheets/dist/bootstrap.min.css"
+  "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
 ]));
 router.use(loadJS([
-  "https://code.jquery.com/jquery-3.2.1.min.js"
+  "https://code.jquery.com/jquery-3.2.1.min.js",
+  "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
 ]));
 
 //Redirect root route

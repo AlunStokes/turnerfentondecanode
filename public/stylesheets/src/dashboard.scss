@@ -28,3 +28,11 @@
 .dataTable {
   width: 100% !important;
 }
+
+.modal-backdrop {
+  z-index: -1 !important;
+}
+
+span[data-notify=message] {
+    margin-left: 40px;
+}

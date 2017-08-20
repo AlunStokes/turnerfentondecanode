@@ -10,11 +10,11 @@ var loadJS = require("../middlewares/loadJS");
 
 router.use(loadCSS([
   "stylesheets/dist/timeline.min.css",
-  "stylesheets/dist/simplemde.min.css"
+  "https://cdnjs.cloudflare.com/ajax/libs/simplemde/1.11.2/simplemde.min.css"
 ]))
 router.use(loadJS([
   "js/dist/timeline.min.js",
-  "js/dist/simplemde.min.js"
+  "https://cdnjs.cloudflare.com/ajax/libs/simplemde/1.11.2/simplemde.min.js"
 ]))
 
 router.get("/", function(req, res, next) {

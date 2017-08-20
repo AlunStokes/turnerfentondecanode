@@ -17,10 +17,10 @@ router.use(setLayout("front"));
 router.use(loadNavbar("front"));
 router.use(loadTitle);
 router.use(loadCSS([
-  "stylesheets/dist/headroom.min.css"
+  "stylesheets/dist/front.min.css"
 ]));
 router.use(loadJS([
-  "js/dist/headroom.min.js",
+  "https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.js",
   "js/dist/front.min.js"
 ]));
 
