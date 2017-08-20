@@ -9,9 +9,14 @@
         {{/if}}
       {{/if}}
       {{>cards/startExamCard}}
+      {{>cards/personalExamStatisticsCard}}
+      {{#if admin}}
+        {{>cards/chapterExamStatisticsCard}}
+      {{/if}}
       {{>cards/userAttendanceCard}}
       {{>cards/usersOnlineCard}}
       {{>cards/changeColorCard}}
+      {{>cards/userClusterProficiencyCard}}
       {{>cards/numQuestionsAnsweredCard}}
       {{#if canSubmitExtensions}}
         {{>cards/submitExtensionCard}}

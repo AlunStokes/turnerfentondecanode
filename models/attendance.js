@@ -10,7 +10,7 @@ attendance.getLatestSession = function(callback) {
       callback(err);
       return;
     }
-    connection.query("SELECT id, optionA, optionB, optionC, optionD, answer, startTime, endTime, DATE_FORMAT(startTime, '%D of %M, %Y') AS date, createdBy FROM attendancesessions ORDER BY id DESC LIMIT 1;", function(err, rows, fields) {
+    connection.query("SELECT id, optionA, optionB, optionC, optionD, answer, startTime, endTime, DATE_FORMAT(startTime, '%d %M, %Y') AS date, createdBy FROM attendancesessions ORDER BY id DESC LIMIT 1;", function(err, rows, fields) {
       connection.release();
       if (err) {
         callback(err);
@@ -40,7 +40,7 @@ attendance.getSessionData = function(sessionid, callback) {
       callback(err);
       return;
     }
-    connection.query("SELECT id, optionA, optionB, optionC, optionD, answer, startTime, endTime, DATE_FORMAT(startTime, '%D of %M, %Y') AS date, createdBy FROM attendancesessions WHERE id = ? ORDER BY id DESC;", [sessionid], function(err, rows, fields) {
+    connection.query("SELECT id, optionA, optionB, optionC, optionD, answer, startTime, endTime, DATE_FORMAT(startTime, '%d %M, %Y') AS date, createdBy FROM attendancesessions WHERE id = ? ORDER BY id DESC;", [sessionid], function(err, rows, fields) {
       connection.release();
       if (err) {
         callback(err);
@@ -70,7 +70,7 @@ attendance.getSessionids = function(callback) {
       callback(err);
       return;
     }
-    connection.query("SELECT id, DATE_FORMAT(startTime, '%D of %M, %Y at %r') AS date FROM attendancesessions ORDER BY id DESC;", function(err, rows, fields) {
+    connection.query("SELECT id, DATE_FORMAT(startTime, '%d %M, %Y at %r') AS date FROM attendancesessions ORDER BY id DESC;", function(err, rows, fields) {
       connection.release();
       if (err) {
         callback(err);

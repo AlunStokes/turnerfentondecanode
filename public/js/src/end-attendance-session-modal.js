@@ -15,35 +15,35 @@ function prepEndModal(callback) {
       var htmlBody = '';
 
       htmlBody += '<div class="row">' +
-      '<div class="col-xs-12 col-lg-12">' +
-      '<h1 class="text thin medium center">Started at ' + currentSession.startTime + '</h1>' +
+      '<div class="col-xs-12 col-lg-12 ignore">' +
+      '<h1 class="text thin medium center">Started on ' + currentSession.startTime + '</h1>' +
       '</div>' +
       '</div>' +
       '<br>' +
       '<div class="row">' +
-      '<div class="col-xs-12 col-lg-6">' +
+      '<div class="col-xs-6 col-lg-6 ignore">' +
       '<h1 class="text thin small dark italic center" id="option-A-title">Option A:</h1>' +
       '<h1 class="text thin small dark center" id="option-A-value">' + currentSession.optionA + '</h1>' +
       '</div>' +
-      '<div class="col-xs-12 col-lg-6">' +
+      '<div class="col-xs-6 col-lg-6 ignore">' +
       '<h1 class="text thin small dark italic center" id="option-B-title">Option B:</h1>' +
       '<h1 class="text thin small dark center" id="option-B-value">' + currentSession.optionB + '</h1>' +
       '</div>' +
       '</div>' +
       '<br />' +
       '<div class="row">' +
-      '<div class="col-xs-12 col-lg-6">' +
+      '<div class="col-xs-6 col-lg-6 ignore">' +
       '<h1 class="text thin small dark italic center" id="option-C-title">Option C:</h1>' +
       '<h1 class="text thin small dark center" id="option-C-value">' + currentSession.optionC + '</h1>' +
       '</div>' +
-      '<div class="col-xs-12 col-lg-6">' +
+      '<div class="col-xs-6 col-lg-6 ignore">' +
       '<h1 class="text thin small dark italic center" id="option-D-title">Option D:</h1>' +
       '<h1 class="text thin small dark center" id="option-D-value">' + currentSession.optionD + '</h1>' +
       '</div>' +
       '</div>' +
       '<br />' +
       '<div class="row">' +
-      '<div class="col-xs-12 col-lg-12">' +
+      '<div class="col-xs-12 col-lg-12 ignore">' +
       '<button class="btn btn-lg btn-block active-color" id="confirm-end-session-btn">End session</button>' +
       '</div>' +
       '</div>';

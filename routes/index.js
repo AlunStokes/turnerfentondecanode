@@ -38,6 +38,8 @@ router.use("/submit-extension", require("./submitExtension"));
 router.use("/home", require("./home"));
 router.use("/timeline", require("./timeline"));
 router.use("/practice", require("./practice"));
+router.use("/personal-exam-statistics", require("./personalExamStatistics"));
+router.use("/chapter-exam-statistics", require("./chapterExamStatistics"));
 router.use("/exam", require("./exam"));
 router.use("/create-exam", require("./createExam"));
 router.use("/add-question", require("./addQuestion"));

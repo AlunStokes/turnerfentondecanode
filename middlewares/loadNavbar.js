@@ -107,7 +107,9 @@ module.exports = function(route) {
             "practice",
             "create-exam",
             "exam",
-            "add-question"
+            "add-question",
+            "personal-exam-statistics",
+            "chapter-exam-statistics"
           ]
         },
         {

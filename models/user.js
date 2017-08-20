@@ -428,7 +428,7 @@ user.getUserSettings = function(user, callback) {
       return;
     }
     connection.query("SELECT sidebarBackground, sidebarText, sidebarActive, canSubmitExtensions FROM membersettings WHERE studentNumber = ?", [user.studentNumber], function(err, rows, fields) {
-          connection.release();
+      connection.release();
       if (err) {
         callback("Server error, try again later");
         return;
@@ -494,7 +494,7 @@ user.confirmEmail = function(user, callback) {
       return;
     }
     connection.query("UPDATE members SET confirmEmailCode = NULL WHERE BINARY confirmEmailCode = ?", [user.confirmEmailCode], function(err, rows, fields) {
-    connection.release();
+      connection.release();
       if (err) {
         callback("Server error, try again later");
         return;
@@ -520,7 +520,7 @@ user.checkResetCode = function(user, callback) {
     }
     //BINARY enforces case-sensitive search
     connection.query("SELECT passwordResetCode FROM members WHERE BINARY passwordResetCode = ?", [user.resetCode], function(err, rows, fields) {
-    connection.release();
+      connection.release();
       if (err) {
         callback("Server error, try again later");
         return;
@@ -543,7 +543,7 @@ user.addSession = function(user, callback) {
       return;
     }
     connection.query("SELECT firstName, lastName, email, decaCluster, decaEvent, admin FROM members WHERE studentNumber = ?", [user.studentNumber], function(err, rows, fields) {
-    connection.release();
+      connection.release();
       if (err) {
         callback("Server error, try again later");
         return;
@@ -562,9 +562,258 @@ user.addSession = function(user, callback) {
   });
 }
 
+
+
+user.getClusterProficiency = function(studentNumber, callback) {
+  var statQuery = "SELECT SUM(correct = 1 && cluster = 'marketing') AS marketingCorrect, SUM(cluster = 'marketing') AS marketingAttempted, SUM( correct = 1 && cluster = 'businessadmin' ) AS businessadminCorrect, SUM(cluster = 'businessadmin') AS businessadminAttempted, SUM( correct = 1 && cluster = 'finance' ) AS financeCorrect, SUM(cluster = 'finance') AS financeAttempted, SUM( correct = 1 && cluster = 'hospitality' ) AS hospitalityCorrect, SUM(cluster = 'hospitality') AS hospitalityAttempted FROM questionsattempted JOIN questionclusters ON questionclusters.questionid = questionsattempted.questionid WHERE studentNumber = ?";
+  db.pool.getConnection(function(err, connection) {
+    connection.query(statQuery, [studentNumber], function(err, rows, fields) {
+      connection.release();
+      if (err) {
+        callback("Server error - try again later");
+        return;
+      }
+      var stats = {
+
+      };
+      var percents = {
+
+      };
+      var clusters = [
+        "marketing",
+        "finance",
+        "businessadmin",
+        "hospitality"
+      ];
+
+      for (var i = 0 ; i < clusters.length; i++) {
+        if (rows[0][clusters[i] + "Attempted"] == 0) {
+          percents[clusters[i]] = 0;
+        }
+        else {
+          percents[clusters[i]] = (rows[0][clusters[i] + "Correct"]/rows[0][clusters[i] + "Attempted"]);
+        }
+      }
+
+
+      var sum = percents.marketing + percents.finance + percents.hospitality + percents.businessadmin;
+
+      stats.marketing = ((percents.marketing/sum) * 100).toFixed(2);
+      stats.finance = ((percents.finance/sum) * 100).toFixed(2);
+      stats.businessadmin = ((percents.businessadmin/sum) * 100).toFixed(2);
+      stats.hospitality = ((percents.hospitality/sum) * 100).toFixed(2);
+
+      if (isNaN(stats.marketing) || isNaN(stats.finance) || isNaN(stats.businessadmin) || isNaN(stats.hospitality)) {
+        callback("Invalid statistics - try again later");
+        return;
+      }
+      callback(null, stats);
+    });
+  });
+}
+
+user.getExamResultsLine = function(studentNumber, callback) {
+  db.pool.getConnection(function(err, connection) {
+    if (err) {
+      callback(err);
+      return;
+    }
+    connection.query("SELECT correct, total, DATE_FORMAT(startTime, '%M %Y') as date FROM examresults LEFT JOIN createdexams ON createdexams.id = examresults.examid WHERE studentNumber = ? AND correct IS NOT NULL AND (includestats = 1 OR examresults.examid = 0) ORDER BY startTime ASC", [studentNumber], function(err, rows, fields) {
+      if (err) {
+        callback(err);
+        return;
+      }
+
+      var rawResults = [];
+      for (var i = 0; i < rows.length; i++) {
+        rawResults.push(
+          {
+            percentage: (rows[i].correct/rows[i].total) * 100,
+            date: rows[i].date
+          }
+        );
+      }
+
+      var firstMonth = rawResults[0].date.split(" ")[0];
+      var firstYear = parseInt(rawResults[0].date.split(" ")[1], 10);
+
+      var lastMonth = rawResults[rawResults.length - 1].date.split(" ")[0];
+      var lastYear = parseInt(rawResults[rawResults.length - 1].date.split(" ")[1], 10);
+
+      var months = [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December"
+      ];
+      var numMonths = months.forwardDistance(firstMonth, lastMonth) + 12 * (lastYear - firstYear) + 1;
+
+      var examResults = {
+
+      };
+
+      var firstMonthIndex = months.indexOf(firstMonth);
+      for (var i = 0; i < numMonths; i++) {
+        //Creates an index in examResults for each month between the first result and the last
+        examResults[months[(firstMonthIndex + i) % 12] + ' ' + (firstYear + Math.floor((i + (12 - firstMonthIndex)) / 12))] = 0;
+      }
+
+      var numInMonthCounter = 0;
+      for (var i = 0; i < rawResults.length; i++) {
+        if (i == 0) {
+          examResults[rawResults[i].date] += rawResults[i].percentage;
+            numInMonthCounter++;
+        }
+        else {
+          if (rawResults[i].date == rawResults[i - 1].date) {
+            numInMonthCounter++;
+            examResults[rawResults[i].date] += rawResults[i].percentage;
+          }
+          else {
+            examResults[rawResults[i-1].date] /= numInMonthCounter;
+            numInMonthCounter = 1;
+            examResults[rawResults[i].date] += rawResults[i].percentage;
+          }
+        }
+      }
+      //Get last case of for
+      examResults[rawResults[rawResults.length - 1].date] /= numInMonthCounter;
+      //Remove months with 0 by filling with score of previous months
+      for (var prop in examResults) {
+        if (examResults[prop] == 0) {
+          //If not the first month (because can't check month before)
+          if (prop != firstMonth) {
+            //Find name of prop for month before current to set to that score
+            examResults[prop] = examResults[Object.keys(examResults)[Object.keys(examResults).indexOf(prop) - 1]];
+          }
+        }
+      }
+
+      callback(null, examResults);
+    });
+  });
+}
+
+//Not finished
+user.getMostIncorrectlyAnsweredBy = function(studentNumber, callback) {
+  var statQuery = 'SELECT question, optionA, optionB, optionC, optionD, answer FROM questionsattempted JOIN questions ON questionsattempted.questionid = questions.questionid JOIN questionanswers ON questionsattempted.questionid = questionanswers.questionid JOIN questionoptions ON questionsattempted.questionid = questionoptions.questionid GROUP BY questionsattempted.questionid ORDER BY SUM(IF(questionsattempted.correct = 0, 1, 0)) DESC LIMIT 1'
+  db.pool.getConnection(function(err, connection) {
+    if (err) {
+      callback(err);
+      return;
+    }
+    connection.query(statQuery, function(err, rows, fields) {
+      if (err) {
+        callback(err);
+        return;
+      }
+      connection.release();
+      if (err) {
+        callback(err);
+        return;
+      }
+      var question = {
+        question: rows[0].question,
+        optionA: rows[0].optionA,
+        optionB: rows[0].optionB,
+        optionC: rows[0].optionC,
+        optionD: rows[0].optionD,
+        answer: rows[0].answer,
+      }
+      callback(null, question);
+      return;
+    });
+  });
+}
+
+user.getExamResults = function(studentNumber, callback) {
+  db.pool.getConnection(function(err, connection) {
+    if (err) {
+      callback(err);
+      return;
+    }
+    connection.query("SELECT correct, total, DATE_FORMAT(startTime, '%d %M, %Y') as date, name, examresults.cluster as cluster FROM examresults LEFT JOIN createdexams ON createdexams.id = examresults.examid WHERE studentNumber = ? AND correct IS NOT NULL AND (includeStats = 1 OR examresults.examid = 0) ORDER BY startTime DESC;", [studentNumber], function(err, rows, fields) {
+      if (err) {
+        callback(err);
+        return;
+      }
+      var examResults = [];
+      for (var i = 0; i < rows.length; i++) {
+        examResults.push(
+          {
+            correct: rows[i].correct,
+            total: rows[i].total,
+            percentage: ((rows[i].correct/rows[i].total) * 100).toFixed(2),
+            name: rows[i].name ? rows[i].name : "Random",
+            cluster: valueToCluster(rows[i].cluster),
+            date: rows[i].date
+          }
+        );
+      }
+      callback(null, examResults);
+      return;
+    });
+  });
+}
+
+
 user.uploadPhoto = function(image, callback) {
 
 }
 
 
+
 module.exports = user;
+
+
+function valueToCluster (value) {
+  switch(value) {
+    case "mix":
+    return "Mixed Clusters";
+    break;
+    case "marketing":
+    return "Marketing";
+    break;
+    case "finance":
+    return "Finance";
+    break;
+    case "businessadmin":
+    return "Business Administration";
+    break;
+    case "hospitality":
+    return "Hospitality & Tourism";
+    break;
+    case "writtens":
+    return "Writtens";
+    break;
+    default:
+    return "undefined"
+  }
+}
+
+//Finds number of values for certain prop in array of objects
+function numUnique (arr, prop) {
+  var known = [];
+  var num = 0;
+  for (var i = 0; i < arr.length; i++) {
+    if (known.indexOf(arr[i][prop]) == -1) {
+      num++;
+      known.push(arr[i][prop]);
+    }
+  }
+  return num;
+}
+
+//Find the number of indices from the first given value to the second, moving upward in indices and looping back to the beginning if necessary
+Array.prototype.forwardDistance = function(firstValue, lastValue) {
+  var dist = (this.length - this.indexOf(firstValue) + this.indexOf(lastValue)) % this.length;
+  return dist;
+}

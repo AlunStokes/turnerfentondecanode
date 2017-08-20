@@ -12,10 +12,10 @@ var loadAttendanceData = require("../middlewares/loadAttendanceData");
 router.use(adminRoute);
 router.use(loadAttendanceData);
 router.use(loadCSS([
-  "https://cdn.datatables.net/v/bs/dt-1.10.15/b-1.4.0/b-colvis-1.4.0/b-html5-1.4.0/fh-3.1.2/r-2.1.1/sc-1.4.2/datatables.min.css"
+  "https://cdn.datatables.net/v/dt/dt-1.10.15/b-1.4.0/b-colvis-1.4.0/b-html5-1.4.0/cr-1.3.3/r-2.1.1/se-1.2.2/datatables.min.css"
 ]));
 router.use(loadJS([
-  "https://cdn.datatables.net/v/bs/dt-1.10.15/b-1.4.0/b-colvis-1.4.0/b-html5-1.4.0/fh-3.1.2/r-2.1.1/sc-1.4.2/datatables.min.js",
+  "https://cdn.datatables.net/v/dt/dt-1.10.15/b-1.4.0/b-colvis-1.4.0/b-html5-1.4.0/cr-1.3.3/r-2.1.1/se-1.2.2/datatables.min.js",
   "js/dist/check-attendance.min.js"
 ]));
 

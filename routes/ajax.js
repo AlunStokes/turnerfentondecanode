@@ -300,7 +300,7 @@ router.get("/", function(req, res, next) {
 
 
       case "getAttendanceSession":
-      connection.query("SELECT id, optionA, optionB, optionC, optionD, answer, DATE_FORMAT(startTime, '%D of %M, %Y at %r') AS startTime, createdBy FROM attendancesessions WHERE endTime IS NULL", function(err, rows, fields) {
+      connection.query("SELECT id, optionA, optionB, optionC, optionD, answer, DATE_FORMAT(startTime, '%d %M, %Y at %r') AS startTime, createdBy FROM attendancesessions WHERE endTime IS NULL", function(err, rows, fields) {
         if (err) {
           res.json({
             err: "Sever error - try again later"
@@ -326,6 +326,39 @@ router.get("/", function(req, res, next) {
             startTime: rows[0].startTime,
             createdBy: rows[0].createdBy
           }
+        });
+        return;
+      });
+      break;
+
+
+      case "getClusterProficiency":
+      User.getClusterProficiency(req.session.studentNumber, function(err, clusterProficiency) {
+        if (err) {
+          res.json({
+            err: err
+          });
+          return;
+        }
+        res.json({
+          err: null,
+          clusterProficiency: clusterProficiency
+        });
+        return;
+      });
+      break;
+
+      case "getExamResultsLine":
+      User.getExamResultsLine(req.session.studentNumber, function(err, examResults) {
+        if (err) {
+          res.json({
+            err: err
+          });
+          return;
+        }
+        res.json({
+          err: null,
+          examResults: examResults
         });
         return;
       });
@@ -450,6 +483,12 @@ router.post("/", function(req, res, next) {
 
       //Add error checking
       case "checkExam":
+      if (!req.session.examHash) {
+        res.json({
+          err: "Exam already submitted"
+        });
+        return;
+      }
       var givenAnswers = JSON.parse(req.body.givenAnswers);
       connection.query("SELECT examid, modulus, increment, seed, multiplier, offset FROM examresults WHERE examHash = ?", [req.session.examHash], function(err, rows, fields) {
         if (err) {
@@ -472,33 +511,59 @@ router.post("/", function(req, res, next) {
             Exam.getidList(examid, function(err, ids) {
               connection.query("SELECT answer FROM questionanswers WHERE questionid IN (" + ids.join() + ") ORDER BY FIND_IN_SET(questionid, '" + ids.join() + "')", function(err, rows, fields) {
                 var answers = [];
+                var correct = [];
                 var numCorrect = 0;
                 for (var i = 0; i < rows.length; i++) {
                   answers[i] = rows[i].answer;
                   if (givenAnswers[i] == answers[i]) {
+                    correct[i] = 1;
                     numCorrect++;
                   }
+                  else {
+                    correct[i] = 0;
+                  }
                 }
-                Exam.saveExam(req.session.examHash, numCorrect, function(err) {
-                  req.session.examHash = null;
-                  if (!err) {
-                    if (showScore) {
-                      res.json({
-                        answers: answers,
-                        showScore: true
-                      });
+
+                //Save individual questions
+                var attemptedQuestionsQuery = "BEGIN;";
+                var attemptedQuestionsQueryInsertArray = []
+                for (var i = 0; i < answers.length; i++) {
+                  attemptedQuestionsQuery += "INSERT INTO questionsattempted (studentNumber, questionid, correct, guess, examid) VALUES (?, ?, ?, ?, ?);";
+                  attemptedQuestionsQueryInsertArray.push(req.session.studentNumber);
+                  attemptedQuestionsQueryInsertArray.push(ids[i]);
+                  attemptedQuestionsQueryInsertArray.push(correct[i]);
+                  attemptedQuestionsQueryInsertArray.push(givenAnswers[i]);
+                  attemptedQuestionsQueryInsertArray.push(examid);
+                }
+                attemptedQuestionsQuery += "COMMIT;";
+                connection.query(attemptedQuestionsQuery, attemptedQuestionsQueryInsertArray, function(err, rows, fields) {
+                  if (err) {
+                    res.json({
+                      err: "Error saving exam - try again later"
+                    });
+                    return;
+                  }
+                  Exam.saveExam(req.session.examHash, numCorrect, function(err) {
+                    req.session.examHash = null;
+                    if (!err) {
+                      if (showScore) {
+                        res.json({
+                          answers: answers,
+                          showScore: true
+                        });
+                      }
+                      else {
+                        res.json({
+                          showScore: false
+                        })
+                      }
                     }
                     else {
                       res.json({
-                        showScore: false
-                      })
+                        err: "Server error - try again later"
+                      });
                     }
-                  }
-                  else {
-                    res.json({
-                      err: "Server error - try again later"
-                    });
-                  }
+                  });
                 });
               });
             });
@@ -508,26 +573,51 @@ router.post("/", function(req, res, next) {
           Utilities.linConGen(rows[0].modulus, rows[0].increment, rows[0].seed, rows[0].multiplier, givenAnswers.length, rows[0].offset, function(questionList) {
             connection.query("SELECT answer FROM questionanswers WHERE questionid IN (" + questionList.join() + ") ORDER BY FIND_IN_SET(questionid, '" + questionList.join() + "')", function(err, rows, fields) {
               var answers = [];
-              var numCorrect = 0
+              var correct = [];
+              var numCorrect = 0;
               for (var i = 0; i < rows.length; i++) {
                 answers[i] = rows[i].answer;
                 if (givenAnswers[i] == answers[i]) {
+                  correct[i] = 1;
                   numCorrect++;
                 }
-              }
-              Exam.saveExam(req.session.examHash, numCorrect, function(err) {
-                req.session.examHash = null;
-                if (!err) {
-                  res.json({
-                    answers: answers,
-                    showScore: true
-                  });
-                }
                 else {
-                  res.json({
-                    err: "Server error - try again later"
-                  });
+                  correct[i] = 0;
                 }
+              }
+              //Save individual questions
+              var attemptedQuestionsQuery = "BEGIN;";
+              var attemptedQuestionsQueryInsertArray = []
+              for (var i = 0; i < answers.length; i++) {
+                attemptedQuestionsQuery += "INSERT INTO questionsattempted (studentNumber, questionid, correct, guess, examid) VALUES (?, ?, ?, ?, ?);";
+                attemptedQuestionsQueryInsertArray.push(req.session.studentNumber);
+                attemptedQuestionsQueryInsertArray.push(questionList[i]);
+                attemptedQuestionsQueryInsertArray.push(correct[i]);
+                attemptedQuestionsQueryInsertArray.push(givenAnswers[i]);
+                attemptedQuestionsQueryInsertArray.push(0);
+              }
+              attemptedQuestionsQuery += "COMMIT;";
+              connection.query(attemptedQuestionsQuery, attemptedQuestionsQueryInsertArray, function(err, rows, fields) {
+                if (err) {
+                  res.json({
+                    err: "Error saving exam - try again later"
+                  });
+                  return;
+                }
+                Exam.saveExam(req.session.examHash, numCorrect, function(err) {
+                  req.session.examHash = null;
+                  if (!err) {
+                    res.json({
+                      answers: answers,
+                      showScore: true
+                    });
+                  }
+                  else {
+                    res.json({
+                      err: "Server error - try again later"
+                    });
+                  }
+                });
               });
             });
           });
@@ -624,7 +714,7 @@ router.post("/", function(req, res, next) {
 
       case "submitNewQuestion":
       var questionData = JSON.parse(req.body.questionData);
-      var a = connection.query("BEGIN;" +
+      connection.query("BEGIN;" +
       "INSERT INTO questions (question) VALUES (?);" +
       "INSERT INTO questionoptions (questionid, optionA, optionB, optionC, optionD) VALUES (LAST_INSERT_ID(), ?, ?, ?, ?);" +
       "INSERT INTO questionanswers (questionid, answer) VALUES (LAST_INSERT_ID(), ?);" +

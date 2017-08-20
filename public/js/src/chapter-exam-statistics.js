@@ -1,13 +1,14 @@
-var sessionidInput;
-
 $(document).ready(function() {
+
+  //Initialise results chart
   $(function () {
-    $('#attendance-table').dataTable({
+    $('#exam-results-table').dataTable({
       lengthChange: true,
       ordering: true,
       paging: false,
       info: true,
       colReorder: true,
+      searching: false,
       autoWidth: true,
       responsive: true,
       iDisplayLength: 100,
@@ -17,16 +18,10 @@ $(document).ready(function() {
         'excelHtml5',
         {
           extend: 'csvHtml5',
-          title: 'tfdeca-attendance-' + $("#session-id-input :selected").text()
+          title: 'exam-results-' + Date.now()
         }
       ],
-      dom: 'Bfrtip'
+      dom: 'B'
     });
-  });
-
-  sessionidInput = $("#session-id-input");
-
-  sessionidInput.on('change', function() {
-    window.location = 'check-attendance?sessionid=' + sessionidInput.val();
   });
 });

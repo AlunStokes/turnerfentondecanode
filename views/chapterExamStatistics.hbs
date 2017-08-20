@@ -1,0 +1,64 @@
+<div class="container-fluid">
+
+  <!-- Exam results chart -->
+  <div class="box">
+    <div class="box-header">
+    </div>
+  </div>
+  <div class="box-body">
+    <table id="exam-results-table" class="table table-bordered table-hover">
+      <thead>
+        <tr>
+          <th>First Name</th>
+          <th>Last Name</th>
+          <th>Student Number</th>
+          <th>Score</th>
+          <th>Total</th>
+          <th>Percentage</th>
+          <th>Exam Name</th>
+          <th>Date</th>
+          <th>Cluster</th>
+        </tr>
+      </thead>
+      <tbody id="table-body">
+        {{#each examResults}}
+        <tr>
+          <td>{{this.firstName}}</td>
+          <td>{{this.lastName}}</td>
+          <td>{{this.studentNumber}}</td>
+          <td>{{this.correct}}</td>
+          <td>{{this.total}}</td>
+          <td>{{this.percentage}}%</td>
+          <td>{{this.name}}</td>
+            <td>{{this.date}}</td>
+          <td>{{this.cluster}}</td>
+        </tr>
+        {{/each}}
+      </tbody>
+      <tfoot id="table-footer">
+        <tr>
+          <th>First Name</th>
+          <th>Last Name</th>
+          <th>Student Number</th>
+          <th>Score</th>
+          <th>Total</th>
+          <th>Percentage</th>
+          <th>Exam Name</th>
+          <th>Date</th>
+          <th>Cluster</th>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+
+
+</div>
+
+<style media="screen">
+.btn-group {
+  display: inline;
+}
+#exam-results-table_wrapper {
+  margin-bottom: 20px;
+}
+</style>
