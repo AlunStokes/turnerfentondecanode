@@ -12,7 +12,7 @@ $(document).ready(function() {
             return;
           }
           notify("Password successfully changed", "success", "check");
-          resetForm();
+          resetPasswordForm();
           return;
         });
       });
@@ -66,7 +66,7 @@ function submitPasswordData(passwordData, callback) {
   });
 }
 
-function resetForm() {
+function resetPasswordForm() {
   $("#password-input").val("");
   $("#password-confirm-input").val("");
   return;

@@ -220,7 +220,7 @@ exam.startExam = function(studentNumber, examData, callback) {
       }
       connection.query("SELECT numQuestions, cluster FROM createdexams WHERE id = ?", [examData], function(err, rows, fields) {
         Utilities.generateRandomString(32, function(examHash) {
-          connection.query("INSERT INTO examResults (examid, total, studentNumber, examHash, cluster) VALUES (?, ?, ?, ?, ?);", [examData, rows[0].numQuestions, studentNumber, examHash, rows[0].cluster], function(err, rows, fields) {
+          connection.query("INSERT INTO examresults (examid, total, studentNumber, examHash, cluster) VALUES (?, ?, ?, ?, ?);", [examData, rows[0].numQuestions, studentNumber, examHash, rows[0].cluster], function(err, rows, fields) {
             if(err) {
               callback("Server error- try again later");
               return;
@@ -239,7 +239,7 @@ exam.startExam = function(studentNumber, examData, callback) {
         return;
       }
       Utilities.generateRandomString(32, function(examHash) {
-        connection.query("INSERT INTO examResults (modulus, increment, seed, multiplier, offset, total, studentNumber, examHash, cluster) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);", [examData.mod, examData.increment, examData.seed,examData. multiplier, examData.offset, examData.numQuestions, studentNumber, examHash, examData.cluster], function(err, rows, fields) {
+        connection.query("INSERT INTO examresults (modulus, increment, seed, multiplier, offset, total, studentNumber, examHash, cluster) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);", [examData.mod, examData.increment, examData.seed,examData. multiplier, examData.offset, examData.numQuestions, studentNumber, examHash, examData.cluster], function(err, rows, fields) {
           if(err) {
             callback("Server error- try again later");
             return;

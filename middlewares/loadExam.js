@@ -71,6 +71,7 @@ module.exports = function(req, res, next) {
               next();
               return;
             }
+            console.log(res.locals.exam);
             req.session.examHash = examHash;
             next();
             return;

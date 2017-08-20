@@ -192,7 +192,7 @@ user.register = function(registrant, callback) {
                                       //Define handlebars required data
                                       handlebarsData = {
                                         firstName: registrant.firstName.value,
-                                        url: config.host + "/register?confirmEmailCode=" + confirmEmailCode
+                                        url: "http://" + config.host + "/register?confirmEmailCode=" + confirmEmailCode
                                       };
                                       //Insert variables into handlebars template
                                       var html = htmlTemplate(handlebarsData);
@@ -202,7 +202,7 @@ user.register = function(registrant, callback) {
                                         from: config.mail.name + " <" + config.mail.noReplyAddress + ">",
                                         to: registrant.email.value,
                                         subject: "Confirm Email",
-                                        text: "Hello, " + registrant.firstName.value + ", \r\n In order to verify your email and complete your registration with Turner Fenton DECA, please proceed to the following url: \r\n " + config.host + "/register?confirmEmailCode=" + confirmEmailCode,
+                                        text: "Hello, " + registrant.firstName.value + ", \r\n In order to verify your email and complete your registration with Turner Fenton DECA, please proceed to the following url: \r\n " + "http://" + config.host + "/register?confirmEmailCode=" + confirmEmailCode,
                                         html: html
                                       };
 
@@ -402,7 +402,7 @@ user.sendResetCode = function(user, callback) {
             //Define handlebars required data
             handlebarsData = {
               firstName: rows[0].firstName,
-              url: config.host + "/reset-password?resetCode=" + resetCode
+              url: "http://" + config.host + "/reset-password?resetCode=" + resetCode
             };
             //Insert variables into handlebars template
             var html = htmlTemplate(handlebarsData);
@@ -412,7 +412,7 @@ user.sendResetCode = function(user, callback) {
               from: config.mail.name + " <" + config.mail.noReplyAddress + ">",
               to: rows[0].email,
               subject: "Password Reset",
-              text: "Hello, " + rows[0].firstName + ", \r\n We noticed you've requested a password reset.  To choose a new password, please proceed to the following url: \r\n " + config.host + "/reset-password?resetCode=" + resetCode,
+              text: "Hello, " + rows[0].firstName + ", \r\n We noticed you've requested a password reset.  To choose a new password, please proceed to the following url: \r\n " + "http://" + config.host + "/reset-password?resetCode=" + resetCode,
               html: html
             };
 

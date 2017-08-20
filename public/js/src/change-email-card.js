@@ -12,7 +12,7 @@ $(document).ready(function() {
             return;
           }
           notify("Email successfully changed", "success", "check");
-          resetForm();
+          resetEmailForm();
           return;
         });
       });
@@ -53,7 +53,7 @@ function submitEmail(email, callback) {
   });
 }
 
-function resetForm() {
+function resetEmailForm() {
   $("#email-input").val("");
   return;
 }
