@@ -62,6 +62,7 @@ jscolor.*
 todo.*
 simplemde.*
 
+tools/
 node_modules/
 utilities/
 public/images/design-timeline

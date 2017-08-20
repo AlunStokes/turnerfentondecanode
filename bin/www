@@ -31,6 +31,7 @@ app.set('port', port);
  */
 
 var server = http.createServer(app);
+console.log("Starting in " + process.env.NODE_ENV + " environment");
 
 /**
  * Listen on provided port, on all network interfaces.
