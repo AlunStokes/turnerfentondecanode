@@ -75,3 +75,4 @@ package-lock.json
 pem passphrase app.txt
 key.pem
 cert.pem
+tools/testLCG.js

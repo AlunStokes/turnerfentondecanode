@@ -31,7 +31,6 @@ exam.loadRandomExam = function(cluster, numQuestions, callback) {
       Utilities.linCongGenGen(totalQuestions, function(mod, increment, seed, multiplier) {
         var offset = parseInt(Math.random() * (totalQuestions));
         Utilities.linConGen(mod, increment, seed, multiplier, numQuestions, offset, function(numList) {
-
           //Can only use numList to determine indices from 0 - size of number set, thus for specific clusters (where question ids may range from 1400 - 2400 & numList
           //would show 1 - 1000) the range of question ids must be loaded and put into array to load exam
           if (cluster == "mix") {
