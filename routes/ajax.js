@@ -515,6 +515,13 @@ router.post("/", function(req, res, next) {
           });
           return;
         }
+        //If some linConGen error
+        if (rows[0].total != givenAnswers.length) {
+          res.json({
+            err: "Error with exam - try another exam"
+          });
+          return;
+        }
         //If non random exam
         if (rows[0].examid != 0) {
           var examid = rows[0].examid;
@@ -596,7 +603,7 @@ router.post("/", function(req, res, next) {
         }
         else {
           var numQuestions = rows[0].total;
-          Utilities.linConGen(rows[0].modulus, rows[0].increment, rows[0].seed, rows[0].multiplier, givenAnswers.length, rows[0].offset, function(numList) {
+          Utilities.linConGen(rows[0].modulus, rows[0].increment, rows[0].seed, rows[0].multiplier, numQuestions, rows[0].offset, function(numList) {
             //Can only use numList to determine indices from 0 - size of number set, thus for specific clusters (where question ids may range from 1400 - 2400 & numList
             //would show 1 - 1000) the range of question ids must be loaded and put into array to load exam
             if (rows[0].cluster == "mix") {
