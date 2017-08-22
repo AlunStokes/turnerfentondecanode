@@ -75,7 +75,10 @@ $(document).ready(function() {
       ajaxid: "getTFDExtensions"
     }
   }).done(function(data) {
-    tags = tags.concat(data);
+    if (data.err) {
+      return;
+    }
+    tags = tags.concat(data.extensions);
   });
   ext.on('click', function() {
     i++;

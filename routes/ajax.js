@@ -12,6 +12,13 @@ var User = require("../models/user");
 router.get("/", function(req, res, next) {
 
   db.pool.getConnection(function(err, connection) {
+    if (err) {
+      res.json({
+        err: "Cannot connect to database"
+      });
+      return;
+    }
+    
     switch(req.query.ajaxid) {
       case "questionsAnswered":
       Statistics.getNumQuestionsAnswered(function(err, numQuestionsAnswered) {
@@ -28,11 +35,20 @@ router.get("/", function(req, res, next) {
 
       case "getTFDExtensions":
       connection.query("SELECT extension FROM tfdextensions WHERE approved = 1 ORDER BY RAND() LIMIT 10", function(err, rows, fields) {
+        if (err) {
+          res.json({
+            err: "Couldn't load extensions"
+          });
+          return;
+        }
         var extensions = [];
         for (var i = 0; i < rows.length; i++) {
-          extensions.push(rows[i].extension)
+          extensions.push(rows[i].extensions)
         }
-        res.json(extensions);
+        res.json({
+          err: null,
+          extension: extensions
+        });
       });
       break;
 
