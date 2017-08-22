@@ -18,7 +18,7 @@ router.get("/", function(req, res, next) {
       });
       return;
     }
-    
+
     switch(req.query.ajaxid) {
       case "questionsAnswered":
       Statistics.getNumQuestionsAnswered(function(err, numQuestionsAnswered) {
@@ -26,10 +26,12 @@ router.get("/", function(req, res, next) {
           res.send({
             numQuestionsAnswered: numQuestionsAnswered
           });
+          return;
         }
-        else {
-          err: "Server error"
-        }
+        res.send({
+          err: "Sever error"
+        });
+        return;
       });
       break;
 
@@ -43,11 +45,11 @@ router.get("/", function(req, res, next) {
         }
         var extensions = [];
         for (var i = 0; i < rows.length; i++) {
-          extensions.push(rows[i].extensions)
+          extensions.push(rows[i].extension)
         }
         res.json({
           err: null,
-          extension: extensions
+          extensions: extensions
         });
       });
       break;
