@@ -31,6 +31,9 @@ module.exports = function(req, res, next) {
           next();
           return;
         }
+        if (exam.length != numQuestions) {
+          console.log("Exam length error occured to user " + req.session.studentNumber + " at " + new Date().toJSON().slice(0, 10) + " with hash " + examHash + ".");
+        }
         //Used to identify exam session
         req.session.examHash = examHash;
         next();
