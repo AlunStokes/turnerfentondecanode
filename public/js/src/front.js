@@ -94,6 +94,9 @@ $(document).ready(function() {
           }
         }).done(function(data) {
           //If hasn't been found
+          if (data.err) {
+            return;
+          }
           if (!data.canSubmitExtensions) {
             window.location = "submit-extension";
           }
