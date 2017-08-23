@@ -208,8 +208,6 @@ user.register = function(registrant, callback) {
 
                                       mailgun.messages().send(mailData, function(err, body) {
                                         if (err) {
-                                          errors.push("Server error, try again later");
-
                                           connection.query("DELETE FROM members WHERE studentNumber = ?", [registrant.studentNumber.value], function(err, rows, fields) {
                                             if (err) {
                                               errors.push("Error registering - contact an administrator");
@@ -223,7 +221,9 @@ user.register = function(registrant, callback) {
                                               callback(errors[0], returnRegistrant);
                                               return;
                                             });
+                                            return;
                                           });
+                                          return;
                                         }
 
                                         //Create copy of anon for profile picture
