@@ -25,7 +25,7 @@
 <script>
 $("#find-question-btn").on('click', function() {
   isWritingExam(function(isWriting) {
-    if (!isWriting) {
+    if (!isWriting || admin) {
       $("#find-question-modal").modal('show');
     }
     else {
