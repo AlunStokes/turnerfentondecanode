@@ -11,6 +11,11 @@ var User = require("../models/user");
 
 router.get("/", function(req, res, next) {
 
+  if (!req.query.ajaxid) {
+    res.redirect("login");
+    return;
+  }
+
   db.pool.getConnection(function(err, connection) {
     if (err) {
       res.json({
