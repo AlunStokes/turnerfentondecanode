@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 23, 2017 at 07:24 PM
+-- Generation Time: Aug 23, 2017 at 07:30 PM
 -- Server version: 5.7.14
 -- PHP Version: 5.6.25
 
@@ -3673,7 +3673,7 @@ INSERT INTO `questionanswers` (`questionid`, `answer`) VALUES
 (3458, 'A'),
 (3459, 'B'),
 (3460, 'C'),
-(3461, 'B'),
+(3461, 'C'),
 (3462, 'B'),
 (3463, 'A'),
 (3464, 'B'),
@@ -17424,6 +17424,24 @@ ALTER TABLE `websitesettings`
 --
 ALTER TABLE `membersettings`
   ADD CONSTRAINT `membersettings_ibfk_1` FOREIGN KEY (`studentNumber`) REFERENCES `members` (`studentNumber`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `questionanswers`
+--
+ALTER TABLE `questionanswers`
+  ADD CONSTRAINT `questionanswers_ibfk_1` FOREIGN KEY (`questionid`) REFERENCES `questions` (`questionid`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `questionclusters`
+--
+ALTER TABLE `questionclusters`
+  ADD CONSTRAINT `questionclusters_ibfk_1` FOREIGN KEY (`questionid`) REFERENCES `questions` (`questionid`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `questionoptions`
+--
+ALTER TABLE `questionoptions`
+  ADD CONSTRAINT `questionoptions_ibfk_1` FOREIGN KEY (`questionid`) REFERENCES `questions` (`questionid`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
