@@ -48,9 +48,11 @@ server.on('listening', onListening);
 /**
  * Socket.io
  */
+ /*
 var websockets = require('../websockets');
 var io = websockets.io;
 io.attach(server);
+*/
 
 /**
  * Normalize a port into a number, string, or false.

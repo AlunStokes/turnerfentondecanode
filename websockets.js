@@ -1,13 +1,12 @@
-var app = require("./app");
-var socketio = require('socket.io');
-var io = socketio();
-var ws = {
+var app = require('express')();
+var http = require('http').Server(app);
+var io = require('socket.io')(http);
 
-}
+http.listen(9000, function(){
+  console.log('listening on *:9000');
+});
 
-ws.io = io;
-
-app.locals.usersOnline = 0;
+var usersOnline = 0;
 
 //Each session in sessions is an object containing studentNumber, and an array of all socket ids (multiple tabs) belonging to it
 var sessions = [
@@ -85,7 +84,7 @@ function newConnection(socket, studentNumber) {
   if (typeof(userIndex) != "undefined") {
     sessions[userIndex].socketids.push(socket.id);
     //Tell only this socket num users online
-    socket.emit('usersOnline', {usersOnline: app.locals.usersOnline});
+    socket.emit('usersOnline', {usersOnline: usersOnline});
     return;
   }
   //If new user
@@ -95,7 +94,7 @@ function newConnection(socket, studentNumber) {
       socket.id
     ]
   });
-  app.locals.usersOnline++;
+  usersOnline++;
   usersOnlineChange();
   return;
 }
@@ -127,7 +126,7 @@ function droppedConnection(socket) {
     }
     //If user's last page is being closed
     sessions.splice(userIndex, 1);
-    app.locals.usersOnline--;
+    usersOnline--;
     usersOnlineChange();
     return;
   }
@@ -137,7 +136,5 @@ function droppedConnection(socket) {
 
 function usersOnlineChange() {
   //Update all clients
-  io.emit('usersOnline', {usersOnline: app.locals.usersOnline});
+  io.emit('usersOnline', {usersOnline: usersOnline});
 }
-
-module.exports = ws;
