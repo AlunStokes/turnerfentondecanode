@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 20, 2017 at 04:09 AM
+-- Generation Time: Aug 23, 2017 at 04:30 PM
 -- Server version: 5.7.14
 -- PHP Version: 5.6.25
 
@@ -17550,7 +17550,8 @@ CREATE TABLE `websitesettings` (
 --
 
 INSERT INTO `websitesettings` (`id`, `setting`, `value`) VALUES
-(1, 'registrationOpen', 1);
+(1, 'registrationOpen', 1),
+(2, 'searchQuestionsOpen', 1);
 
 --
 -- Indexes for dumped tables
@@ -17670,7 +17671,7 @@ ALTER TABLE `websitesettings`
 -- AUTO_INCREMENT for table `attendancerecords`
 --
 ALTER TABLE `attendancerecords`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 --
 -- AUTO_INCREMENT for table `attendancesessions`
 --
@@ -17700,12 +17701,12 @@ ALTER TABLE `designtimelineentries`
 -- AUTO_INCREMENT for table `examresults`
 --
 ALTER TABLE `examresults`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=90;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=138;
 --
 -- AUTO_INCREMENT for table `members`
 --
 ALTER TABLE `members`
-  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 --
 -- AUTO_INCREMENT for table `questionanswers`
 --
@@ -17730,7 +17731,7 @@ ALTER TABLE `questions`
 -- AUTO_INCREMENT for table `questionsattempted`
 --
 ALTER TABLE `questionsattempted`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=268;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=287;
 --
 -- AUTO_INCREMENT for table `tfdextensions`
 --
@@ -17745,7 +17746,7 @@ ALTER TABLE `timeline`
 -- AUTO_INCREMENT for table `websitesettings`
 --
 ALTER TABLE `websitesettings`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- Constraints for dumped tables
 --

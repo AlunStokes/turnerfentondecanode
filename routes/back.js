@@ -27,11 +27,11 @@ router.use(loadCSS([
   "stylesheets/dist/dashboard.min.css"
 ]));
 router.use(loadJS([
-  "https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.1/socket.io.slim.js",
+  //"https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.1/socket.io.slim.js",
   "https://cdnjs.cloudflare.com/ajax/libs/mouse0270-bootstrap-notify/3.1.7/bootstrap-notify.min.js",
   "js/dist/dashboard.min.js",
   "https://cdnjs.cloudflare.com/ajax/libs/jscolor/2.0.4/jscolor.min.js",
-  "js/dist/keep-alive.min.js",
+  //"js/dist/keep-alive.min.js",
   "https://use.fontawesome.com/4a55e6f24a.js"
 ]));
 

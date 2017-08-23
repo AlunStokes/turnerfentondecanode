@@ -9,8 +9,6 @@ var compression = require('compression');
 
 //Initialise applicaiton
 var app = express();
-//Import socketio
-app.io = require("socket.io")();
 
 //Various config variables
 var config = require("./config.js");

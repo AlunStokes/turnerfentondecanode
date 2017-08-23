@@ -111,6 +111,22 @@ router.get("/", function(req, res, next) {
       });
       break;
 
+      case "canSearchQuestions":
+      connection.query("SELECT value FROM websiteSettings WHERE setting = ?", ["searchQuestionsOpen"], function(err, rows, fields) {
+        if (err) {
+          res.json({
+            err: "Server error"
+          });
+          return;
+        }
+        res.json({
+          err: null,
+          canSearchQuestions: rows[0].value == 1 ? true : false
+        });
+        return;
+      });
+      break;
+
 
       case "getQuestionList":
       var cluster = req.query.cluster;

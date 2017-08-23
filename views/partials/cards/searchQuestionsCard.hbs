@@ -24,27 +24,31 @@
 
 <script>
 $("#find-question-btn").on('click', function() {
-  isWritingExam(function(isWriting) {
-    if (!isWriting || admin) {
+  canSearchQuestions(function(canSearch) {
+    if (canSearch || admin) {
       $("#find-question-modal").modal('show');
     }
     else {
-      notify("You cannot look up questions while writing an exam", "warning", "times");
+      notify("You cannot look up questions right now", "warning", "times");
     }
   });
 });
 
-function isWritingExam(callback) {
-  socket.emit('checkWritingExam', studentNumber, function(writingExam) {
-    if (writingExam) {
-      callback(true);
-      return;
+function canSearchQuestions(callback) {
+  $.ajax({
+    type: "GET",
+    url: "ajax",
+    data: {
+      ajaxid: "canSearchQuestions"
     }
-    else {
+  }).done(function(data) {
+    if (data.err) {
+      notify(data.err, "danger", "exclamation");
       callback(false);
       return;
     }
-  });
+    callback(data.canSearchQuestions)
+  })
 }
 
 </script>
