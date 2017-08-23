@@ -38,7 +38,13 @@ statistics.getNumQuestionsAnswered = function(callback) {
         callback(err);
         return;
       }
-      callback(null, rows[0].total);
+      //Non 0 case
+      if (rows[0].total) {
+        callback(null, rows[0].total);
+        return;
+      }
+      //0 case
+        callback(null, 0);
     });
   });
 }

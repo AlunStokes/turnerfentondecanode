@@ -28,17 +28,4 @@
   </div>
 </div>
 
-  <script>
-  var questionsAnsweredText = $("#questionsAnswered");
-    $.ajax({
-      url: "ajax",
-      type: "GET",
-      data: {
-        ajaxid: "questionsAnswered"
-      }
-    }).done(function(data) {
-      if (!data.err) {
-        questionsAnsweredText.html(data.numQuestionsAnswered);
-      }
-    });
-  </script>
+<script src="js/dist/questions-answered-card.min.js" charset="utf-8"></script>
