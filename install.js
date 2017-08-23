@@ -3,7 +3,7 @@ var mysql = require('mysql2');
 
 var fs = require('fs');
 
-prompt.start();
+  prompt.start();
 
 var configSchema = {
   properties: {
@@ -55,6 +55,14 @@ var configSchema = {
       message: "What sort of environment is this (production/development)",
       required: true,
       default: "production"
+    },
+    sslKey: {
+      message: "What is the file name (including extension) of your SSL Key?",
+      required: false
+    },
+    sslCertificate: {
+      message: "What is the file name (including extension) of your SSL Certificate?",
+      required: false
     }
   }
 }
@@ -79,7 +87,9 @@ prompt.get(configSchema, function(err, result) {
       noReplyAddress: "` + result.mailingNoReply + `"
     },
     host: "` + result.host + `",
-    nodeEnvironment: "` + result.nodeEnvironment + `"
+    nodeEnvironment: "` + result.nodeEnvironment + `",
+    sslKey: "` + result.sslKey + `",
+    sslCertificate: "` + result.sslCertificate + `"
   }`;
 
   fs.writeFile("./config.js", configText, function(err) {

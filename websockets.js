@@ -1,10 +1,38 @@
 var app = require('express')();
-var http = require('http').Server(app);
-var io = require('socket.io')(http);
+var fs = require("fs")
+var config = require("./config");
 
-http.listen(9000, function(){
-  console.log('listening on *:9000');
-});
+
+var sslKey = null;
+try {
+  sslKey = fs.readFileSync(config.sslKey);
+} catch (e) {
+
+}
+
+if (sslKey) {
+    var options = {
+      key: fs.readFileSync(config.sslKey),
+      cert: fs.readFileSync(config.sskCertificate)
+    };
+
+  var https = require('https');
+
+  var server = https.createServer(options, app);
+  var io = require('socket.io')(server);
+
+  server.listen(9000, function(){
+    console.log('listening on *:9000 with ssl');
+  });
+}
+else {
+  var http = require('http').Server(app);
+  var io = require('socket.io')(http);
+
+  http.listen(9000, function(){
+    console.log('listening on *:9000');
+  });
+}
 
 var usersOnline = 0;
 
