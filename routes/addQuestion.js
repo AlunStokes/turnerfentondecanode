@@ -3,6 +3,9 @@ var router = express.Router();
 
 var loadJS = require("../middlewares/loadJS");
 var loadCSS = require("../middlewares/loadCSS");
+var adminRoute = require("../middlewares/adminRoute");
+
+router.use(adminRoute);
 
 //Load default back middlewares
 router.use(require("./back"));
