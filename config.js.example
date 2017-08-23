@@ -17,9 +17,7 @@ var config = {
     noReplyAddress: "no-reply@turnerfentondeca.com"
   },
   host: "turnerfentondeca.com",
-  nodeEnvironment: "production",
-  sslKey: "ssl.key",
-  sslCertificate: "cert.crt"
+  nodeEnvironment: "production"
 }
 
 module.exports = config;
