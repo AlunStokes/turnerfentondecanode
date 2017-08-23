@@ -209,9 +209,20 @@ user.register = function(registrant, callback) {
                                       mailgun.messages().send(mailData, function(err, body) {
                                         if (err) {
                                           errors.push("Server error, try again later");
-                                          user.buildRegistrant(registrant, function(returnRegistrant) {
-                                            callback(errors[0], returnRegistrant);
-                                            return;
+
+                                          connection.query("DELETE FROM members WHERE studentNumber = ?", [registrant.studentNumber.value], function(err, rows, fields) {
+                                            if (err) {
+                                              errors.push("Error registering - contact an administrator");
+                                              user.buildRegistrant(registrant, function(returnRegistrant) {
+                                                callback(errors[0], returnRegistrant);
+                                                return;
+                                              });
+                                            }
+                                            errors.push("Email server error - try again later");
+                                            user.buildRegistrant(registrant, function(returnRegistrant) {
+                                              callback(errors[0], returnRegistrant);
+                                              return;
+                                            });
                                           });
                                         }
 
