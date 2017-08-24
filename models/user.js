@@ -764,7 +764,7 @@ user.getExamResults = function(studentNumber, callback) {
       callback(err);
       return;
     }
-    connection.query("SELECT correct, total, DATE_FORMAT(startTime, '%d %M, %Y') as date, name, examresults.cluster as cluster FROM examresults LEFT JOIN createdexams ON createdexams.id = examresults.examid WHERE studentNumber = ? AND correct IS NOT NULL AND (includeStats = 1 OR examresults.examid = 0) ORDER BY startTime DESC;", [studentNumber], function(err, rows, fields) {
+    connection.query("SELECT correct, total, DATE_FORMAT(startTime, '%Y/%c/%e') as date, name, examresults.cluster as cluster FROM examresults LEFT JOIN createdexams ON createdexams.id = examresults.examid WHERE studentNumber = ? AND correct IS NOT NULL AND (includeStats = 1 OR examresults.examid = 0) ORDER BY startTime DESC;", [studentNumber], function(err, rows, fields) {
       if (err) {
         callback(err);
         return;
