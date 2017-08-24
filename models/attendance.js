@@ -147,6 +147,18 @@ attendance.getSessionResults = function(sessionid, callback) {
           if (users.length == i) {
             break;
           }
+          if (rawData.length == 0) {
+            sessionData.push(
+              {
+                studentNumber: users[i].studentNumber,
+                firstName: users[i].firstName,
+                lastName: users[i].lastName,
+                cluster: users[i].cluster,
+                present: false
+              }
+            );
+            continue;
+          }
           if (i == rawData.length + 1) {
             sessionData.push(
               {
