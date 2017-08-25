@@ -11,11 +11,50 @@ module.exports = function(route) {
       case "front":
       if (!res.locals.loggedIn) {
         res.locals.navbarEntries = [
+
+          {
+            link: "design-timeline",
+            title: "Design Timeline",
+            alias: [
+              "design-timeline"
+            ]
+          },
+          /*{
+            link: "reset-password",
+            title: "Reset Password",
+            alias: [
+              "reset-password"
+            ]
+          },*/
+          {
+            link: "register",
+            title: "Register",
+            alias: [
+              "register"
+            ]
+          },{
+            link: "login",
+            title: "Login",
+            alias: [
+              "login"
+            ]
+          },
           {
             link: "landing",
             title: "Landing",
             alias: [
               "landing"
+            ]
+          }
+        ];
+      }
+      else {
+        res.locals.navbarEntries = [
+          {
+            link: "logout",
+            title: "Logout",
+            alias: [
+              "logout"
             ]
           },
           {
@@ -25,31 +64,6 @@ module.exports = function(route) {
               "design-timeline"
             ]
           },
-          {
-            link: "login",
-            title: "Login",
-            alias: [
-              "login"
-            ]
-          },
-          {
-            link: "register",
-            title: "Register",
-            alias: [
-              "register"
-            ]
-          },
-          {
-            link: "reset-password",
-            title: "Reset Password",
-            alias: [
-              "reset-password"
-            ]
-          }
-        ];
-      }
-      else {
-        res.locals.navbarEntries = [
           {
             link: "home",
             title: "Home",
@@ -62,20 +76,6 @@ module.exports = function(route) {
             title: "Landing",
             alias: [
               "landing"
-            ]
-          },
-          {
-            link: "design-timeline",
-            title: "Design Timeline",
-            alias: [
-              "design-timeline"
-            ]
-          },
-          {
-            link: "logout",
-            title: "Logout",
-            alias: [
-              "logout"
             ]
           }
         ]
