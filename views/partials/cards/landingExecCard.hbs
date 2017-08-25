@@ -1,7 +1,7 @@
 <div class="col-lg-3 col-sm-4 col-xs-12">
   <div class="card">
     <img src="{{this.imgPath}}" alt="{{this.name}}" style="width:100%">
-    <div class="card-container">
+    <div class="card-container" data-cluster="{{this.decaCluster}}">
       <h1 class="text medium normal left dark">{{this.name}}</h1>
       <h1 class="text small normal left dark"><i>{{this.position}}</i></h1>
       <br>
@@ -25,3 +25,18 @@
     </div>
   </div>
 </div>
+
+<style media="screen">
+[data-cluster="marketing"] {
+  background-color: #967;
+}
+[data-cluster="businessadmin"] {
+  background-color: #341;
+}
+[data-cluster="hospitality"] {
+  background-color: #563;
+}
+[data-cluster="finance"] {
+  background-color: #124;
+}
+</style>
