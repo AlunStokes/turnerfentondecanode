@@ -26,6 +26,7 @@ router.get("/", function(req, res, next) {
         decaEvent: "BLTDM",
         decaCluster: "Business Admin",
         imgPath: "images/exec-images/anon.jpg",
+        favQuote: "Hi"
       },
       {
         name: "Bani Arora",
@@ -33,26 +34,23 @@ router.get("/", function(req, res, next) {
         decaEvent: "AAM",
         decaCluster: "Marketing",
         imgPath: "images/exec-images/anon.jpg",
-        numMedals: 0,
-        numPlaques: 0
+        favQuote: "-"
       },
       {
         name: "Maanav Dalal",
-        position: "VP of Communications",
+        position: "VP of Comms",
         decaEvent: "BSM",
         decaCluster: "Marketing",
         imgPath: "images/exec-images/anon.jpg",
-        numMedals: 0,
-        numPlaques: 0
+        favQuote: "-"
       },
       {
         name: "Kabisan Tanedran",
-        position: "VP of Communications",
+        position: "VP of Comms",
         decaEvent: "BSM",
         decaCluster: "Marketing",
         imgPath: "images/exec-images/anon.jpg",
-        numMedals: 0,
-        numPlaques: 0
+        favQuote: "-"
       },
       {
         name: "Dhvani Doshi",
@@ -60,17 +58,15 @@ router.get("/", function(req, res, next) {
         decaEvent: "BLTDM",
         decaCluster: "Business Admin",
         imgPath: "images/exec-images/anon.jpg",
-        numMedals: 0,
-        numPlaques: 0
+        favQuote: "Growth"
       },
       {
         name: "Kavya Kadi",
         position: "VP of Education",
-        decaEvent: "BSM",
+        decaEvent: "MCS",
         decaCluster: "Marketing",
         imgPath: "images/exec-images/Kavya.png",
-        numMedals: 0,
-        numPlaques: 0
+        favQuote: "Life-Changing"
       },
       {
         name: "Khubi Shah",
@@ -78,8 +74,7 @@ router.get("/", function(req, res, next) {
         decaEvent: "PFL",
         decaCluster: "Finance",
         imgPath: "images/exec-images/anon.jpg",
-        numMedals: 0,
-        numPlaques: 0
+        favQuote: "-"
       },
       {
         name: "Richard Li",
@@ -87,8 +82,7 @@ router.get("/", function(req, res, next) {
         decaEvent: "PFL",
         decaCluster: "Finance",
         imgPath: "images/exec-images/anon.jpg",
-        numMedals: 0,
-        numPlaques: 0
+        favQuote: "-"
       },
     {
       name: "Tanzim Pathan",
@@ -96,35 +90,31 @@ router.get("/", function(req, res, next) {
       decaEvent: "HTPS",
       decaCluster: "Hospitality",
       imgPath: "images/exec-images/anon.jpg",
-      numMedals: 0,
-      numPlaques: 0
+      favQuote: "Memorable"
     },
       {
         name: "Hina Rani",
-        position: "Edu - Marketing",
+        position: "Edu (Marketing)",
         decaEvent: "MCS",
         decaCluster: "Marketing",
         imgPath: "images/exec-images/Hina.png",
-        numMedals: 0,
-        numPlaques: 0
+        favQuote: "Inspiring"
       },
       {
         name: "Vanit Shah",
-        position: "Edu - Business Admin",
+        position: "Edu (Biz Admin)",
         decaEvent: "MTDM",
         decaCluster: "Business Admin",
         imgPath: "images/exec-images/anon.jpg",
-        numMedals: 0,
-        numPlaques: 0
+        favQuote: "-"
       },
       {
         name: "Rashi R.",
-        position: "Edu - Hospitality",
-        decaEvent: "HLM",
+        position: "Edu (Hospitality)",
+        decaEvent: "TTDM",
         decaCluster: "Hospitality",
         imgPath: "images/exec-images/anon.jpg",
-        numMedals: 0,
-        numPlaques: 0
+        favQuote: "-"
       },
       {
         name: "Poonam Parmar",
@@ -132,8 +122,7 @@ router.get("/", function(req, res, next) {
         decaEvent: "PMK",
         decaCluster: "Marketing",
         imgPath: "images/exec-images/anon.jpg",
-        numMedals: 0,
-        numPlaques: 0
+        favQuote: "-"
       },
       {
         name: "Dalraj Dhillon",
@@ -141,8 +130,7 @@ router.get("/", function(req, res, next) {
         decaEvent: "PMK",
         decaCluster: "Marketing",
         imgPath: "images/exec-images/anon.jpg",
-        numMedals: 0,
-        numPlaques: 0
+        favQuote: "-"
       },
       {
         name: "Purva Vyas",
@@ -150,8 +138,7 @@ router.get("/", function(req, res, next) {
         decaEvent: "PMK",
         decaCluster: "Marketing",
         imgPath: "images/exec-images/Purva.png",
-        numMedals: 0,
-        numPlaques: 0
+        favQuote: "-"
       }
   ]
 

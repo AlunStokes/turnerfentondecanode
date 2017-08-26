@@ -2,27 +2,10 @@
   <div class="card">
     <img src="{{this.imgPath}}" alt="{{this.name}}" style="width:100%">
     <div class="card-container" data-cluster="{{this.decaCluster}}">
-      <br>
-      <h1 class="text medium normal left dark">{{this.name}}</h1>
-      <h1 class="text small normal left dark"><i>{{this.position}}</i></h1>
-      <br>
-      <p class="text small thin left dark">{{this.decaEvent}} - {{this.decaCluster}}</p>
-      <br>
-      <div class="row">
-        {{#for this.numPlaques}}
-          <div class="col-lg-3 col-xs-3">
-            {{>plaqueSVG}}
-          </div>
-        {{/for}}
-      </div>
-      <br>
-      <div class="row">
-        {{#for this.numMedals}}
-          <div class="col-lg-2 col-xs-2">
-            {{>medalSVG}}
-          </div>
-        {{/for}}
-      </div>
+      <h1 class="text medium normal left bold dark toppad">{{this.name}}</h1>
+      <h1 class="text small normal left dark"><i>{{this.position}} | {{this.decaEvent}}</i></h1>
+    <!---  <p class="text small thin left dark toppadd"> {{this.decaCluster}}</p> --->
+      <blockquote class="small right padfix"><i>{{this.favQuote}}</i></blockquote>
     </div>
   </div>
 </div>
@@ -39,5 +22,19 @@
 }
 [data-cluster="Finance"] {
   background-color: #47a972;
+}
+.toppad{
+  padding-top: 5px;
+}
+.toppadd{
+  padding-top: 10px;
+}
+.padfix{
+  margin-top: 5px;
+  margin-bottom: 5px;
+  margin-left: 2.5px;
+}
+.widthfix{
+  width: 45%;
 }
 </style>
