@@ -42,7 +42,7 @@ router.get("/", function(req, res, next) {
         decaEvent: "BSM",
         decaCluster: "Marketing",
         imgPath: "images/exec-images/anon.jpg",
-        favQuote: "-"
+        favQuote: "Aesthetic"
       },
       {
         name: "Kabisan Tanedran",
@@ -92,6 +92,30 @@ router.get("/", function(req, res, next) {
       imgPath: "images/exec-images/anon.jpg",
       favQuote: "Memorable"
     },
+    {
+      name: "Poonam Parmar",
+      position: "Business Associate",
+      decaEvent: "BOR",
+      decaCluster: "Business Admin",
+      imgPath: "images/exec-images/anon.jpg",
+      favQuote: "Eye-opening"
+    },
+    {
+      name: "Dalraj Dhillon",
+      position: "Business Associate",
+      decaEvent: "PMK",
+      decaCluster: "Marketing",
+      imgPath: "images/exec-images/anon.jpg",
+      favQuote: "-"
+    },
+    {
+      name: "Purva Vyas",
+      position: "Business Associate",
+      decaEvent: "PMK",
+      decaCluster: "Marketing",
+      imgPath: "images/exec-images/Purva.png",
+      favQuote: "-"
+    },
       {
         name: "Hina Rani",
         position: "Edu (Marketing)",
@@ -102,7 +126,7 @@ router.get("/", function(req, res, next) {
       },
       {
         name: "Vanit Shah",
-        position: "Edu (Biz Admin)",
+        position: "Edu (Principles)",
         decaEvent: "MTDM",
         decaCluster: "Business Admin",
         imgPath: "images/exec-images/anon.jpg",
@@ -114,30 +138,6 @@ router.get("/", function(req, res, next) {
         decaEvent: "TTDM",
         decaCluster: "Hospitality",
         imgPath: "images/exec-images/anon.jpg",
-        favQuote: "-"
-      },
-      {
-        name: "Poonam Parmar",
-        position: "Business Associate",
-        decaEvent: "PMK",
-        decaCluster: "Marketing",
-        imgPath: "images/exec-images/anon.jpg",
-        favQuote: "-"
-      },
-      {
-        name: "Dalraj Dhillon",
-        position: "Business Associate",
-        decaEvent: "PMK",
-        decaCluster: "Marketing",
-        imgPath: "images/exec-images/anon.jpg",
-        favQuote: "-"
-      },
-      {
-        name: "Purva Vyas",
-        position: "Business Associate",
-        decaEvent: "PMK",
-        decaCluster: "Marketing",
-        imgPath: "images/exec-images/Purva.png",
         favQuote: "-"
       }
   ]
