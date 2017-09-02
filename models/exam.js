@@ -256,6 +256,7 @@ exam.startExam = function(studentNumber, examData, callback) {
         connection.query("INSERT INTO examresults (modulus, increment, seed, multiplier, offset, total, studentNumber, examHash, cluster) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);", [examData.mod, examData.increment, examData.seed,examData. multiplier, examData.offset, examData.numQuestions, studentNumber, examHash, examData.cluster], function(err, rows, fields) {
           if(err) {
             callback("Server error- try again later");
+            console.log(err);
             console.log(16);
             return;
           }
