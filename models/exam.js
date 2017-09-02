@@ -223,6 +223,7 @@ exam.startExam = function(studentNumber, examData, callback) {
             console.log(a.sql);
             if(err) {
               callback("Server error- try again later");
+              console.log(16);
               console.log(err);
               return;
             }
