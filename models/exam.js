@@ -219,12 +219,10 @@ exam.startExam = function(studentNumber, examData, callback) {
       }
       connection.query("SELECT numQuestions, cluster FROM createdexams WHERE id = ?", [examData], function(err, rows, fields) {
         Utilities.generateRandomString(32, function(examHash) {
-          var a = connection.query("INSERT INTO examresults (examid, total, studentNumber, examHash, cluster) VALUES (?, ?, ?, ?, ?);", [examData, rows[0].numQuestions, studentNumber, examHash, rows[0].cluster], function(err, rows, fields) {
-            console.log(a.sql);
+          connection.query("INSERT INTO examresults (examid, total, studentNumber, examHash, cluster) VALUES (?, ?, ?, ?, ?);", [examData, rows[0].numQuestions, studentNumber, examHash, rows[0].cluster], function(err, rows, fields) {
             if(err) {
               callback("Server error- try again later");
               console.log(16);
-              console.log(err);
               return;
             }
             callback(null, examHash);
