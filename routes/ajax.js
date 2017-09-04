@@ -773,7 +773,6 @@ router.post("/", function(req, res, next) {
 
       case "switchExamLock":
       var examid = parseInt(req.body.examid, 10);
-      console.log(examid);
       connection.query("UPDATE createdexams SET unlocked = IF(unlocked=1, 0, 1) WHERE id = ?;", [examid], function(err, rows, fields) {
         if (err) {
           res.json({
