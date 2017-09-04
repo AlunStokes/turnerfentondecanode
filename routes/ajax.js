@@ -782,6 +782,7 @@ router.post("/", function(req, res, next) {
           return;
         }
         if (rows.affectedRows != 1) {
+          console.log(rows.affectedRows);
           res.json({
             err: "Server error - try again later"
           });
