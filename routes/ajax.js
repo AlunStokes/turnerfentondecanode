@@ -775,6 +775,7 @@ router.post("/", function(req, res, next) {
       var examid = parseInt(req.body.examid, 10);
       connection.query("UPDATE createdexams SET unlocked = IF(unlocked=1, 0, 1) WHERE id = ?;", [examid], function(err, rows, fields) {
         if (err) {
+          console.log(err);
           res.json({
             err: "Server error - try again later"
           });

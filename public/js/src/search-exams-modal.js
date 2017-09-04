@@ -98,7 +98,6 @@ function loadExams(cluster, search, offset, callback) {
     }
   }).done(function(data) {
     if (data.err) {
-      notify(data.err);
       notify("Server error - try again later", "danger", "exclamation");
       return;
     }
