@@ -723,9 +723,8 @@ router.post("/", function(req, res, next) {
         connection.query("INSERT INTO createdexams (name, numQuestions, cluster, unlocked, showScore, includeStats, showTimer) VALUES (?, ?, ?, ?, ?, ?, ?);", [examName, examQuestions.length, examCluster, examUnlocked, examShowScore, examShowScore, examShowTimer], function(err, rows, fields) {
           if (err) {
             connection.release();
-            console.log(err);
             res.json({
-              err: "Serer error - exam not created"
+              err: "Server error - exam not created"
             });
             return;
           }
@@ -736,9 +735,8 @@ router.post("/", function(req, res, next) {
           connection.query("INSERT INTO createdexamquestions (examid, questionid) VALUES ?", [insertArray], function(err, rows, fields) {
             connection.release();
             if (err) {
-              console.log(err);
               res.json({
-                err: "Serer error - exam not created"
+                err: "Server error - exam not created"
               });
               return;
             }
