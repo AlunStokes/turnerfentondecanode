@@ -773,16 +773,15 @@ router.post("/", function(req, res, next) {
 
       case "switchExamLock":
       var examid = parseInt(req.body.examid, 10);
+      console.log(examid);
       connection.query("UPDATE createdexams SET unlocked = IF(unlocked=1, 0, 1) WHERE id = ?;", [examid], function(err, rows, fields) {
         if (err) {
-          console.log(err);
           res.json({
             err: "Server error - try again later"
           });
           return;
         }
         if (rows.affectedRows != 1) {
-          console.log(rows.affectedRows);
           res.json({
             err: "Server error - try again later"
           });
