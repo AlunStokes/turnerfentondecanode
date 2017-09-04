@@ -112,7 +112,7 @@ router.get("/", function(req, res, next) {
       break;
 
       case "canSearchQuestions":
-      connection.query("SELECT value FROM websitesettings WHERE setting = ?", ["searchQuestionsOpen"], function(err, rows, fields) {
+      connection.query("SELECT value FROM websiteSettings WHERE setting = ?", ["searchQuestionsOpen"], function(err, rows, fields) {
         if (err) {
           res.json({
             err: "Server error"
@@ -723,6 +723,7 @@ router.post("/", function(req, res, next) {
         connection.query("INSERT INTO createdexams (name, numQuestions, cluster, unlocked, showScore, includeStats, showTimer) VALUES (?, ?, ?, ?, ?, ?, ?);", [examName, examQuestions.length, examCluster, examUnlocked, examShowScore, examShowScore, examShowTimer], function(err, rows, fields) {
           if (err) {
             connection.release();
+            console.log(err);
             res.json({
               err: "Serer error - exam not created"
             });
@@ -735,6 +736,7 @@ router.post("/", function(req, res, next) {
           connection.query("INSERT INTO createdexamquestions (examid, questionid) VALUES ?", [insertArray], function(err, rows, fields) {
             connection.release();
             if (err) {
+              console.log(err);
               res.json({
                 err: "Serer error - exam not created"
               });
