@@ -724,7 +724,7 @@ router.post("/", function(req, res, next) {
           if (err) {
             connection.release();
             res.json({
-              err: "Serer error - exam not created"
+              err: "Server error - exam not created"
             });
             return;
           }
@@ -736,7 +736,7 @@ router.post("/", function(req, res, next) {
             connection.release();
             if (err) {
               res.json({
-                err: "Serer error - exam not created"
+                err: "Server error - exam not created"
               });
               return;
             }
