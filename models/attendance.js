@@ -67,7 +67,6 @@ attendance.getSessionData = function(sessionid, callback) {
     });
   });
 }
-
 attendance.getSessionids = function(callback) {
   db.pool.getConnection(function(err, connection) {
     if (err) {

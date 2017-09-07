@@ -28,8 +28,7 @@
       {{#if loggedIn}}
         <h1 class="text large thin light center" id="welcome-text">Welcome, {{firstName}}</h1>
         <h1 class="text medium thin light center underlined" id="welcome-subtitle"><a href="home">go to your dashboard</a></h1>
-        <h1 class="text large thin light center">or,</h1>
-        <h1 class="text medium thin light center underlined"><a href="logout">logout</a></h1>
+        <h1 class="text large thin light center">or, <a href="logout">logout</a></h1>
       {{else}}
         {{>loginForm}}
       {{/if}}
