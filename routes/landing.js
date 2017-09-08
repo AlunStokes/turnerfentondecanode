@@ -25,7 +25,7 @@ router.get("/", function(req, res, next) {
         position: "President",
         decaEvent: "BLTDM",
         decaCluster: "Business Admin",
-        imgPath: "images/exec-images/anon.jpg",
+        imgPath: "images/exec-images/Sonali.png",
         favQuote: "Hi"
       },
       {
@@ -33,7 +33,7 @@ router.get("/", function(req, res, next) {
         position: "Vice President",
         decaEvent: "AAM",
         decaCluster: "Marketing",
-        imgPath: "images/exec-images/anon.jpg",
+        imgPath: "images/exec-images/Bani.png",
         favQuote: "-"
       },
       {
@@ -41,15 +41,15 @@ router.get("/", function(req, res, next) {
         position: "VP of Comms",
         decaEvent: "BSM",
         decaCluster: "Marketing",
-        imgPath: "images/exec-images/anon.jpg",
+        imgPath: "images/exec-images/Maanav.png",
         favQuote: "Aesthetic"
       },
       {
-        name: "Kabisan Tanedran",
+        name: "Kabisan Thanedran",
         position: "VP of Comms",
         decaEvent: "BSM",
         decaCluster: "Marketing",
-        imgPath: "images/exec-images/anon.jpg",
+        imgPath: "images/exec-images/Kabisan.png",
         favQuote: "-"
       },
       {
@@ -57,7 +57,7 @@ router.get("/", function(req, res, next) {
         position: "VP of Education",
         decaEvent: "BLTDM",
         decaCluster: "Business Admin",
-        imgPath: "images/exec-images/anon.jpg",
+        imgPath: "images/exec-images/Dhvani.png",
         favQuote: "Growth"
       },
       {
@@ -81,7 +81,7 @@ router.get("/", function(req, res, next) {
         position: "VP of Finance",
         decaEvent: "PFL",
         decaCluster: "Finance",
-        imgPath: "images/exec-images/anon.jpg",
+        imgPath: "images/exec-images/Richard.png",
         favQuote: "-"
       },
     {
@@ -93,11 +93,11 @@ router.get("/", function(req, res, next) {
       favQuote: "Memorable"
     },
     {
-      name: "Poonam Parmar",
+      name: "Poonum Parmar",
       position: "Business Associate",
       decaEvent: "BOR",
       decaCluster: "Business Admin",
-      imgPath: "images/exec-images/anon.jpg",
+      imgPath: "images/exec-images/Poonum.png",
       favQuote: "Eye-opening"
     },
     {
@@ -105,7 +105,7 @@ router.get("/", function(req, res, next) {
       position: "Business Associate",
       decaEvent: "PMK",
       decaCluster: "Marketing",
-      imgPath: "images/exec-images/anon.jpg",
+      imgPath: "images/exec-images/Dalraj.png",
       favQuote: "-"
     },
     {
@@ -129,15 +129,15 @@ router.get("/", function(req, res, next) {
         position: "Edu (Principles)",
         decaEvent: "MTDM",
         decaCluster: "Business Admin",
-        imgPath: "images/exec-images/anon.jpg",
-        favQuote: "-"
+        imgPath: "images/exec-images/Vanit.png",
+        favQuote: "Breathtaking"
       },
       {
         name: "Rashi R.",
         position: "Edu (Hospitality)",
         decaEvent: "TTDM",
         decaCluster: "Hospitality",
-        imgPath: "images/exec-images/anon.jpg",
+        imgPath: "images/exec-images/Rashi.png",
         favQuote: "-"
       }
   ]
