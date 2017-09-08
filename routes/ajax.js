@@ -112,9 +112,8 @@ router.get("/", function(req, res, next) {
       break;
 
       case "canSearchQuestions":
-      connection.query("SELECT value FROM websiteSettings WHERE setting = ?", ["searchQuestionsOpen"], function(err, rows, fields) {
+      connection.query("SELECT value FROM websitesettings WHERE setting = ?", ["searchQuestionsOpen"], function(err, rows, fields) {
         if (err) {
-          console.log(err);
           res.json({
             err: "Server error"
           });
