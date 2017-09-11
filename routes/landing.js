@@ -25,7 +25,7 @@ router.get("/", function(req, res, next) {
       position: "Chapter Advisor",
       decaEvent: "Teacher",
       decaCluster: "Advisor",
-      imgPath: "images/exec-images/sbomari.jpg",
+      imgPath: "images/exec-images/sbOmari.jpg",
       favQuote: "I'm the advisor, I don't need a Word"
     },
     {
@@ -81,7 +81,7 @@ router.get("/", function(req, res, next) {
         position: "VP of Operations",
         decaEvent: "PFL",
         decaCluster: "Finance",
-        imgPath: "images/exec-images/sbkhubi.jpg",
+        imgPath: "images/exec-images/sbKhubi.jpg",
         favQuote: "Exciting"
       },
       {
@@ -97,7 +97,7 @@ router.get("/", function(req, res, next) {
       position: "Writtens Director",
       decaEvent: "HTPS",
       decaCluster: "Hospitality",
-      imgPath: "images/exec-images/sbtanzim.jpg",
+      imgPath: "images/exec-images/sbTanzim.jpg",
       favQuote: "Memorable"
     },
     {
