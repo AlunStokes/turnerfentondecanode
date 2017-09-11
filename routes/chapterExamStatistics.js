@@ -16,7 +16,7 @@ router.use(loadCSS([
 ]));
 router.use(loadJS([
   "https://cdn.datatables.net/v/bs/dt-1.10.15/b-1.4.0/b-colvis-1.4.0/b-html5-1.4.0/fh-3.1.2/r-2.1.1/sc-1.4.2/datatables.min.js",
-  "js/dist/chapter-exam-statistics.min.js"
+  "js/src/chapter-exam-statistics.js"
 ]));
 
 router.get("/", function(req, res, next) {

@@ -3,6 +3,16 @@
   <!-- Exam results chart -->
   <div class="box">
     <div class="box-header">
+      <select id="exam-id-input" style="float:left; height:30px;">
+        {{#each examids}}
+          {{#if this.selected}}
+            <option value='{{this.id}}' selected>{{this.name}}</option>
+          {{else}}
+            <option value='{{this.id}}'>{{this.name}}</option>
+          {{/if}}
+        {{/each}}
+      </select>
+      <br>
     </div>
   </div>
   <div class="box-body">

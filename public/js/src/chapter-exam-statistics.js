@@ -1,5 +1,16 @@
 $(document).ready(function() {
 
+  initialiseTable();
+
+  examidInput = $("#exam-id-input");
+
+  examidInput.on('change', function() {
+    window.location = 'chapter-exam-statistics?examid=' + examidInput.val();
+  });
+
+});
+
+function initialiseTable() {
   //Initialise results chart
   $(function () {
     $('#exam-results-table').dataTable({
@@ -24,4 +35,4 @@ $(document).ready(function() {
       dom: 'B'
     });
   });
-});
+}

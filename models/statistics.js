@@ -49,13 +49,20 @@ statistics.getNumQuestionsAnswered = function(callback) {
   });
 }
 
-statistics.getChapterExamResults = function(callback) {
+statistics.getChapterExamResults = function(examid, callback) {
   db.pool.getConnection(function(err, connection) {
     if (err) {
       callback(err);
       return;
     }
-    connection.query("SELECT members.studentNumber as studentNumber, firstName, lastName, correct, total, DATE_FORMAT(startTime, '%Y/%c/%e') as date, name, examresults.cluster as cluster FROM examresults LEFT JOIN createdexams ON createdexams.id = examresults.examid JOIN members on members.studentNumber = examresults.studentNumber AND correct IS NOT NULL AND (includeStats = 1 OR examresults.examid = 0) ORDER BY startTime DESC;", function(err, rows, fields) {
+    var query;
+    if (examid == -1) {
+      query = "SELECT members.studentNumber as studentNumber, firstName, lastName, correct, total, DATE_FORMAT(startTime, '%Y/%c/%e') as date, name, examresults.cluster as cluster FROM examresults LEFT JOIN createdexams ON createdexams.id = examresults.examid JOIN members on members.studentNumber = examresults.studentNumber AND correct IS NOT NULL ORDER BY startTime DESC;";
+    }
+    else {
+      query = "SELECT members.studentNumber as studentNumber, firstName, lastName, correct, total, DATE_FORMAT(startTime, '%Y/%c/%e') as date, name, examresults.cluster as cluster FROM examresults LEFT JOIN createdexams ON createdexams.id = examresults.examid JOIN members on members.studentNumber = examresults.studentNumber AND correct IS NOT NULL WHERE examid=" + examid + " ORDER BY startTime DESC;";
+    }
+    connection.query(query, function(err, rows, fields) {
       connection.release();
       if (err) {
         callback(err);
@@ -78,6 +85,43 @@ statistics.getChapterExamResults = function(callback) {
         );
       }
       callback(null, examResults);
+      return;
+    });
+  });
+}
+
+statistics.getExamids = function(callback) {
+  db.pool.getConnection(function(err, connection) {
+    if (err) {
+      callback(err);
+      return;
+    }
+    connection.query("SELECT id, name FROM createdexams ORDER BY id DESC;", function(err, rows, fields) {
+      connection.release();
+      if (err) {
+        callback(err);
+        return;
+      }
+      var examids = [];
+      examids.push(
+        {
+          id: -1,
+          name: "All Exams"
+        },
+        {
+          id: 0,
+          name: "Random"
+        }
+      );
+      for (var i = 0; i < rows.length; i++) {
+        examids.push(
+          {
+            id: rows[i].id,
+            name: rows[i].name
+          }
+        );
+      }
+      callback(null, examids);
       return;
     });
   });
