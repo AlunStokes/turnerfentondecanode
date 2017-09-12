@@ -12,6 +12,7 @@ module.exports = function(req, res, next) {
     password: {value: req.body.password, valid: true},
     passwordConfirm: {value: req.body.passwordConfirm, valid: true},
     grade: {value: parseInt(req.body.grade), valid: true},
+    programName: {value: req.body.programName, valid: true},
     alum: {value: req.body.alum == "true" ? 1: 0, valid: true}
   }
 

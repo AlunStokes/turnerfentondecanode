@@ -26,6 +26,14 @@
         <input type="password" class="login-field text thin" value="" placeholder="password (confirm)" id="password-confirm" name="passwordConfirm" autocomplete="off" data-validation="required">
       </div>
       <div class="control-group">
+        <select class="text thin" name="program">
+          <option class="text thin" value="Academic" {{#if registrant.academic}}selected="selected"{{/if}}>academic</option>
+          <option class="text thin" value="IB" {{#if registrant.ib}}selected="selected"{{/if}}>ib</option>
+          <option class="text thin" value="French Immersion" {{#if registrant.frenchImmersion}}selected="selected"{{/if}}>french immersion</option>
+          <option class="text thin" value="Vocational" {{#if registrant.vocational}}selected="selected"{{/if}}>vocational</option>
+        </select>
+      </div>
+      <div class="control-group">
         <select class="text thin" name="grade">
           <option class="text thin" value="9" {{#if registrant.gradeNine}}selected="selected"{{/if}}>grade nine</option>
           <option class="text thin" value="10" {{#if registrant.gradeTen}}selected="selected"{{/if}}>grade ten</option>

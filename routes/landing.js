@@ -26,7 +26,7 @@ router.get("/", function(req, res, next) {
       decaEvent: "Teacher",
       decaCluster: "Advisor",
       imgPath: "images/exec-images/sbOmari.jpg",
-      favQuote: "I'm the advisor, I don't need a Word"
+      favQuote: "Synergy"
     },
     {
         name: "Sonali Puri",
