@@ -159,7 +159,7 @@ user.register = function(registrant, callback) {
                       else {
                         bcrypt.hash(registrant.password.value, config.hashComplexity, function(err, hash) {
                           Utilities.generateRandomString(32, function(confirmEmailCode) {
-                            connection.query("INSERT INTO members (firstName, lastName, email, password, studentNumber, confirmEmailCode, grade, alum, admin) VALUES (?,?,?,?,?,?,?,?,?)", [registrant.firstName.value, registrant.lastName.value, registrant.email.value, hash, registrant.studentNumber.value, confirmEmailCode, registrant.grade.value, registrant.alum.value, 0], function(err, rows, fields) {
+                            connection.query("INSERT INTO members (firstName, lastName, email, password, studentNumber, confirmEmailCode, grade, programName, alum, admin) VALUES (?,?,?,?,?,?,?,?,?,?)", [registrant.firstName.value, registrant.lastName.value, registrant.email.value, hash, registrant.studentNumber.value, confirmEmailCode, registrant.grade.value, registrant.alum.value, 0], function(err, rows, fields) {
                               if (err) {
                                 errors.push("Server error, try again later");
                                 user.buildRegistrant(registrant, function(returnRegistrant) {

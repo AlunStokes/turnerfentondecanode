@@ -122,7 +122,7 @@ router.get("/", function(req, res, next) {
       decaEvent: "PMK",
       decaCluster: "Marketing",
       imgPath: "images/exec-images/sbPurva.jpg",
-      favQuote: "-"
+      favQuote: "Mind-Blowing"
     },
       {
         name: "Hina Rani",
