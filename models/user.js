@@ -807,7 +807,60 @@ user.uploadPhoto = function(image, callback) {
 
 }
 
-
+user.getUsers = function(callback) {
+  db.pool.getConnection(function(err, connection) {
+    if (err) {
+      callback(err);
+      return;
+    }
+    connection.query("SELECT firstName, lastName, email, studentNumber, grade, alum, admin, decaCluster, decaEvent, passwordResetCode, confirmEmailCode, programName FROM members", function(err, rows, fields) {
+      if (err) {
+        callback(err);
+        return;
+      }
+      if (rows.length == 0) {
+        callback("No attendance data");
+        return;
+      }
+      var users = [];
+      for (var i = 0; i < rows.length; i++) {
+        users.push(
+          {
+            firstName: rows[i].firstName,
+            lastName: rows[i].lastName,
+            studentNumber: rows[i].studentNumber,
+            email: rows[i].email,
+            grade: rows[i].grade,
+            alum: rows[i].alum == 1,
+            admin: rows[i].admin == 1,
+            decaCluster: rows[i].decaCluster != null ? rows[i].decaCluster : "Not Chosen",
+            decaEvent: rows[i].decaEvent != null ? rows[i].decaEvent : "Not Chosen",
+            confirmedEmail: rows[i].confirmEmailCode == null,
+            requestedPasswordReset: rows[i].passwordResetCode != null
+          }
+        );
+        switch(rows[i].programName) {
+          case "ib":
+          users[i].program = "IB";
+          break;
+          case "academic":
+          users[i].program = "Academic";
+          break;
+          case "vocational":
+          users[i].program = "Vocational";
+          break;
+          case "french immersion":
+          users[i].program = "French Immersion";
+          break;
+          default:
+          users[i].program = "Unknown";
+        }
+      }
+      callback(null, users);
+      return;
+    });
+  });
+}
 
 module.exports = user;
 
