@@ -19,7 +19,6 @@ function initialiseTable() {
       paging: false,
       info: true,
       colReorder: true,
-      searching: false,
       autoWidth: true,
       responsive: true,
       iDisplayLength: 100,
@@ -32,7 +31,7 @@ function initialiseTable() {
           title: 'exam-results-' + Date.now()
         }
       ],
-      dom: 'B'
+      dom: 'Bfrtip'
     });
   });
 }
