@@ -1,6 +1,10 @@
 $(document).ready(function() {
 
   var givenStudentNumber = findGetParameter("studentNumber");
+  if (givenStudentNumber && !admin && givenStudentNumber != studentNumber) {
+    notify("You aren't allowed to view other users' stats", "warning", "exclamation");
+    givenStudentNumber = null;
+  }
 
   $.ajax({
       type: "GET",
