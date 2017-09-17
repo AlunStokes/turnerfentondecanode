@@ -1,9 +1,13 @@
 $(document).ready(function() {
+
+  var givenStudentNumber = findGetParameter("studentNumber");
+
   $.ajax({
       type: "GET",
       url: "ajax",
       data: {
-        ajaxid: "getExamResultsLine"
+        ajaxid: "getExamResultsLine",
+        studentNumber: givenStudentNumber
       },
     }).done(function(data){
       if (data.err) {

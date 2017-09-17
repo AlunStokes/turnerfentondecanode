@@ -1,11 +1,14 @@
 $(document).ready(function() {
 
+  var givenStudentNumber = findGetParameter("studentNumber");
+
   //Load cluster proficiency pie chart
   $.ajax({
     type: "GET",
     url: "ajax",
     data: {
-      ajaxid : "getClusterProficiency"
+      ajaxid : "getClusterProficiency",
+      studentNumber: givenStudentNumber
     },
   }).done(function(data){
     if (data.err) {
