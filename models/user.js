@@ -833,8 +833,8 @@ user.getUsers = function(callback) {
             grade: rows[i].grade,
             alum: rows[i].alum == 1,
             admin: rows[i].admin == 1,
-            decaCluster: rows[i].decaCluster != null ? rows[i].decaCluster : "Not Chosen",
-            decaEvent: rows[i].decaEvent != null ? rows[i].decaEvent : "Not Chosen",
+            decaCluster: rows[i].decaCluster != null ? rows[i].decaCluster.charAt(0).toUpperCase() + rows[i].decaCluster.slice(1) : "Not Chosen",
+            decaEvent: rows[i].decaEvent != null ? rows[i].decaEvent.toUpperCase() : "Not Chosen",
             confirmedEmail: rows[i].confirmEmailCode == null,
             requestedPasswordReset: rows[i].passwordResetCode != null
           }
