@@ -20,6 +20,7 @@
     <table id="exam-results-table" class="table table-bordered table-hover">
       <thead>
         <tr>
+          <th>Indiv. Stats</th>
           <th>First Name</th>
           <th>Last Name</th>
           <th>Student Number</th>
@@ -34,6 +35,7 @@
       <tbody id="table-body">
         {{#each examResults}}
         <tr>
+          <th><a href="/personal-exam-statistics?studentNumber={{this.studentNumber}}" target="_blank" class="active-color btn btn-default">Indiv. Stats</a></th>
           <td>{{this.firstName}}</td>
           <td>{{this.lastName}}</td>
           <td>{{this.studentNumber}}</td>
@@ -48,6 +50,7 @@
       </tbody>
       <tfoot id="table-footer">
         <tr>
+          <th>Indiv. Stats</th>
           <th>First Name</th>
           <th>Last Name</th>
           <th>Student Number</th>

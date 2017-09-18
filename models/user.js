@@ -277,6 +277,28 @@ user.register = function(registrant, callback) {
 
 }
 
+user.getName = function(studentNumber, callback) {
+  db.pool.getConnection(function(err, connection) {
+    if (err) {
+      callback("Server error, try again later");
+      return;
+    }
+    connection.query("SELECT firstName, lastName FROM members WHERE studentNumber=?;", [studentNumber], function(err, rows, fields) {
+      if (err) {
+        callback("Could not retrieve student name");
+        return;
+      }
+      if (rows.length == 0) {
+        callback("Student number doesn't match a registered user");
+        return;
+      }
+      var name = rows[0].firstName + " " + rows[0].lastName;
+      callback(null, name);
+      return;
+    });
+  });
+}
+
 //Builds registrant object with only valid fields (only defines value), from two dimensional registrant object (which defines value/valid)
 user.buildRegistrant = function(registrant, callback) {
   //Creates new registrant object which contains only the valid fields to be passed back into the form when the page is reloaded

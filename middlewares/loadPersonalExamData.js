@@ -12,7 +12,15 @@ module.exports = function(req, res, next) {
       return;
     }
     res.locals.examResults = examResults;
-    next();
-    return;
+    User.getName(studentNumber, function(err, name) {
+      if (err) {
+        res.locals.errors.push(err);
+        next();
+        return;
+      }
+      res.locals.name = name;
+      next();
+      return;
+    });
   });
 }
