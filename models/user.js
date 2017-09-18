@@ -277,6 +277,28 @@ user.register = function(registrant, callback) {
 
 }
 
+user.getName = function(studentNumber, callback) {
+  db.pool.getConnection(function(err, connection) {
+    if (err) {
+      callback("Server error, try again later");
+      return;
+    }
+    connection.query("SELECT firstName, lastName FROM members WHERE studentNumber=?;", [studentNumber], function(err, rows, fields) {
+      if (err) {
+        callback("Could not retrieve student name");
+        return;
+      }
+      if (rows.length == 0) {
+        callback("Student number doesn't match a registered user");
+        return;
+      }
+      var name = rows[0].firstName + " " + rows[0].lastName;
+      callback(null, name);
+      return;
+    });
+  });
+}
+
 //Builds registrant object with only valid fields (only defines value), from two dimensional registrant object (which defines value/valid)
 user.buildRegistrant = function(registrant, callback) {
   //Creates new registrant object which contains only the valid fields to be passed back into the form when the page is reloaded
@@ -807,7 +829,60 @@ user.uploadPhoto = function(image, callback) {
 
 }
 
-
+user.getUsers = function(callback) {
+  db.pool.getConnection(function(err, connection) {
+    if (err) {
+      callback(err);
+      return;
+    }
+    connection.query("SELECT firstName, lastName, email, studentNumber, grade, alum, admin, decaCluster, decaEvent, passwordResetCode, confirmEmailCode, programName FROM members", function(err, rows, fields) {
+      if (err) {
+        callback(err);
+        return;
+      }
+      if (rows.length == 0) {
+        callback("No attendance data");
+        return;
+      }
+      var users = [];
+      for (var i = 0; i < rows.length; i++) {
+        users.push(
+          {
+            firstName: rows[i].firstName,
+            lastName: rows[i].lastName,
+            studentNumber: rows[i].studentNumber,
+            email: rows[i].email,
+            grade: rows[i].grade,
+            alum: rows[i].alum == 1,
+            admin: rows[i].admin == 1,
+            decaCluster: rows[i].decaCluster != null ? rows[i].decaCluster.charAt(0).toUpperCase() + rows[i].decaCluster.slice(1) : "Not Chosen",
+            decaEvent: rows[i].decaEvent != null ? rows[i].decaEvent.toUpperCase() : "Not Chosen",
+            confirmedEmail: rows[i].confirmEmailCode == null,
+            requestedPasswordReset: rows[i].passwordResetCode != null
+          }
+        );
+        switch(rows[i].programName) {
+          case "ib":
+          users[i].program = "IB";
+          break;
+          case "academic":
+          users[i].program = "Academic";
+          break;
+          case "vocational":
+          users[i].program = "Vocational";
+          break;
+          case "french immersion":
+          users[i].program = "French Immersion";
+          break;
+          default:
+          users[i].program = "Unknown";
+        }
+      }
+      callback(null, users);
+      return;
+    });
+  });
+}
 
 module.exports = user;
 

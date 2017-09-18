@@ -372,7 +372,11 @@ router.get("/", function(req, res, next) {
 
 
       case "getClusterProficiency":
-      User.getClusterProficiency(req.session.studentNumber, function(err, clusterProficiency) {
+      var studentNumber = req.session.studentNumber;
+      if (req.query.studentNumber && req.session.admin) {
+        studentNumber = req.query.studentNumber;
+      }
+      User.getClusterProficiency(studentNumber, function(err, clusterProficiency) {
         if (err) {
           res.json({
             err: err
@@ -388,7 +392,11 @@ router.get("/", function(req, res, next) {
       break;
 
       case "getExamResultsLine":
-      User.getExamResultsLine(req.session.studentNumber, function(err, examResults) {
+      var studentNumber = req.session.studentNumber;
+      if (req.query.studentNumber && req.session.admin) {
+        studentNumber = req.query.studentNumber;
+      }
+      User.getExamResultsLine(studentNumber, function(err, examResults) {
         if (err) {
           res.json({
             err: err

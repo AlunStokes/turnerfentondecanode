@@ -131,6 +131,14 @@ module.exports = function(route) {
               "attendance",
               "check-attendance"
             ]
+          },
+          {
+            link: "student-directory",
+            title: "Student Directory",
+            icon: "users",
+            alias: [
+              "student-directory"
+            ]
           }
           /*
           {

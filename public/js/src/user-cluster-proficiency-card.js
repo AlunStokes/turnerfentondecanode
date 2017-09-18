@@ -1,11 +1,18 @@
 $(document).ready(function() {
 
+  var givenStudentNumber = findGetParameter("studentNumber");
+  if (givenStudentNumber && !admin && givenStudentNumber != studentNumber) {
+    notify("You aren't allowed to view other users' stats", "warning", "exclamation");
+    givenStudentNumber = null;
+  }
+
   //Load cluster proficiency pie chart
   $.ajax({
     type: "GET",
     url: "ajax",
     data: {
-      ajaxid : "getClusterProficiency"
+      ajaxid : "getClusterProficiency",
+      studentNumber: givenStudentNumber
     },
   }).done(function(data){
     if (data.err) {

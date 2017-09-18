@@ -1,0 +1,84 @@
+<div class="container-fluid">
+  <h1 class="text thin medium left">Student Directory</h1>
+  <div class="box">
+    <div class="box-header">
+
+    </div>
+  </div>
+  <div class="box-body">
+    <table id="directory-table" class="table table-bordered table-hover">
+      <thead>
+        <tr>
+          <th>First Name</th>
+          <th>Last Name</th>
+          <th>Student Number</th>
+          <th>Email</th>
+          <th>Grade</th>
+          <th>Program</th>
+          <th>Cluster</th>
+          <th>Event</th>
+          <th>Alumnus/Alumna</th>
+          <th>Admin</th>
+          <th>Confirmed Email</th>
+          <th>Requested Password Reset</th>
+        </tr>
+      </thead>
+      <tbody id="table-body">
+        {{#each users}}
+        <tr>
+          <td>{{this.firstName}}</td>
+          <td>{{this.lastName}}</td>
+          <td>{{this.studentNumber}}</td>
+          <td>{{this.email}}</td>
+          <td>{{this.grade}}</td>
+          <td>{{this.program}}</td>
+          <td>{{this.decaCluster}}</td>
+          <td>{{this.decaEvent}}</td>
+          {{#if this.alum}}
+          <td>X</td>
+          {{else}}
+          <td></td>
+          {{/if}}
+          {{#if this.admin}}
+          <td>X</td>
+          {{else}}
+          <td></td>
+          {{/if}}
+          {{#if this.confirmedEmail}}
+          <td>X</td>
+          {{else}}
+          <td></td>
+          {{/if}}
+          {{#if this.requestedPasswordReset}}
+          <td>X</td>
+          {{else}}
+          <td></td>
+          {{/if}}
+        </tr>
+        {{/each}}
+      </tbody>
+      <tfoot id="table-footer">
+        <tr>
+          <th>First Name</th>
+          <th>Last Name</th>
+          <th>Student Number</th>
+          <th>Email</th>
+          <th>Grade</th>
+          <th>Program</th>
+          <th>Cluster</th>
+          <th>Event</th>
+          <th>Alumnus/Alumna</th>
+          <th>Admin</th>
+          <th>Confirmed Email</th>
+          <th>Requested Password Reset</th>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+</div>
+
+<style media="screen">
+.btn-group {
+  display: inline;
+}
+</style>
