@@ -57,10 +57,10 @@ statistics.getChapterExamResults = function(examid, callback) {
     }
     var query;
     if (examid == -1) {
-      query = "SELECT members.studentNumber as studentNumber, firstName, lastName, correct, total, DATE_FORMAT(startTime, '%Y/%c/%e') as date, name, examresults.cluster as cluster FROM examresults LEFT JOIN createdexams ON createdexams.id = examresults.examid JOIN members on members.studentNumber = examresults.studentNumber AND correct IS NOT NULL ORDER BY startTime DESC;";
+      query = "SELECT members.studentNumber as studentNumber, firstName, lastName, correct, total, DATE_FORMAT(startTime, '%Y/%c/%e %k:%i:%s') as date, name, examresults.cluster as cluster FROM examresults LEFT JOIN createdexams ON createdexams.id = examresults.examid JOIN members on members.studentNumber = examresults.studentNumber AND correct IS NOT NULL ORDER BY startTime DESC;";
     }
     else {
-      query = "SELECT members.studentNumber as studentNumber, firstName, lastName, correct, total, DATE_FORMAT(startTime, '%Y/%c/%e') as date, name, examresults.cluster as cluster FROM examresults LEFT JOIN createdexams ON createdexams.id = examresults.examid JOIN members on members.studentNumber = examresults.studentNumber AND correct IS NOT NULL WHERE examid=" + examid + " ORDER BY startTime DESC;";
+      query = "SELECT members.studentNumber as studentNumber, firstName, lastName, correct, total, DATE_FORMAT(startTime, '%Y/%c/%e %k:%i:%s') as date, name, examresults.cluster as cluster FROM examresults LEFT JOIN createdexams ON createdexams.id = examresults.examid JOIN members on members.studentNumber = examresults.studentNumber AND correct IS NOT NULL WHERE examid=" + examid + " ORDER BY startTime DESC;";
     }
     connection.query(query, function(err, rows, fields) {
       connection.release();
