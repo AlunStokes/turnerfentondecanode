@@ -668,13 +668,21 @@ user.getClusterProficiency = function(studentNumber, callback) {
   });
 }
 
-user.getExamResultsLine = function(studentNumber, callback) {
+user.getExamResultsLine = function(studentNumber, admin, callback) {
   db.pool.getConnection(function(err, connection) {
     if (err) {
       callback(err);
       return;
     }
-    connection.query("SELECT correct, total, DATE_FORMAT(startTime, '%M %Y') as date FROM examresults LEFT JOIN createdexams ON createdexams.id = examresults.examid WHERE studentNumber = ? AND correct IS NOT NULL AND (includestats = 1 OR examresults.examid = 0) ORDER BY startTime ASC", [studentNumber], function(err, rows, fields) {
+    var query;
+    //Check if admin to determine whether or not to show exams where stats are not shown
+    if(admin) {
+      query = "SELECT correct, total, DATE_FORMAT(startTime, '%M %Y') as date FROM examresults LEFT JOIN createdexams ON createdexams.id = examresults.examid WHERE studentNumber = ? AND correct IS NOT NULL ORDER BY startTime ASC";
+    }
+    else {
+      query = "SELECT correct, total, DATE_FORMAT(startTime, '%M %Y') as date FROM examresults LEFT JOIN createdexams ON createdexams.id = examresults.examid WHERE studentNumber = ? AND correct IS NOT NULL AND (includestats = 1 OR examresults.examid = 0) ORDER BY startTime ASC";
+    }
+    connection.query(query, [studentNumber], function(err, rows, fields) {
       if (err) {
         callback(err);
         return;
@@ -794,13 +802,21 @@ user.getMostIncorrectlyAnsweredBy = function(studentNumber, callback) {
   });
 }
 
-user.getExamResults = function(studentNumber, callback) {
+user.getExamResults = function(studentNumber, admin, callback) {
   db.pool.getConnection(function(err, connection) {
     if (err) {
       callback(err);
       return;
     }
-    connection.query("SELECT correct, total, DATE_FORMAT(startTime, '%Y/%c/%e') as date, name, examresults.cluster as cluster FROM examresults LEFT JOIN createdexams ON createdexams.id = examresults.examid WHERE studentNumber = ? AND correct IS NOT NULL AND (includeStats = 1 OR examresults.examid = 0) ORDER BY startTime DESC;", [studentNumber], function(err, rows, fields) {
+    var query;
+    //Check if admin to determine whether or not to show exams where stats are not shown
+    if(admin) {
+      query = "SELECT correct, total, DATE_FORMAT(startTime, '%Y/%c/%e') as date, name, examresults.cluster as cluster FROM examresults LEFT JOIN createdexams ON createdexams.id = examresults.examid WHERE studentNumber = ? AND correct IS NOT NULL ORDER BY startTime DESC;";
+    }
+    else {
+      query = "SELECT correct, total, DATE_FORMAT(startTime, '%Y/%c/%e') as date, name, examresults.cluster as cluster FROM examresults LEFT JOIN createdexams ON createdexams.id = examresults.examid WHERE studentNumber = ? AND correct IS NOT NULL AND (includeStats = 1 OR examresults.examid = 0) ORDER BY startTime DESC;";
+    }
+    connection.query(query, [studentNumber], function(err, rows, fields) {
       if (err) {
         callback(err);
         return;

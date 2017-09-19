@@ -5,7 +5,7 @@ module.exports = function(req, res, next) {
   if (req.query.studentNumber && req.session.admin) {
     studentNumber = req.query.studentNumber;
   }
-  User.getExamResults(studentNumber, function(err, examResults) {
+  User.getExamResults(studentNumber, req.session.admin, function(err, examResults) {
     if (err) {
       res.locals.errors.push(err);
       next();

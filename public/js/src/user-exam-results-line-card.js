@@ -15,7 +15,7 @@ $(document).ready(function() {
       },
     }).done(function(data){
       if (data.err) {
-        notify(data.err, "danger", "exclamation");
+        //notify(data.err, "danger", "exclamation");
         $("#exam-results-line-card").css("display", "none");
         return;
       }

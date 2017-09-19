@@ -396,7 +396,7 @@ router.get("/", function(req, res, next) {
       if (req.query.studentNumber && req.session.admin) {
         studentNumber = req.query.studentNumber;
       }
-      User.getExamResultsLine(studentNumber, function(err, examResults) {
+      User.getExamResultsLine(studentNumber, req.session.admin, function(err, examResults) {
         if (err) {
           res.json({
             err: err
