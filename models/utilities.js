@@ -145,7 +145,7 @@ var utilities = {
     return;
   },
   //Returns a coprime integer to the given input between the max and min values given
-  getCoprimeTo(a, max, callback) {
+  getCoprimeTo: function(a, max, callback) {
     var viable = [];
     utilities.getPrimeFactorsOf(a, function(pFactorsA) {
       utilities.getPrimeFactorsOfUpTo(max, function(pFactors) {
@@ -164,7 +164,7 @@ var utilities = {
     });
   },
   //Checks if a and b are congruent modulo n; returns true if so, false if not
-  checkModularCongruence(a, b, n, callback) {
+  checkModularCongruence: function(a, b, n, callback) {
     if ((a - b) % n == 0) {
       //console.log(a + " is congruent to " + b + " mod " + n);
       callback(true);
@@ -174,9 +174,11 @@ var utilities = {
     callback(false);
     return;
   },
+  //Used to incrementally check though indices of possible values in modularly congruent to set function such that values aren't repeated needlessly
+  lastIndexGetModularlyCongruentToSet: null,
   //Returns a value a between min and max for which and a and b are congruent modulo the entire set of n, where n is an integer array
   //divByFour is a boolean which represents whether a must be divisible by 4
-  getModularlyCongruentToSet(b, n, min, max, divByFour, callback) {
+  getModularlyCongruentToSet: function(b, n, min, max, divByFour, callback) {
     var aPass = true;
     if (divByFour) {
       var possibleNums = utilities.getNumbersUpToDivisibleBy(max, 4);
@@ -186,7 +188,15 @@ var utilities = {
       }
       //Add first index to last to make it more likely to get the previous last index
       possibleNums.push(possibleNums[0]);
-      a = possibleNums[parseInt(Math.random() * (possibleNums.length - 1))];
+      if (utilities.lastIndexGetModularlyCongruentToSet) {
+        a = possibleNums[(utilities.lastIndexGetModularlyCongruentToSet + 1) % (possibleNums.length - 1)];
+        utilities.lastIndexGetModularlyCongruentToSet += 1;
+      }
+      else {
+        var num = parseInt(Math.random() * (possibleNums.length - 1));
+        a = possibleNums[num];
+        utilities.lastIndexGetModularlyCongruentToSet = num;
+      }
     }
     else {
       //Get lowest common multiple of all numbers in n
