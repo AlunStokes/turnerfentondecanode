@@ -16,7 +16,7 @@ function initialiseTable() {
     $('#exam-results-table').dataTable({
       lengthChange: true,
       ordering: true,
-      paging: false,
+      paging: true,
       info: true,
       colReorder: true,
       autoWidth: true,

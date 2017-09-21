@@ -3,7 +3,7 @@ $(document).ready(function() {
     $('#directory-table').dataTable({
       lengthChange: true,
       ordering: true,
-      paging: false,
+      paging: true,
       info: true,
       colReorder: true,
       autoWidth: true,
