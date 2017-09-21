@@ -5,6 +5,7 @@ $(document).ready(function() {
     $('#exam-results-table').dataTable({
       lengthChange: true,
       ordering: true,
+      order: [[0, 'desc']],
       true: false,
       info: true,
       colReorder: true,

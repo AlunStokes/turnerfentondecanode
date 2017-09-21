@@ -811,10 +811,10 @@ user.getExamResults = function(studentNumber, admin, callback) {
     var query;
     //Check if admin to determine whether or not to show exams where stats are not shown
     if(admin) {
-      query = "SELECT correct, total, DATE_FORMAT(startTime, '%Y/%c/%e') as date, name, examresults.cluster as cluster FROM examresults LEFT JOIN createdexams ON createdexams.id = examresults.examid WHERE studentNumber = ? AND correct IS NOT NULL ORDER BY startTime DESC;";
+      query = "SELECT correct, total, DATE_FORMAT(startTime, '%Y/%c/%e %k:%i:%s') as date, name, examresults.cluster as cluster FROM examresults LEFT JOIN createdexams ON createdexams.id = examresults.examid WHERE studentNumber = ? AND correct IS NOT NULL ORDER BY startTime DESC;";
     }
     else {
-      query = "SELECT correct, total, DATE_FORMAT(startTime, '%Y/%c/%e') as date, name, examresults.cluster as cluster FROM examresults LEFT JOIN createdexams ON createdexams.id = examresults.examid WHERE studentNumber = ? AND correct IS NOT NULL AND (includeStats = 1 OR examresults.examid = 0) ORDER BY startTime DESC;";
+      query = "SELECT correct, total, DATE_FORMAT(startTime, '%Y/%c/%e %k:%i:%s') as date, name, examresults.cluster as cluster FROM examresults LEFT JOIN createdexams ON createdexams.id = examresults.examid WHERE studentNumber = ? AND correct IS NOT NULL AND (includeStats = 1 OR examresults.examid = 0) ORDER BY startTime DESC;";
     }
     connection.query(query, [studentNumber], function(err, rows, fields) {
       if (err) {
