@@ -127,6 +127,54 @@ router.get("/", function(req, res, next) {
       });
       break;
 
+      case "getMostIncorrectlyAnswered":
+      Statistics.getMostIncorrectlyAnswered(function(err, questionid) {
+        if (err) {
+          res.json({
+            err: err
+          });
+          return;
+        }
+        res.json({
+            questionid: questionid
+          });
+        return;
+      });
+      break;
+
+      case "getQuestionNoAnswer":
+      var questionid = req.query.questionid;
+      Exam.getQuestion(questionid, function(err, question) {
+        if (err) {
+          res.json({
+            err: err
+          });
+          return;
+        }
+        question.answer = null;
+        res.json({
+          question: question
+        });
+        return;
+      });
+      break;
+
+      case "getQuestionAnswer":
+      var questionid = req.query.questionid;
+      Exam.getQuestion(questionid, function(err, question) {
+        if (err) {
+          res.json({
+            err: err
+          });
+          return;
+        }
+        var answer = question.answer;
+        res.json({
+          answer: answer
+        });
+        return;
+      });
+      break;
 
       case "getQuestionList":
       var cluster = req.query.cluster;

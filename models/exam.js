@@ -288,5 +288,29 @@ exam.checkShowTimer = function(examid, callback) {
   });
 }
 
+exam.getQuestion = function(questionid, callback) {
+  db.pool.getConnection(function(err, connection) {
+    if (err) {
+      callback("Server error - try again later");
+      return;
+    }
+    connection.query('SELECT question, optionA, optionB, optionC, optionD, answer FROM questionsattempted JOIN questions ON questionsattempted.questionid = questions.questionid JOIN questionanswers ON questionsattempted.questionid = questionanswers.questionid JOIN questionoptions ON questionsattempted.questionid = questionoptions.questionid WHERE questions.questionid = ?;', [questionid], function(err, rows, fields) {
+      if (err) {
+        callback("Server error - try again later");
+        return;
+      }
+      var question = {
+        question: rows[0].question,
+        optionA: rows[0].optionA,
+        optionB: rows[0].optionB,
+        optionC: rows[0].optionC,
+        optionD: rows[0].optionD,
+        answer: rows[0].answer,
+      }
+      callback(null, question);
+    });
+  });
+}
+
 
 module.exports = exam;

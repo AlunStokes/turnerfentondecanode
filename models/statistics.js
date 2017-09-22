@@ -6,23 +6,19 @@ var statistics = function() {
 }
 
 statistics.getMostIncorrectlyAnswered = function(callback) {
-  var statQuery = 'SELECT question, optionA, optionB, optionC, optionD, answer FROM questionsattempted JOIN questions ON questionsattempted.questionid = questions.questionid JOIN questionanswers ON questionsattempted.questionid = questionanswers.questionid JOIN questionoptions ON questionsattempted.questionid = questionoptions.questionid GROUP BY questionsattempted.questionid ORDER BY SUM(IF(questionsattempted.correct = 0, 1, 0)) DESC LIMIT 1'
+  //Determines the top n questions that will be chosen from
+  var numQuestions = 10;
+  var statQuery = 'SELECT questions.questionid as questionid FROM questionsattempted JOIN questions ON questionsattempted.questionid = questions.questionid JOIN questionanswers ON questionsattempted.questionid = questionanswers.questionid JOIN questionoptions ON questionsattempted.questionid = questionoptions.questionid GROUP BY questionsattempted.questionid ORDER BY SUM(IF(questionsattempted.correct = 0, 1, 0)) DESC LIMIT ?'
   db.pool.getConnection(function(err, connection) {
-    connection.query(statQuery, function(err, rows, fields) {
+    connection.query(statQuery, [numQuestions], function(err, rows, fields) {
       connection.release();
       if (err) {
         callback(err);
         return;
       }
-      var question = {
-        question: rows[0].question,
-        optionA: rows[0].optionA,
-        optionB: rows[0].optionB,
-        optionC: rows[0].optionC,
-        optionD: rows[0].optionD,
-        answer: rows[0].answer,
-      }
-      callback(null, question);
+      var rowNum = Math.floor(Math.random() * numQuestions);
+      var questionid = rows[rowNum].questionid;
+      callback(null, questionid);
       return;
     });
   });
