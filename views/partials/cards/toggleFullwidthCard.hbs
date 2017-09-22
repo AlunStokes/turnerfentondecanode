@@ -1,33 +1,33 @@
-.question-area {
-  min-height: 30vh;
-  max-height: 50vh;
-  overflow: auto;
-  // box-shadow: inset 8px 8px 50px -20px rgba(0,0,0,1);
-  padding-top: 10px;
-  padding-bottom: 10px;
-}
-.question .row {
-  width: 100%;
-  margin-left: 0;
-  margin-right: 0;
-}
-.exam.row {
-  width: 100%;
-  margin-left: 0;
-  margin-right: 0;
-}
-.exam .row {
-  width: 100%;
-  margin-left: 0;
-  margin-right: 0;
-}
+<div class="col-lg-4 col-sm-6 col-xs-12">
+  <div class="card">
+    <div class="header">
+      <h4 class="title">Toggle Fullwidth</h4>
+      <p class="category">If on, your pages will take up the full width of your screen</p>
+    </div>
+    <div class="content">
 
-@media screen and (min-width: 1030px) {
-  .modal-dialog {
-    width: 850px;
-  }
-}
+      <div class="control-group">
+        <label class="switch">
+          {{#if fullwidth}}
+          <input type="checkbox" class="slider" id="fullwidth-switch" checked>
+          {{else}}
+          <input type="checkbox" class="slider" id="fullwidth-switch">
+          {{/if}}
+          <div class="slider round"></div>
+        </label>
+        {{#if fullwidth}}
+        <i><p id="fullwidth-text">Fullwidth</p></i>
+        {{else}}
+        <i><p id="fullwidth-text">Boxed</p></i>
+        {{/if}}
+      </div>
 
+    </div>
+  </div>
+</div>
+
+
+<style media="screen">
 /* The switch - the box around the slider */
 .switch {
   position: relative;
@@ -86,13 +86,6 @@ input:checked + .slider:before {
 .slider.round:before {
   border-radius: 50%;
 }
+</style>
 
-.truncate {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.exam-name {
-  text-align: right;
-}
+<script src="js/dist/toggle-fullwidth-card.min.js" charset="utf-8"></script>

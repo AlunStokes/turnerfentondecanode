@@ -485,7 +485,7 @@ user.getUserSettings = function(user, callback) {
       callback("Server error, try again later");
       return;
     }
-    connection.query("SELECT sidebarBackground, sidebarText, sidebarActive, canSubmitExtensions FROM membersettings WHERE studentNumber = ?", [user.studentNumber], function(err, rows, fields) {
+    connection.query("SELECT sidebarBackground, sidebarText, sidebarActive, canSubmitExtensions, fullwidth FROM membersettings WHERE studentNumber = ?", [user.studentNumber], function(err, rows, fields) {
       connection.release();
       if (err) {
         callback("Server error, try again later");
@@ -518,6 +518,13 @@ user.getUserSettings = function(user, callback) {
       }
       else {
         settings.activeColor = "#aacfff";
+      }
+
+      if (rows[0].fullwidth) {
+        settings.fullwidth = true;
+      }
+      else {
+        settings.fullwidth = false;
       }
 
       callback(null, settings);

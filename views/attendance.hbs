@@ -1,4 +1,8 @@
-<div class="container-fluid">
+{{#if fullwidth}}
+<div class="container-fluid" id="top-div">
+{{else}}
+<div class="container" id="top-div">
+{{/if}}
     <div class="row">
       <!--Page specific cards -->
       {{>cards/startAttendanceSessionCard}}

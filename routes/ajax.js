@@ -502,6 +502,22 @@ router.post("/", function(req, res, next) {
       break;
 
 
+      case "toggleFullwidth":
+      connection.query("UPDATE membersettings SET fullwidth = IF(fullwidth=1, 0, 1) WHERE studentNumber = ?;", [req.session.studentNumber], function(err, rows, fields) {
+        if (err) {
+          res.json({
+            err: "Server error - try again later"
+          });
+          return;
+        }
+        res.json({
+          err: null
+        });
+        return;
+      });
+      break;
+
+
       case "submitNewPost":
       if (!req.session.admin) {
         res.json({

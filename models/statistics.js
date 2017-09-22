@@ -16,6 +16,13 @@ statistics.getMostIncorrectlyAnswered = function(callback) {
         callback(err);
         return;
       }
+      if (rows.length < numQuestions) {
+        numQuestions = rows.length;
+      }
+      if (rows.length == 0) {
+        callback("No question data existant");
+        return;
+      }
       var rowNum = Math.floor(Math.random() * numQuestions);
       var questionid = rows[rowNum].questionid;
       callback(null, questionid);
