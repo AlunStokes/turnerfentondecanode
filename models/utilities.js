@@ -54,8 +54,22 @@ var utilities = {
     var seed = parseInt(Math.random() * (mod - 2) + 1);
     var multiplier;
     utilities.getCoprimeTo(mod, mod-1, function(coprime) {
+      //If no coprime
+      if (!coprime) {
+        increment = 1;
+        multiplier = 1;
+        callback(mod, increment, seed, multiplier);
+        return;
+      }
       increment = coprime;
       utilities.getPrimeFactorsOf(mod, function(modFactors) {
+        //Special cases
+        if (modFactors.length == 0) {
+          increment = 1;
+          multiplier = 1;
+          callback(mod, increment, seed, multiplier);
+          return;
+        }
         utilities.getModularlyCongruentToSet(1, modFactors, 1, mod-1, mod % 4 == 0, function(b) {
           multiplier = b;
           callback(mod, increment, seed, multiplier);
@@ -156,6 +170,10 @@ var utilities = {
             //+2 to account for removing 0 and 1
             viable.push(i + 2);
           }
+        }
+        if (viable.length == 0) {
+          callback(null);
+          return;
         }
         var index = parseInt(Math.random() * (viable.length), 10);
         callback(viable[index]);
