@@ -60,10 +60,10 @@ statistics.getChapterExamResults = function(examid, callback) {
     }
     var query;
     if (examid == -1) {
-      query = "SELECT members.studentNumber as studentNumber, firstName, lastName, correct, total, DATE_FORMAT(startTime, '%Y/%c/%e %k:%i:%s') as date, name, examresults.cluster as cluster FROM examresults LEFT JOIN createdexams ON createdexams.id = examresults.examid JOIN members on members.studentNumber = examresults.studentNumber AND correct IS NOT NULL ORDER BY startTime DESC;";
+      query = "SELECT members.studentNumber as studentNumber, firstName, lastName, correct, total, alum, grade, DATE_FORMAT(startTime, '%Y/%c/%e %k:%i:%s') as date, name, examresults.cluster as cluster FROM examresults LEFT JOIN createdexams ON createdexams.id = examresults.examid JOIN members on members.studentNumber = examresults.studentNumber AND correct IS NOT NULL ORDER BY startTime DESC;";
     }
     else {
-      query = "SELECT members.studentNumber as studentNumber, firstName, lastName, correct, total, DATE_FORMAT(startTime, '%Y/%c/%e %k:%i:%s') as date, name, examresults.cluster as cluster FROM examresults LEFT JOIN createdexams ON createdexams.id = examresults.examid JOIN members on members.studentNumber = examresults.studentNumber AND correct IS NOT NULL WHERE examid=" + examid + " ORDER BY startTime DESC;";
+      query = "SELECT members.studentNumber as studentNumber, firstName, lastName, correct, total, alum, grade, DATE_FORMAT(startTime, '%Y/%c/%e %k:%i:%s') as date, name, examresults.cluster as cluster FROM examresults LEFT JOIN createdexams ON createdexams.id = examresults.examid JOIN members on members.studentNumber = examresults.studentNumber AND correct IS NOT NULL WHERE examid=" + examid + " ORDER BY startTime DESC;";
     }
     connection.query(query, function(err, rows, fields) {
       connection.release();
@@ -80,6 +80,8 @@ statistics.getChapterExamResults = function(examid, callback) {
             lastName: rows[i].lastName,
             correct: rows[i].correct,
             total: rows[i].total,
+            alum: rows[i].alum == 1 ? "X" : "",
+            grade: rows[i].grade,
             percentage: ((rows[i].correct/rows[i].total) * 100).toFixed(2),
             name: rows[i].name ? rows[i].name : "Random",
             cluster: valueToCluster(rows[i].cluster),
