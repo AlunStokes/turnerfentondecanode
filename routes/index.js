@@ -50,6 +50,7 @@ router.use("/account", require("./account"));
 router.use("/student-directory", require("./studentDirectory"));
 
 //404 error
+router.use("/404", require("./404"));
 router.use(require("./404"));
 
 module.exports = router;
