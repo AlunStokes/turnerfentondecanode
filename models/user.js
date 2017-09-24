@@ -235,9 +235,9 @@ user.register = function(registrant, callback) {
                                               return;
                                             });
                                           }
-                                        //Registration completed
-                                        callback(null);
-                                        return;
+                                          //Registration completed
+                                          callback(null);
+                                          return;
                                         });
                                       });
 
@@ -745,7 +745,7 @@ user.getExamResultsLine = function(studentNumber, admin, callback) {
       for (var i = 0; i < rawResults.length; i++) {
         if (i == 0) {
           examResults[rawResults[i].date] += rawResults[i].percentage;
-            numInMonthCounter++;
+          numInMonthCounter++;
         }
         else {
           if (rawResults[i].date == rawResults[i - 1].date) {
@@ -852,13 +852,39 @@ user.uploadPhoto = function(image, callback) {
 
 }
 
-user.getUsers = function(callback) {
+user.getUsers = function(fields, callback) {
+  for (var i = 0; i < fields.length; i++) {
+    if (!keyToValue(fields[i])) {
+      fields.splice(i, 1);
+    }
+  }
   db.pool.getConnection(function(err, connection) {
     if (err) {
       callback(err);
       return;
     }
-    connection.query("SELECT firstName, lastName, email, studentNumber, grade, alum, admin, decaCluster, decaEvent, passwordResetCode, confirmEmailCode, programName FROM members", function(err, rows, fields) {
+    var query = "SELECT ";
+    for (var i = 0; i < fields.length; i++) {
+      if (fields[i] == "confirmedEmail") {
+        if (!("confirmEmailCode" in fields)) {
+          query += "confirmEmailCode, ";
+        }
+        continue;
+      }
+      if (fields[i] == "requestedPasswordReset") {
+        if (!("passwordResetCode" in fields)) {
+          query += "passwordResetCode, ";
+        }
+        continue;
+      }
+      query += fields[i] + ", ";
+    }
+
+    //remove extra comma at end
+    query = query.slice(0, query.length - 2) + " ";
+
+    query += "FROM members";
+    connection.query(query, function(err, rows, queryFields) {
       if (err) {
         callback(err);
         return;
@@ -869,40 +895,120 @@ user.getUsers = function(callback) {
       }
       var users = [];
       for (var i = 0; i < rows.length; i++) {
-        users.push(
-          {
-            firstName: rows[i].firstName,
-            lastName: rows[i].lastName,
-            studentNumber: rows[i].studentNumber,
-            email: rows[i].email,
-            grade: rows[i].grade,
-            alum: rows[i].alum == 1,
-            admin: rows[i].admin == 1,
-            decaCluster: rows[i].decaCluster != null ? rows[i].decaCluster.charAt(0).toUpperCase() + rows[i].decaCluster.slice(1) : "Not Chosen",
-            decaEvent: rows[i].decaEvent != null ? rows[i].decaEvent.toUpperCase() : "Not Chosen",
-            confirmedEmail: rows[i].confirmEmailCode == null,
-            requestedPasswordReset: rows[i].passwordResetCode != null
+        users.push({});
+        for (var j = 0; j < fields.length; j++) {
+          if (fields[j] == "confirmedEmail") {
+            users[i][fields[j]] = rows[i].confirmEmailCode == null ? "X" : "";
+            continue;
           }
-        );
-        switch(rows[i].programName) {
-          case "ib":
-          users[i].program = "IB";
-          break;
-          case "academic":
-          users[i].program = "Academic";
-          break;
-          case "vocational":
-          users[i].program = "Vocational";
-          break;
-          case "french immersion":
-          users[i].program = "French Immersion";
-          break;
-          default:
-          users[i].program = "Unknown";
+          if (fields[j] == "requestedPasswordReset") {
+            users[i][fields[j]] = rows[i].passwordResetCode != null ? "X" : "";
+            continue;
+          }
+          if (fields[j] == "decaCluster") {
+            users[i][fields[j]] = rows[i][fields[j]] != null ? rows[i][fields[j]].charAt(0).toUpperCase() + rows[i][fields[j]].slice(1) : "Not Chosen";
+            continue;
+          }
+          if (fields[j] == "decaEvent") {
+            users[i][fields[j]] = rows[i][fields[j]] != null ? rows[i][fields[j]].toUpperCase() : "Not Chosen";
+            continue;
+          }
+          if (fields[j] == "programName") {
+            var name;
+            switch(rows[i]["programName"]) {
+              case "ib":
+              name = "IB";
+              break;
+              case "academic":
+              name = "Academic";
+              break;
+              case "vocational":
+              name = "Vocational";
+              break;
+              case "french immersion":
+              name = "French Immersion";
+              break;
+              case "master":
+              name = "Master";
+              break;
+              default:
+              name = "Unknown";
+            }
+            users[i][fields[j]] = name;
+            continue;
+          }
+          //Checks if values is null
+          //If so, write empty string
+          //Otherwise check if value is not an int
+          //If so (not int) writes value as is
+          //Checks if value (known int) is more than 1 (not binary condition)
+          //If so, writes value as is
+          //Otherwise, checks if value is equal to 1
+          //If so, writes "X"
+          //Otherwise, writes empty string
+          users[i][fields[j]] = rows[i][fields[j]] == null ? "" : !Number.isInteger(rows[i][fields[j]]) ? rows[i][fields[j]] : rows[i][fields[j]] > 1 ? rows[i][fields[j]] : rows[i][fields[j]] == 1 ? "X" : "";
+        }
+        if ("programName" in fields) {
+          switch(rows[i].programName) {
+            case "ib":
+            users[i].programName = "IB";
+            break;
+            case "academic":
+            users[i].programName = "Academic";
+            break;
+            case "vocational":
+            users[i].programName = "Vocational";
+            break;
+            case "french immersion":
+            users[i].programName = "French Immersion";
+            break;
+            default:
+            users[i].programName = "Unknown";
+          }
         }
       }
-      callback(null, users);
-      return;
+
+      connection.query("SELECT * FROM members LIMIT 1", function(err, rows, queryFields) {
+        if (err) {
+          callback(err);
+          return;
+        }
+
+        var resultFields = [];
+        for (var i = 0; i < queryFields.length; i++) {
+          resultFields.push({key: queryFields[i].name});
+          if (resultFields[i].key in users[0]) {
+            resultFields[i].inTable = true;
+          }
+          else {
+            resultFields[i].inTable = false;
+          }
+          resultFields[i].name = keyToValue(resultFields[i].key);
+        }
+
+        for (var i = 0; i < fields.length; i++) {
+          var inAlready = false;
+          for (var j = 0; j < queryFields.length; j++) {
+            if (fields[i] == queryFields[j].name) {
+              inAlready = true;
+              break;
+            }
+          }
+          if (!inAlready) {
+            resultFields.push({key: fields[i], name: keyToValue(fields[i]), inTable: true});
+          }
+        }
+        //Special cases
+        if (!Number.isInteger(valInObjInArr(resultFields, "key", "requestedPasswordReset"))) {
+          resultFields.push({key: "requestedPasswordReset", name: keyToValue("requestedPasswordReset"), inTable: false})
+        }
+        if (!Number.isInteger(valInObjInArr(resultFields, "key", "confirmedEmail"))) {
+          resultFields.push({key: "confirmedEmail", name: keyToValue("confirmedEmail"), inTable: false})
+        }
+
+        callback(null, users, resultFields);
+        return;
+      });
     });
   });
 }
@@ -931,7 +1037,80 @@ function valueToCluster (value) {
     return "Writtens";
     break;
     default:
-    return "undefined"
+    return "undefined";
+  }
+}
+
+function valInObjInArr(arr, prop, val) {
+  for (var i = 0; i < arr.length; i++) {
+    if (arr[i][prop] == val) {
+      return i;
+    }
+  }
+  return null;
+}
+
+function keyToValue(key) {
+  switch(key) {
+    case "id":
+    return "ID";
+    break;
+    case "firstName":
+    return "First Name";
+    break;
+    case "lastName":
+    return "Last Name";
+    break;
+    case "email":
+    return "Email";
+    break;
+    case "studentNumber":
+    return "Student Number";
+    break;
+    case "grade":
+    return "Grade";
+    break;
+    case "alum":
+    return "Alumnus";
+    break;
+    case "admin":
+    return "Admin";
+    break;
+    case "programName":
+    return "Program";
+    break;
+    case "password":
+    return "Password";
+    break;
+    case "class":
+    return "Class";
+    break;
+    case "lastOnline":
+    return "Last Online";
+    break;
+    case "dateRegistered":
+    return "Date Registered";
+    break;
+    case "confirmEmailCode":
+    return "Confirm Email Code";
+    break;
+    case "confirmedEmail":
+    return "Confirmed Email";
+    break;
+    case "requestedPasswordReset":
+    return "Requested Password Reset";
+    break;
+    case "passwordResetCode":
+    return "Password Reset Code";
+    break;
+    case "decaCluster":
+    return "Cluster";
+    break;
+    case "decaEvent":
+    return "Event";
+    break;
+    default:
+    return null;
   }
 }
 
