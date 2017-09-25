@@ -5,9 +5,12 @@ $(document).ready(function() {
   examidInput = $("#exam-id-input");
 
   examidInput.on('change', function() {
-    window.location = 'chapter-exam-statistics?examid=' + examidInput.val();
+    change();
   });
 
+  $(document).on('change', '.slider', function() {
+    change();
+  });
 });
 
 function initialiseTable() {
@@ -16,7 +19,6 @@ function initialiseTable() {
     $('#exam-results-table').dataTable({
       lengthChange: true,
       ordering: true,
-      order: [[8, 'desc']],
       paging: true,
       info: true,
       colReorder: true,
@@ -35,4 +37,28 @@ function initialiseTable() {
       dom: 'Bfrtip'
     });
   });
+}
+
+function generateGetArray(varName) {
+  var checked = $(".slider:checked");
+  var prop = [];
+  for (var i = 0; i < checked.length; i++) {
+    prop.push(checked[i].id.slice(7, checked[i].id.length));
+  }
+  var getArray = "?";
+  for (var i = 0; i < prop.length; i++) {
+    if (i == prop.length - 1) {
+      getArray += varName + "[]=" + prop[i];
+      break;
+    }
+    getArray += varName + "[]=" + prop[i] + "&";
+  }
+  return getArray;
+}
+
+function change() {
+  var query = "";
+  query += generateGetArray("fields");
+  query += "&examid=" + examidInput.val();
+  window.location.replace(query);
 }

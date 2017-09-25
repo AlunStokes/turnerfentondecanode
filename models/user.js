@@ -853,6 +853,7 @@ user.uploadPhoto = function(image, callback) {
 }
 
 user.getUsers = function(fields, callback) {
+  //Remove non-existant fields
   for (var i = 0; i < fields.length; i++) {
     if (!keyToValue(fields[i])) {
       fields.splice(i, 1);
@@ -947,24 +948,6 @@ user.getUsers = function(fields, callback) {
           //If so, writes "X"
           //Otherwise, writes empty string
           users[i][fields[j]] = rows[i][fields[j]] == null ? "" : !Number.isInteger(rows[i][fields[j]]) ? rows[i][fields[j]] : rows[i][fields[j]] > 1 ? rows[i][fields[j]] : rows[i][fields[j]] == 1 ? "X" : "";
-        }
-        if ("programName" in fields) {
-          switch(rows[i].programName) {
-            case "ib":
-            users[i].programName = "IB";
-            break;
-            case "academic":
-            users[i].programName = "Academic";
-            break;
-            case "vocational":
-            users[i].programName = "Vocational";
-            break;
-            case "french immersion":
-            users[i].programName = "French Immersion";
-            break;
-            default:
-            users[i].programName = "Unknown";
-          }
         }
       }
 
