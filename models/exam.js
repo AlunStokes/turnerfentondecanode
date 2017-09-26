@@ -111,6 +111,10 @@ exam.loadExam = function(examid, callback) {
       return;
     }
     db.pool.getConnection(function(err, connection) {
+      if (err) {
+        callback("Server error - try again later");
+        return;
+      }
       connection.query("SELECT questions.questionid, question, optionA, optionB, optionC, optionD FROM questions LEFT JOIN questionoptions ON questionoptions.questionid = questions.questionid WHERE questions.questionid IN (" + ids.join() + ") ORDER BY FIND_IN_SET(questions.questionid, '" + ids.join() + "');", function(err, rows, fields) {
         if (err) {
           callback("Server error - try again later");
