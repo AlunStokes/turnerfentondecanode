@@ -35,6 +35,10 @@ statistics.getMostIncorrectlyAnswered = function(callback) {
 statistics.getNumQuestionsAnswered = function(callback) {
   var statQuery = "SELECT SUM(total) total FROM examresults WHERE endTime IS NOT NULL";
   db.pool.getConnection(function(err, connection) {
+  if (err) {
+    callback(err);
+    return;
+  }
     connection.query(statQuery, function(err, rows, fields) {
       connection.release();
       if (err) {
