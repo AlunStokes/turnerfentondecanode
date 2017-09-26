@@ -632,6 +632,10 @@ user.addSession = function(user, callback) {
 user.getClusterProficiency = function(studentNumber, callback) {
   var statQuery = "SELECT SUM(correct = 1 && cluster = 'marketing') AS marketingCorrect, SUM(cluster = 'marketing') AS marketingAttempted, SUM( correct = 1 && cluster = 'businessadmin' ) AS businessadminCorrect, SUM(cluster = 'businessadmin') AS businessadminAttempted, SUM( correct = 1 && cluster = 'finance' ) AS financeCorrect, SUM(cluster = 'finance') AS financeAttempted, SUM( correct = 1 && cluster = 'hospitality' ) AS hospitalityCorrect, SUM(cluster = 'hospitality') AS hospitalityAttempted FROM questionsattempted JOIN questionclusters ON questionclusters.questionid = questionsattempted.questionid WHERE studentNumber = ?";
   db.pool.getConnection(function(err, connection) {
+    if (err) {
+      callback("Server error, try again later");
+      return;
+    }
     connection.query(statQuery, [studentNumber], function(err, rows, fields) {
       connection.release();
       if (err) {
