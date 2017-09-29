@@ -10,6 +10,10 @@ statistics.getMostIncorrectlyAnswered = function(callback) {
   var numQuestions = 10;
   var statQuery = 'SELECT questions.questionid as questionid FROM questionsattempted JOIN questions ON questionsattempted.questionid = questions.questionid JOIN questionanswers ON questionsattempted.questionid = questionanswers.questionid JOIN questionoptions ON questionsattempted.questionid = questionoptions.questionid GROUP BY questionsattempted.questionid ORDER BY SUM(IF(questionsattempted.correct = 0, 1, 0)) DESC LIMIT ?'
   db.pool.getConnection(function(err, connection) {
+    if (err) {
+      callback(err);
+      return;
+    }
     connection.query(statQuery, [numQuestions], function(err, rows, fields) {
       connection.release();
       if (err) {
