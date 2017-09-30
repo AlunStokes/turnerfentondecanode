@@ -42,7 +42,7 @@ router.get("/", function(req, res, next) {
         decaEvent: "AAM",
         decaCluster: "Marketing",
         imgPath: "images/exec-images/sbBani.jpg",
-        favQuote: "Family"
+        favQuote: "Limitless"
       },
       {
         name: "Maanav Dalal",
