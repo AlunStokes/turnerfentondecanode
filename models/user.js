@@ -98,7 +98,7 @@ user.register = function(registrant, callback) {
   }
 
   //Checks if password follows rules
-  if (registrant.password.value.toString().lengh < 8) {
+  if (registrant.password.value.toString().length < 8) {
     errors.push("Password too short");
     registrant.password.valid = false;
     registrant.passwordConfirm.valid = false;
