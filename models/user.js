@@ -519,13 +519,7 @@ user.getUserSettings = function(user, callback) {
       else {
         settings.activeColor = "#aacfff";
       }
-
-      if (rows[0].fullwidth) {
-        settings.fullwidth = true;
-      }
-      else {
-        settings.fullwidth = false;
-      }
+      settings.fullwidth = rows[0].fullwidth ? true : false;
 
       callback(null, settings);
       return;
