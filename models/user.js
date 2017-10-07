@@ -284,6 +284,7 @@ user.getName = function(studentNumber, callback) {
       return;
     }
     connection.query("SELECT firstName, lastName FROM members WHERE studentNumber=?;", [studentNumber], function(err, rows, fields) {
+      connection.release();
       if (err) {
         callback("Could not retrieve student name");
         return;
@@ -688,6 +689,7 @@ user.getExamResultsLine = function(studentNumber, admin, callback) {
       query = "SELECT correct, total, DATE_FORMAT(startTime, '%M %Y') as date FROM examresults LEFT JOIN createdexams ON createdexams.id = examresults.examid WHERE studentNumber = ? AND correct IS NOT NULL AND (includestats = 1 OR examresults.examid = 0) ORDER BY startTime ASC";
     }
     connection.query(query, [studentNumber], function(err, rows, fields) {
+      connection.release();
       if (err) {
         callback(err);
         return;
@@ -784,6 +786,7 @@ user.getMostIncorrectlyAnsweredBy = function(studentNumber, callback) {
       return;
     }
     connection.query(statQuery, function(err, rows, fields) {
+      connection.release();
       if (err) {
         callback(err);
         return;
@@ -822,6 +825,7 @@ user.getExamResults = function(studentNumber, admin, callback) {
       query = "SELECT correct, total, DATE_FORMAT(startTime, '%Y/%c/%e %k:%i:%s') as date, name, examresults.cluster as cluster FROM examresults LEFT JOIN createdexams ON createdexams.id = examresults.examid WHERE studentNumber = ? AND correct IS NOT NULL AND (includeStats = 1 OR examresults.examid = 0) ORDER BY startTime DESC;";
     }
     connection.query(query, [studentNumber], function(err, rows, fields) {
+      connection.release();
       if (err) {
         callback(err);
         return;
@@ -885,6 +889,7 @@ user.getUsers = function(fields, callback) {
     query += "FROM members";
     connection.query(query, function(err, rows, queryFields) {
       if (err) {
+        connection.release();
         callback(err);
         return;
       }
@@ -950,6 +955,7 @@ user.getUsers = function(fields, callback) {
       }
 
       connection.query("SELECT * FROM members LIMIT 1", function(err, rows, queryFields) {
+        connection.release();
         if (err) {
           callback(err);
           return;

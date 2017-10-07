@@ -23,6 +23,7 @@ exam.loadRandomExam = function(cluster, numQuestions, callback) {
     }
     connection.query(numQuestionsQuery, function(err, rows, fields) {
       if (err) {
+        connection.release();
         callback("Server error- try again later");
         return;
       }
@@ -40,6 +41,11 @@ exam.loadRandomExam = function(cluster, numQuestions, callback) {
             idQuery = "SELECT questionid FROM questionclusters WHERE cluster = '" + cluster + "' ORDER BY questionid";
           }
           connection.query(idQuery, function(err, rows, fields) {
+            if (err) {
+              connection.release();
+              callback("Server error- try again later");
+              return;
+            }
             questionList = [];
             for (var i = 0; i < numQuestions; i++) {
               questionList.push(rows[numList[i]].questionid);
@@ -87,6 +93,7 @@ exam.checkExamUnlocked = function(examid, callback) {
       return;
     }
     connection.query("SELECT unlocked FROM createdexams WHERE id = ?", [examid], function(err, rows, fields) {
+      connection.release();
       if (err) {
         callback("Server error - try again later");
         return;
@@ -116,6 +123,7 @@ exam.loadExam = function(examid, callback) {
         return;
       }
       connection.query("SELECT questions.questionid, question, optionA, optionB, optionC, optionD FROM questions LEFT JOIN questionoptions ON questionoptions.questionid = questions.questionid WHERE questions.questionid IN (" + ids.join() + ") ORDER BY FIND_IN_SET(questions.questionid, '" + ids.join() + "');", function(err, rows, fields) {
+        connection.release();
         if (err) {
           callback("Server error - try again later");
           return;
@@ -144,6 +152,7 @@ exam.saveExam = function(examHash, score, callback) {
       return;
     }
     connection.query("UPDATE examresults SET correct = ?, endTime = now() WHERE examHash = ?", [score, examHash], function(err, rows, fields) {
+      connection.release();
       if (rows.affectedRows == 1) {
         callback(null);
         return;
@@ -166,6 +175,7 @@ exam.resumeExam = function(examHash, callback) {
     }
     connection.query("SELECT modulus, increment, seed, multiplier, offset, total, cluster FROM examresults WHERE examHash = ?", [examHash], function(err, rows, fields) {
       if(err) {
+        connection.release();
         callback("Server error- try again later");
         return;
       }
@@ -222,8 +232,14 @@ exam.startExam = function(studentNumber, examData, callback) {
         return;
       }
       connection.query("SELECT numQuestions, cluster FROM createdexams WHERE id = ?", [examData], function(err, rows, fields) {
+        if(err) {
+          connection.release();
+          callback("Server error- try again later");
+          return;
+        }
         Utilities.generateRandomString(32, function(examHash) {
           connection.query("INSERT INTO examresults (examid, total, studentNumber, examHash, cluster) VALUES (?, ?, ?, ?, ?);", [examData, rows[0].numQuestions, studentNumber, examHash, rows[0].cluster], function(err, rows, fields) {
+            connection.release();
             if(err) {
               callback("Server error- try again later");
               return;
@@ -243,6 +259,7 @@ exam.startExam = function(studentNumber, examData, callback) {
       }
       Utilities.generateRandomString(32, function(examHash) {
         connection.query("INSERT INTO examresults (modulus, increment, seed, multiplier, offset, total, studentNumber, examHash, cluster) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);", [examData.mod, examData.increment, examData.seed,examData. multiplier, examData.offset, examData.numQuestions, studentNumber, examHash, examData.cluster], function(err, rows, fields) {
+          connection.release();
           if(err) {
             callback("Server error- try again later");
             return;
@@ -262,6 +279,7 @@ exam.getidList = function(examid, callback) {
       return;
     }
     connection.query("SELECT questionid FROM createdexamquestions WHERE examid = ?", [examid], function(err, rows, fields) {
+      connection.release();
       if (err) {
         callback("Server error - try again later");
         return;
@@ -283,6 +301,7 @@ exam.checkShowTimer = function(examid, callback) {
       return;
     }
     connection.query("SELECT showTimer FROM createdexams WHERE id = ?", [examid], function(err, rows, fields) {
+      connection.release();
       if (err) {
         callback("Server error - try again later");
         return;
@@ -299,6 +318,7 @@ exam.getQuestion = function(questionid, callback) {
       return;
     }
     connection.query('SELECT question, optionA, optionB, optionC, optionD, answer FROM questionsattempted JOIN questions ON questionsattempted.questionid = questions.questionid JOIN questionanswers ON questionsattempted.questionid = questionanswers.questionid JOIN questionoptions ON questionsattempted.questionid = questionoptions.questionid WHERE questions.questionid = ?;', [questionid], function(err, rows, fields) {
+      connection.release();
       if (err) {
         callback("Server error - try again later");
         return;

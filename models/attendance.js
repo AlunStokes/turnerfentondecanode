@@ -102,6 +102,7 @@ attendance.getSessionResults = function(sessionid, callback) {
     }
     connection.query("SELECT studentNumber, firstName, lastName, decaCluster as cluster FROM members ORDER BY studentNumber", function(err, rows, fields) {
       if (err) {
+        connection.release();
         callback("Database query error");
         return;
       }
@@ -238,6 +239,7 @@ attendance.getAbsences = function(studentNumber, callback) {
     }
     connection.query("SELECT COUNT(id) AS totalSessions FROM attendancesessions WHERE endTime IS NOT NULL;", function(err, rows, fields) {
       if (err) {
+        connection.release();
         callback(err);
         return;
       }
@@ -245,6 +247,7 @@ attendance.getAbsences = function(studentNumber, callback) {
         totalSessions: rows[0].totalSessions
       };
       connection.query("SELECT COUNT(correct) AS attended FROM attendancerecords WHERE correct = 1 AND studentNumber = ?;", [studentNumber], function(err, rows, fields) {
+        connection.release();
         if (err) {
           callback(err);
           return;

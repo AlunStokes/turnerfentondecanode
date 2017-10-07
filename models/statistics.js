@@ -104,6 +104,7 @@ statistics.getChapterExamResults = function(examid, fields, callback) {
     query += "ORDER BY startTime DESC;";
     connection.query(query, function(err, rows, queryFields) {
       if (err) {
+        connection.release();
         callback(err);
         return;
       }
@@ -165,6 +166,7 @@ statistics.getChapterExamResults = function(examid, fields, callback) {
 
 
       connection.query("SELECT * FROM examresults LEFT JOIN createdexams ON createdexams.id = examresults.examid JOIN members on members.studentNumber = examresults.studentNumber LIMIT 1", function(err, rows, queryFields) {
+        connection.release();
         if (err) {
           callback(err);
           return;
