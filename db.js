@@ -3,7 +3,7 @@ var mysql = require("mysql2");
 
 module.exports = {
   pool: mysql.createPool({
-    connectionLimit: 1000,
+    connectionLimit: 150,
     multipleStatements: true,
     host: config.database.host,
     user: config.database.user,
