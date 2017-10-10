@@ -6,8 +6,11 @@
     <div class="row">
       <!--Page specific cards -->
       {{>cards/startExamCard}}
-      {{>cards/searchExamsCard}}
-      {{>cards/searchQuestionsCard}}
+      {{>cards/spreadsheetDownloadCard}}
+      {{!-- {{>cards/searchExamsCard}} --}}
+      {{!-- {{>cards/searchQuestionsCard}} --}}
+      {{>cards/examsCard}}
+      {{>cards/spreadsheetDownloadCard}}
       {{>cards/personalExamStatisticsCard}}
       {{#if admin}}
         {{>cards/chapterExamStatisticsCard}}
