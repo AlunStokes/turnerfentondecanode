@@ -11,28 +11,14 @@ module.exports = function(route) {
       case "front":
       if (!res.locals.loggedIn) {
         res.locals.navbarEntries = [
-
           {
-            link: "design-timeline",
-            title: "Design Timeline",
+            link: "landing",
+            title: "Landing",
             alias: [
-              "design-timeline"
+              "landing"
             ]
           },
-          /*{
-            link: "reset-password",
-            title: "Reset Password",
-            alias: [
-              "reset-password"
-            ]
-          },*/
           {
-            link: "register",
-            title: "Register",
-            alias: [
-              "register"
-            ]
-          },{
             link: "login",
             title: "Login",
             alias: [
@@ -40,21 +26,17 @@ module.exports = function(route) {
             ]
           },
           {
-            link: "landing",
-            title: "Landing",
+            link: "register",
+            title: "Register",
             alias: [
-              "landing"
+              "register"
             ]
-          }
-        ];
-      }
-      else {
-        res.locals.navbarEntries = [
+          },
           {
-            link: "logout",
-            title: "Logout",
+            link: "reset-password",
+            title: "Reset Password",
             alias: [
-              "logout"
+              "reset-password"
             ]
           },
           {
@@ -62,6 +44,17 @@ module.exports = function(route) {
             title: "Design Timeline",
             alias: [
               "design-timeline"
+            ]
+          },
+        ];
+      }
+      else {
+        res.locals.navbarEntries = [
+          {
+            link: "landing",
+            title: "Landing",
+            alias: [
+              "landing"
             ]
           },
           {
@@ -72,12 +65,19 @@ module.exports = function(route) {
             ]
           },
           {
-            link: "landing",
-            title: "Landing",
+            link: "design-timeline",
+            title: "Design Timeline",
             alias: [
-              "landing"
+              "design-timeline"
             ]
-          }
+          },
+          {
+            link: "logout",
+            title: "Logout",
+            alias: [
+              "logout"
+            ]
+          },
         ]
       }
       break;
@@ -142,25 +142,25 @@ module.exports = function(route) {
           }
           /*
           {
-            link: "admin",
-            title: "Admin",
-            icon: "wrench",
-            alias: [
-              "admin"
-            ]
-          }
-          */
-        );
+          link: "admin",
+          title: "Admin",
+          icon: "wrench",
+          alias: [
+          "admin"
+        ]
       }
-      break;
-    }
-
-    Utilities.getActivePage(req.originalUrl, res.locals.navbarEntries, function(index) {
-      if (index != -1) {
-        res.locals.navbarEntries[index].active = true;
-        res.locals.navbarActiveIndex = index;
-      }
-      next();
-    });
+      */
+    );
   }
+  break;
+}
+
+Utilities.getActivePage(req.originalUrl, res.locals.navbarEntries, function(index) {
+  if (index != -1) {
+    res.locals.navbarEntries[index].active = true;
+    res.locals.navbarActiveIndex = index;
+  }
+  next();
+});
+}
 }
