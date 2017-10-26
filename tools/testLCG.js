@@ -1,23 +1,27 @@
 var Utilities = require('../models/utilities');
 
 var min = 1
-var max = 10000
+var max = 5000
 
 for (var i = min; i <= max; i++) {
   Utilities.linCongGenGen(i, function(mod, increment, seed, multiplier) {
-/*
-      console.log(mod);
-      console.log(increment);
-      console.log(seed);
-      console.log(multiplier);
-      console.log('-------');
-      */
-      if (typeof(increment) == 'undefined' || typeof(seed) == 'undefined' || typeof(multiplier) == 'undefined') {
-        console.log("ERROR @ " + i);
+    Utilities.linConGen(mod, increment, seed, multiplier, mod, 0, function(numList) {
+      if (hasDup(numList)) {
+        console.log("Duplicate at " + i);
+        console.log("mod: " + mod);
+        console.log("incrememnt: " + increment);
+        console.log("multiplier: " + multiplier);
+        //console.log(i + " : " + numList);
       }
-
-    if (i % 1000 == 0) {
-      console.log(i);
-    }
+      if (i % 250 == 0) {
+        console.log(i);
+      }
+    });
   });
+}
+
+function hasDup(array) {
+    return array.some(function(value) {                            // .some will break as soon as duplicate found (no need to itterate over all array)
+       return array.indexOf(value) !== array.lastIndexOf(value);   // comparing first and last indexes of the same value
+    })
 }

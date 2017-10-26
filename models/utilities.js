@@ -62,7 +62,7 @@ var utilities = {
         return;
       }
       increment = coprime;
-      utilities.getPrimeFactorsOf(mod, function(modFactors) {
+      var modFactors = utilities.getPrimeFactorsOf(mod);
         //Special cases
         if (modFactors.length == 0) {
           increment = 1;
@@ -74,9 +74,8 @@ var utilities = {
           multiplier = b;
           callback(mod, increment, seed, multiplier);
           return;
-        })
-      });
-    })
+        });
+    });
   },
   //The empty list upon which LinConGen acts
   linConGenList: [
@@ -130,55 +129,47 @@ var utilities = {
     return;
   },
   //Returns an array of the prime factors of a (does not repeat factors or list exponents)
-  getPrimeFactorsOf: function(a, callback) {
-    if (a == 0 || a == 1) {
-      callback([]);
-      return;
-    }
-    var primes = [];
-    utilities.getFactorizationOf(a, function(factors) {
-      for (var i = 0; i < factors.length; i++) {
-        utilities.isPrime(factors[i], function(primality) {
-          if (primality) {
-            primes.push(factors[i]);
-          }
-        });
-      }
-      callback(primes);
-      return;
-    });
+  getPrimeFactorsOf: function(a) {
+    var factors = [], i;
+        if (a < 2) {
+          return factors;
+        }
+        for (i = 2; i <= a; i++) {
+            while ((a % i) === 0) {
+                factors.push(i);
+                a /= i;
+            }
+        }
+        return factors;
   },
   getPrimeFactorsOfUpTo: function(max, callback) {
     var pFactors = [];
     for (var i = 0; i < max; i++) {
-      utilities.getPrimeFactorsOf(i, function(factors) {
-        pFactors[i] = factors;
-      });
+      pFactors[i] = utilities.getPrimeFactorsOf(i);
     }
     callback(pFactors);
     return;
   },
-  //Returns a coprime integer to the given input between the max and min values given
+  //Returns a coprime integer to the given input up to the max value given
   getCoprimeTo: function(a, max, callback) {
     var viable = [];
-    utilities.getPrimeFactorsOf(a, function(pFactorsA) {
-      utilities.getPrimeFactorsOfUpTo(max, function(pFactors) {
-        //Remove 0 and 1 from array -> no prime factors
-        pFactors.splice(0,2);
-        for (var i = 0; i < pFactors.length; i++) {
-          if (!pFactorsA.compare(pFactors[i])) {
-            //+2 to account for removing 0 and 1
-            viable.push(i + 2);
-          }
+    var pFactorsA = utilities.getPrimeFactorsOf(a);
+    utilities.getPrimeFactorsOfUpTo(max, function(pFactors) {
+      //Remove 0 and 1 from array -> no prime factors
+      pFactors.splice(0,2);
+      for (var i = 0; i < pFactors.length; i++) {
+        if (!pFactorsA.hasOverlap(pFactors[i])) {
+          //+2 to account for removing 0 and 1
+          viable.push(i + 2);
         }
-        if (viable.length == 0) {
-          callback(null);
-          return;
-        }
-        var index = parseInt(Math.random() * (viable.length), 10);
-        callback(viable[index]);
+      }
+      if (viable.length == 0) {
+        callback(null);
         return;
-      });
+      }
+      var index = parseInt(Math.random() * (viable.length), 10);
+      callback(viable[index]);
+      return;
     });
   },
   //Checks if a and b are congruent modulo n; returns true if so, false if not
@@ -403,8 +394,8 @@ var utilities = {
   }
 }
 
-Array.prototype.compare = function(arr) {
-  return this.filter(function(item){ return arr.indexOf(item) > -1}) > 0;
+Array.prototype.hasOverlap = function(arr2) {
+    return this.filter(element => arr2.includes(element)).length != 0 ? true : false;
 }
 
 module.exports = utilities;
