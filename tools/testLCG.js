@@ -1,6 +1,6 @@
 var Utilities = require('../models/utilities');
 
-var min = 5000
+var min = 1
 var max = 5000
 
 for (var i = min; i <= max; i++) {
@@ -12,6 +12,9 @@ for (var i = min; i <= max; i++) {
         console.log("incrememnt: " + increment);
         console.log("multiplier: " + multiplier);
         //console.log(i + " : " + numList);
+      }
+      if (i % 250 == 0) {
+        console.log(i);
       }
     });
   });
