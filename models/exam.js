@@ -26,6 +26,9 @@ exam.loadRandomExam = function(cluster, numQuestions, callback) {
     Utilities.linCongGenGen(totalQuestions, function(mod, increment, seed, multiplier) {
       var offset = parseInt(Math.random() * (totalQuestions));
       Utilities.linConGen(mod, increment, seed, multiplier, numQuestions, offset, function(numList) {
+        if (hasDup(numList)) {
+          console.log("Duplicates exam generated with mod: " + mod + ", increment: " + increment + ", multiplier: " + multiplier);
+        }
         //Can only use numList to determine indices from 0 - size of number set, thus for specific clusters (where question ids may range from 1400 - 2400 & numList
         //would show 1 - 1000) the range of question ids must be loaded and put into array to load exam
         if (cluster == "mix") {
@@ -263,3 +266,10 @@ exam.getQuestion = function(questionid, callback) {
 
 
 module.exports = exam;
+
+
+function hasDup(array) {
+    return array.some(function(value) {                            // .some will break as soon as duplicate found (no need to itterate over all array)
+       return array.indexOf(value) !== array.lastIndexOf(value);   // comparing first and last indexes of the same value
+    })
+}
