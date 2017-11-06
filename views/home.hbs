@@ -14,11 +14,14 @@
       {{/if}}
       {{>cards/startExamCard}}
       {{>cards/discordCard}}
+      {{>cards/caseCard}}
       {{>cards/personalExamStatisticsCard}}
       {{#if admin}}
         {{>cards/chapterExamStatisticsCard}}
       {{/if}}
+      {{#if attendanceSessionOpen}}
       {{>cards/userAttendanceCard}}
+      {{/if}}
       {{>cards/numQuestionsAnsweredCard}}
       {{!-- {{>cards/changeColorCard}} --}}
       {{>cards/mostIncorrectlyAnsweredCard}}
