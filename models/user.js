@@ -606,7 +606,7 @@ user.getExamResultsLine = function(studentNumber, admin, callback) {
       "November",
       "December"
     ];
-    var numMonths = months.forwardDistance(firstMonth, lastMonth) + 12 * (lastYear - firstYear) + 1;
+    var numMonths = months.forwardDistance(firstMonth, lastMonth) + 12 * ((lastYear - firstYear - 1) < 0 ? (lastYear - firstYear) : (lastYear - firstYear - 1)) + 1;
 
     var examResults = {
 
@@ -615,7 +615,7 @@ user.getExamResultsLine = function(studentNumber, admin, callback) {
     var firstMonthIndex = months.indexOf(firstMonth);
     for (var i = 0; i < numMonths; i++) {
       //Creates an index in examResults for each month between the first result and the last
-      examResults[months[(firstMonthIndex + i) % 12] + ' ' + (firstYear + Math.floor((i + (12 - firstMonthIndex)) / 12))] = 0;
+      examResults[months[(firstMonthIndex + i) % 12] + ' ' + (firstYear + Math.floor((i + (firstMonthIndex)) / 12))] = 0;
     }
 
     var numInMonthCounter = 0;
