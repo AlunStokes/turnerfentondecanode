@@ -29,7 +29,7 @@ router.get("/", function(req, res, next) {
       favQuote: "Synergy"
     },
     {
-        name: "Sonali Puri",
+        name: "Bani Arora",
         position: "President",
         decaEvent: "BLTDM",
         decaCluster: "Business Admin",
@@ -37,7 +37,7 @@ router.get("/", function(req, res, next) {
         favQuote: "Magical"
       },
       {
-        name: "Bani Arora",
+        name: "Vanit Shah",
         position: "Vice President",
         decaEvent: "AAM",
         decaCluster: "Marketing",
