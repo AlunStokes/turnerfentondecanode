@@ -33,7 +33,7 @@ router.get("/", function(req, res, next) {
         position: "President",
         decaEvent: "BLTDM",
         decaCluster: "Business Admin",
-        imgPath: "images/exec-images/sbSonali.jpg",
+        imgPath: "images/exec-images/bani.jpg",
         favQuote: "Limitless"
       },
       {
@@ -41,7 +41,7 @@ router.get("/", function(req, res, next) {
         position: "Vice President",
         decaEvent: "AAM",
         decaCluster: "Marketing",
-        imgPath: "images/exec-images/sbBani.jpg",
+        imgPath: "images/exec-images/vanit.jpg",
         favQuote: "Limitless"
       },
       {
@@ -77,8 +77,8 @@ router.get("/", function(req, res, next) {
         favQuote: "Life-Changing"
       },
       {
-        name: "Khubi Shah",
-        position: "VP of Operations",
+        name: "Anish Mahto",
+        position: "VP of Education",
         decaEvent: "PFL",
         decaCluster: "Finance",
         imgPath: "images/exec-images/sbKhubi.jpg",
@@ -93,7 +93,7 @@ router.get("/", function(req, res, next) {
         favQuote: "Invigorating"
       },
     {
-      name: "Tanzim Pathan",
+      name: "Poonum Parmar",
       position: "Writtens Director",
       decaEvent: "HTPS",
       decaCluster: "Hospitality",
@@ -109,7 +109,7 @@ router.get("/", function(req, res, next) {
       favQuote: "Eye-opening"
     },
     {
-      name: "Dalraj Dhillon",
+      name: "Arnav Paruthi",
       position: "Business Associate",
       decaEvent: "PMK",
       decaCluster: "Marketing",
