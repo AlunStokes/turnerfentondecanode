@@ -61,7 +61,7 @@ router.get("/", function(req, res, next) {
         favQuote: "Professional"
       },
       {
-        name: "Dhvani Doshi",
+        name: "Purva Vyas",
         position: "VP of Education",
         decaEvent: "BLTDM",
         decaCluster: "Business Admin",
