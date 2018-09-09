@@ -50,14 +50,14 @@ router.get("/", function(req, res, next) {
         decaEvent: "BFS",
         decaCluster: "Finance",
         imgPath: "images/exec-images/aashna.jpg",
-        favQuote: "Aesthetic"
+        favQuote: "Memorable"
       },
       {
         name: "Kabisan T.",
         position: "VP of Comms",
         decaEvent: "BSM",
         decaCluster: "Marketing",
-        imgPath: "images/exec-images/sbKabisan.jpg",
+        imgPath: "images/exec-images/kabi.jpg",
         favQuote: "Professional"
       },
       {
@@ -65,7 +65,7 @@ router.get("/", function(req, res, next) {
         position: "VP of Education",
         decaEvent: "BLTDM",
         decaCluster: "Business Admin",
-        imgPath: "images/exec-images/sbDhvani.jpg",
+        imgPath: "images/exec-images/sbPurva.jpg",
         favQuote: "Growth"
       },
       {
@@ -81,7 +81,7 @@ router.get("/", function(req, res, next) {
         position: "VP of Education",
         decaEvent: "PFL",
         decaCluster: "Finance",
-        imgPath: "images/exec-images/sbKhubi.jpg",
+        imgPath: "images/exec-images/anish.jpg",
         favQuote: "Exciting"
       },
       {
@@ -89,7 +89,7 @@ router.get("/", function(req, res, next) {
         position: "VP of Finance",
         decaEvent: "PFL",
         decaCluster: "Finance",
-        imgPath: "images/exec-images/sbRichard.jpg",
+        imgPath: "images/exec-images/richard.jpg",
         favQuote: "Invigorating"
       },
     {
@@ -105,7 +105,7 @@ router.get("/", function(req, res, next) {
       position: "Writtens Director",
       decaEvent: "BOR",
       decaCluster: "Business Admin",
-      imgPath: "images/exec-images/sbPoonum.jpg",
+      imgPath: "images/exec-images/sbDalraj.jpg",
       favQuote: "Eye-opening"
     },
     {
@@ -113,7 +113,7 @@ router.get("/", function(req, res, next) {
       position: "Writtens Director",
       decaEvent: "PMK",
       decaCluster: "Marketing",
-      imgPath: "images/exec-images/sbDalraj.jpg",
+      imgPath: "images/exec-images/sbPoonum.jpg",
       favQuote: "Powerful"
     },
     {
@@ -129,7 +129,7 @@ router.get("/", function(req, res, next) {
         position: "Business Associate",
         decaEvent: "MCS",
         decaCluster: "Marketing",
-        imgPath: "images/exec-images/sbHina.jpg",
+        imgPath: "images/exec-images/arnav.jpg",
         favQuote: "Inspiring"
       },
       {
