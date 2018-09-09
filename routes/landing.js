@@ -34,7 +34,7 @@ router.get("/", function(req, res, next) {
         decaEvent: "BLTDM",
         decaCluster: "Business Admin",
         imgPath: "images/exec-images/sbSonali.jpg",
-        favQuote: "Magical"
+        favQuote: "Limitless"
       },
       {
         name: "Vanit Shah",
@@ -45,11 +45,11 @@ router.get("/", function(req, res, next) {
         favQuote: "Limitless"
       },
       {
-        name: "Maanav Dalal",
+        name: "Aashna Agarwal",
         position: "VP of Comms",
-        decaEvent: "BSM",
-        decaCluster: "Marketing",
-        imgPath: "images/exec-images/sbMaanav.jpg",
+        decaEvent: "BFS",
+        decaCluster: "Finance",
+        imgPath: "images/exec-images/aashna.jpg",
         favQuote: "Aesthetic"
       },
       {
