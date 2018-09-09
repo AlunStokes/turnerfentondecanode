@@ -93,31 +93,31 @@ router.get("/", function(req, res, next) {
         favQuote: "Invigorating"
       },
     {
-      name: "Poonum Parmar",
-      position: "Writtens Director",
+      name: "Hannah Tang",
+      position: "VP of Finance",
       decaEvent: "HTPS",
       decaCluster: "Hospitality",
       imgPath: "images/exec-images/sbTanzim.jpg",
       favQuote: "Memorable"
     },
     {
-      name: "Poonum Parmar",
-      position: "Business Associate",
+      name: "Sharon Chatha",
+      position: "Writtens Director",
       decaEvent: "BOR",
       decaCluster: "Business Admin",
       imgPath: "images/exec-images/sbPoonum.jpg",
       favQuote: "Eye-opening"
     },
     {
-      name: "Arnav Paruthi",
-      position: "Business Associate",
+      name: "Poonum Parmar",
+      position: "Writtens Director",
       decaEvent: "PMK",
       decaCluster: "Marketing",
       imgPath: "images/exec-images/sbDalraj.jpg",
       favQuote: "Powerful"
     },
     {
-      name: "Purva Vyas",
+      name: "Jai Betala",
       position: "Business Associate",
       decaEvent: "PMK",
       decaCluster: "Marketing",
@@ -125,29 +125,22 @@ router.get("/", function(req, res, next) {
       favQuote: "Mind-Blowing"
     },
       {
-        name: "Hina Rani",
-        position: "Edu (Marketing)",
+        name: "Arnav Paruthi",
+        position: "Business Associate",
         decaEvent: "MCS",
         decaCluster: "Marketing",
         imgPath: "images/exec-images/sbHina.jpg",
         favQuote: "Inspiring"
       },
       {
-        name: "Vanit Shah",
-        position: "Edu (Principles)",
+        name: "Yasmine Ahmed",
+        position: "Business Associate",
         decaEvent: "MTDM",
         decaCluster: "Business Admin",
         imgPath: "images/exec-images/sbVanit.jpg",
         favQuote: "Breathtaking"
       },
-      {
-        name: "Rashi R.",
-        position: "Edu (Hospitality)",
-        decaEvent: "TTDM",
-        decaCluster: "Hospitality",
-        imgPath: "images/exec-images/sbRashi.jpg",
-        favQuote: "Exhilarating"
-      }
+      
   ]
 
   res.render("landing");
