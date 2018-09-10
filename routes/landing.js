@@ -33,7 +33,7 @@ router.get("/", function(req, res, next) {
         position: "President",
         decaEvent: "BLTDM",
         decaCluster: "Business Admin",
-        imgPath: "images/exec-images/bani.jpg",
+        imgPath: "images/exec-images/bani.JPG",
         favQuote: "Limitless"
       },
       {
@@ -41,15 +41,15 @@ router.get("/", function(req, res, next) {
         position: "Vice President",
         decaEvent: "AAM",
         decaCluster: "Marketing",
-        imgPath: "images/exec-images/vanit.jpg",
-        favQuote: "Limitless"
+        imgPath: "images/exec-images/vanit.JPG",
+        favQuote: "Breathtaking"
       },
       {
         name: "Aashna Agarwal",
         position: "VP of Comms",
         decaEvent: "BFS",
         decaCluster: "Finance",
-        imgPath: "images/exec-images/aashna.jpg",
+        imgPath: "images/exec-images/aashna.JPG",
         favQuote: "Memorable"
       },
       {
@@ -57,16 +57,8 @@ router.get("/", function(req, res, next) {
         position: "VP of Comms",
         decaEvent: "BSM",
         decaCluster: "Marketing",
-        imgPath: "images/exec-images/kabi.jpg",
+        imgPath: "images/exec-images/sbKabisan.jpg",
         favQuote: "Professional"
-      },
-      {
-        name: "Purva Vyas",
-        position: "VP of Education",
-        decaEvent: "BLTDM",
-        decaCluster: "Business Admin",
-        imgPath: "images/exec-images/sbPurva.jpg",
-        favQuote: "Growth"
       },
       {
         name: "Kavya Kadi",
@@ -81,47 +73,63 @@ router.get("/", function(req, res, next) {
         position: "VP of Education",
         decaEvent: "PFL",
         decaCluster: "Finance",
-        imgPath: "images/exec-images/anish.jpg",
+        imgPath: "images/exec-images/anish.JPG",
         favQuote: "Exciting"
+      },
+      {
+        name: "Purva Vyas",
+        position: "VP of Education",
+        decaEvent: "BLTDM",
+        decaCluster: "Business Admin",
+        imgPath: "images/exec-images/purva.jpg",
+        favQuote: "Growth"
       },
       {
         name: "Richard Li",
         position: "VP of Finance",
-        decaEvent: "PFL",
+        decaEvent: "FOR",
         decaCluster: "Finance",
-        imgPath: "images/exec-images/richard.jpg",
-        favQuote: "Invigorating"
+        imgPath: "images/exec-images/richard.JPG",
+        favQuote: "Rewarding"
       },
     {
       name: "Hannah Tang",
       position: "VP of Finance",
       decaEvent: "HTPS",
       decaCluster: "Hospitality",
-      imgPath: "images/exec-images/sbTanzim.jpg",
+      imgPath: "images/exec-images/hannah.JPG",
       favQuote: "Memorable"
     },
     {
       name: "Sharon Chatha",
       position: "Writtens Director",
-      decaEvent: "BOR",
-      decaCluster: "Business Admin",
-      imgPath: "images/exec-images/sbDalraj.jpg",
-      favQuote: "Eye-opening"
+      decaEvent: "IMCP",
+      decaCluster: "Writtens",
+      imgPath: "images/exec-images/sharon.JPG",
+      favQuote: "Exhilerating"
     },
     {
       name: "Poonum Parmar",
       position: "Writtens Director",
-      decaEvent: "PMK",
-      decaCluster: "Marketing",
-      imgPath: "images/exec-images/sbPoonum.jpg",
+      decaEvent: "IMCP",
+      decaCluster: "Writtens",
+      imgPath: "images/exec-images/poonum.JPG",
       favQuote: "Powerful"
+    },
+    {
+      name: "Yasmine Ahmed",
+      position: "Business Associate",
+      decaEvent: "MTDM",
+      decaCluster: "Business Admin",
+      imgPath: "images/exec-images/yasmine.JPG",
+      favQuote: "Heart-racing"
     },
     {
       name: "Jai Betala",
       position: "Business Associate",
       decaEvent: "PMK",
       decaCluster: "Marketing",
-      imgPath: "images/exec-images/sbPurva.jpg",
+      imgPath: "images/exec-images/jai.JPG",
       favQuote: "Mind-Blowing"
     },
       {
@@ -129,18 +137,9 @@ router.get("/", function(req, res, next) {
         position: "Business Associate",
         decaEvent: "MCS",
         decaCluster: "Marketing",
-        imgPath: "images/exec-images/arnav.jpg",
+        imgPath: "images/exec-images/arnav.JPG",
         favQuote: "Inspiring"
       },
-      {
-        name: "Yasmine Ahmed",
-        position: "Business Associate",
-        decaEvent: "MTDM",
-        decaCluster: "Business Admin",
-        imgPath: "images/exec-images/sbVanit.jpg",
-        favQuote: "Breathtaking"
-      },
-      
   ]
 
   res.render("landing");
