@@ -111,7 +111,7 @@ router.get("/", function(req, res, next) {
     {
       name: "Poonum Parmar",
       position: "Writtens Director",
-      decaEvent: "IMCP",
+      decaEvent: "BOR",
       decaCluster: "Writtens",
       imgPath: "images/exec-images/poonum.JPG",
       favQuote: "Powerful"
