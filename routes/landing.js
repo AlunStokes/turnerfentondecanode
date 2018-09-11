@@ -39,7 +39,7 @@ router.get("/", function(req, res, next) {
       {
         name: "Vanit Shah",
         position: "Vice President",
-        decaEvent: "AAM",
+        decaEvent: "BTDM",
         decaCluster: "Marketing",
         imgPath: "images/exec-images/vanit.jpg",
         favQuote: "Breathtaking"
@@ -71,7 +71,7 @@ router.get("/", function(req, res, next) {
       {
         name: "Anish Mahto",
         position: "VP of Education",
-        decaEvent: "PFL",
+        decaEvent: "FTDM",
         decaCluster: "Finance",
         imgPath: "images/exec-images/anish.jpg",
         favQuote: "Exciting"
@@ -82,7 +82,7 @@ router.get("/", function(req, res, next) {
         decaEvent: "BLTDM",
         decaCluster: "Business Admin",
         imgPath: "images/exec-images/purva.jpg",
-        favQuote: "Growth"
+        favQuote: "Inspiring"
       },
       {
         name: "Richard Li",
@@ -95,10 +95,10 @@ router.get("/", function(req, res, next) {
     {
       name: "Hannah Tang",
       position: "VP of Finance",
-      decaEvent: "HTPS",
-      decaCluster: "Hospitality",
+      decaEvent: "BFS",
+      decaCluster: "Finance",
       imgPath: "images/exec-images/hannah.jpg",
-      favQuote: "Memorable"
+      favQuote: "Boisterous"
     },
     {
       name: "Sharon Chatha",
@@ -127,18 +127,18 @@ router.get("/", function(req, res, next) {
     {
       name: "Jai Betala",
       position: "Business Associate",
-      decaEvent: "PMK",
-      decaCluster: "Marketing",
+      decaEvent: "PFL",
+      decaCluster: "Finance",
       imgPath: "images/exec-images/jai.jpg",
-      favQuote: "Mind-Blowing"
+      favQuote: "Enthralling"
     },
       {
         name: "Arnav Paruthi",
         position: "Business Associate",
-        decaEvent: "MCS",
-        decaCluster: "Marketing",
+        decaEvent: "HRM",
+        decaCluster: "Business Admin",
         imgPath: "images/exec-images/arnav.jpg",
-        favQuote: "Inspiring"
+        favQuote: "Fun"
       },
   ]
 
