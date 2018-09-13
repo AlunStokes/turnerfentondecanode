@@ -127,13 +127,13 @@ LOCK TABLES `designtimelineentries` WRITE;
 
 INSERT INTO `designtimelineentries` (`entryid`, `date`, `title`, `author`, `description`, `numAlternates`)
 VALUES
-	(1,'2017-02-01 05:00:00','Provincials Poster','Alun Stokes','This poster was used as a promotional design for the then upcoming provincial competitions. It features the hashtag of the 2016/2017 year: #DECAthletes.',5),
+	/*(1,'2017-02-01 05:00:00','Provincials Poster','Alun Stokes','This poster was used as a promotional design for the then upcoming provincial competitions. It features the hashtag of the 2016/2017 year: #DECAthletes.',5),
 	(2,'2016-12-20 18:11:15','Mock Competition Awards Poster','Alun Stokes','Being the first year that Turner Fenton DECA ran a mock competition, there was great stress placed upon the promotion of both the competition itself, and the ensuing awards; this poster was for the latter.',1),
 	(3,'2016-12-13 05:00:00','Mock Competition Poster','Alun Stokes','Being the first year that Turner Fenton DECA ran a mock competition, there was great stress placed upon the promotion of both the competition itself, and the ensuing awards; this poster was for the former. There was both a male, and female poster.',1),
 	(4,'2016-11-06 04:00:00','Post-Regionals Review Poster','Alun Stokes','Used in commemoration of Turner Fenton\'s victories at regionals, this poster takes the form of a provincials plaque to show off the wins.',0),
 	(5,'2016-10-17 04:00:00','Guidebook Design','Alun Stokes','The guidebook has been a staple of Turner Fenton DECA since 2014, and this design refreshes the stylings with the year\'s new logo and font.',1),
 	(6,'2016-09-27 04:00:00','Regionals Poster','Alun Stokes','These posters were not used for the promotion of regionals within Turner Fenton, but as a declaration of the chapter at the regionals itself.',4),
-	(7,'2016-09-01 04:00:00','2016/2017 Logo','Leon Barrett (Circular) / Alun Stokes (Cuboid)','The final circular logo was chosen to keep in theme with the Turner Fenton brand redesign, though a more simple approach was taken with the proposed logos.',4);
+	(7,'2016-09-01 04:00:00','2016/2017 Logo','Leon Barrett (Circular) / Alun Stokes (Cuboid)','The final circular logo was chosen to keep in theme with the Turner Fenton brand redesign, though a more simple approach was taken with the proposed logos.',4);*/
 
 /*!40000 ALTER TABLE `designtimelineentries` ENABLE KEYS */;
 UNLOCK TABLES;
