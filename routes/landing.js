@@ -33,7 +33,7 @@ router.get("/", function(req, res, next) {
         position: "President",
         decaEvent: "BLTDM",
         decaCluster: "Business Admin",
-        imgPath: "images/exec-images/bani.jpg",
+        imgPath: "images/exec-images/sbBani.jpg",
         favQuote: "Limitless"
       },
       {
@@ -41,7 +41,7 @@ router.get("/", function(req, res, next) {
         position: "Vice President",
         decaEvent: "BTDM",
         decaCluster: "Marketing",
-        imgPath: "images/exec-images/vanit.jpg",
+        imgPath: "images/exec-images/sbVanit.jpg",
         favQuote: "Breathtaking"
       },
       {
@@ -81,7 +81,7 @@ router.get("/", function(req, res, next) {
         position: "VP of Education",
         decaEvent: "BLTDM",
         decaCluster: "Business Admin",
-        imgPath: "images/exec-images/purva.jpg",
+        imgPath: "images/exec-images/sbPurva.jpg",
         favQuote: "Inspiring"
       },
       {
@@ -89,7 +89,7 @@ router.get("/", function(req, res, next) {
         position: "VP of Finance",
         decaEvent: "FOR",
         decaCluster: "Finance",
-        imgPath: "images/exec-images/richard.jpg",
+        imgPath: "images/exec-images/sbRichard.jpg",
         favQuote: "Rewarding"
       },
     {
@@ -113,7 +113,7 @@ router.get("/", function(req, res, next) {
       position: "Writtens Director",
       decaEvent: "BOR",
       decaCluster: "Writtens",
-      imgPath: "images/exec-images/poonum.jpg",
+      imgPath: "images/exec-images/sbPoonum.jpg",
       favQuote: "Powerful"
     },
     {
