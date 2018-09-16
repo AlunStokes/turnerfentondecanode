@@ -145,6 +145,7 @@ function validateExam(callback) {
   }
   if (examName.length < 3) {
     callback("Exam name must be at least 3 characters");
+    return;
   }
   if (inExam.length == 0) {
     callback("Exam must have questions in it");

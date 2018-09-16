@@ -1,6 +1,6 @@
 $(document).ready(function() {
   $('#typed-text').typeIt({
-    strings: ["i am", "we are", "this is"],
+    strings: ["i am", "we are", "this is", "the great"],
     html: true,
     breakLines: false,
     deleteDelay: 2500,

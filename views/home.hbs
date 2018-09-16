@@ -1,4 +1,8 @@
-<div class="container-fluid">
+{{#if fullwidth}}
+<div class="container-fluid" id="top-div">
+{{else}}
+<div class="container" id="top-div">
+{{/if}}
     <div class="row">
       <!--Page specific cards -->
       {{#if admin}}
@@ -9,14 +13,20 @@
         {{/if}}
       {{/if}}
       {{>cards/startExamCard}}
+      {{>cards/discordCard}}
+      {{>cards/caseCard}}
       {{>cards/personalExamStatisticsCard}}
       {{#if admin}}
         {{>cards/chapterExamStatisticsCard}}
       {{/if}}
+      {{#if attendanceSessionOpen}}
       {{>cards/userAttendanceCard}}
-      {{>cards/changeColorCard}}
-      {{>cards/userClusterProficiencyCard}}
+      {{/if}}
       {{>cards/numQuestionsAnsweredCard}}
+      {{!-- {{>cards/changeColorCard}} --}}
+      {{>cards/mostIncorrectlyAnsweredCard}}
+      {{>cards/userClusterProficiencyCard}}
+      {{>cards/userExamResultsLineCard}}
       {{#if canSubmitExtensions}}
         {{>cards/submitExtensionCard}}
       {{/if}}

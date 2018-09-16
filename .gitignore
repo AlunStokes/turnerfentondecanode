@@ -62,6 +62,7 @@ themify-icons.*
 jscolor.*
 todo.*
 simplemde.*
+.idea
 
 tools/
 node_modules/

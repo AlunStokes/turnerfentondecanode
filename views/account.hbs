@@ -1,6 +1,51 @@
-<div class="container-fluid">
+{{#if fullwidth}}
+<div class="container-fluid" id="top-div">
+{{else}}
+<div class="container" id="top-div">
+{{/if}}
   <div class="row">
     {{>cards/changePasswordCard}}
     {{>cards/changeEmailCard}}
+    {{#if sidebarBackground}}
+    {{>cards/changeColorCard}}
+    {{/if}}
+    {{>cards/toggleFullwidthCard}}
   </div>
 </div>
+
+<style>
+
+.row {
+ -moz-column-width: 35em;
+ -webkit-column-width: 35em;
+ -moz-column-gap: 1em;
+ -webkit-column-gap:1em;
+}
+
+.row > .col-xs-12:not(.ignore) {
+ display: inline-block;
+ width:  100%;
+ float:none;
+}
+.row > .col-sm-6:not(.ignore) {
+ display: inline-block;
+ width:  100%;
+ float:none;
+}
+.row > .col-lg-4:not(.ignore) {
+ display: inline-block;
+ width:  100%;
+ float:none;
+}
+.row > .col-lg-6:not(.ignore) {
+ display: inline-block;
+ width:  100%;
+ float:none;
+}
+.row > .col-lg-12:not(.ignore) {
+ display: inline-block;
+ width:  100%;
+ float:none;
+}
+
+</style>

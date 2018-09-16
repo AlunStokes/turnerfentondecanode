@@ -1,13 +1,21 @@
 $(document).ready(function() {
+
+  var givenStudentNumber = findGetParameter("studentNumber");
+  if (givenStudentNumber && !admin && givenStudentNumber != studentNumber) {
+    notify("You aren't allowed to view other users' stats", "warning", "exclamation");
+    givenStudentNumber = null;
+  }
+
   $.ajax({
       type: "GET",
       url: "ajax",
       data: {
-        ajaxid: "getExamResultsLine"
+        ajaxid: "getExamResultsLine",
+        studentNumber: givenStudentNumber
       },
     }).done(function(data){
       if (data.err) {
-        notify(data.err, "danger", "exclamation");
+        //notify(data.err, "danger", "exclamation");
         $("#exam-results-line-card").css("display", "none");
         return;
       }

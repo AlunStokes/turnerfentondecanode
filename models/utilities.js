@@ -54,15 +54,28 @@ var utilities = {
     var seed = parseInt(Math.random() * (mod - 2) + 1);
     var multiplier;
     utilities.getCoprimeTo(mod, mod-1, function(coprime) {
+      //If no coprime
+      if (!coprime) {
+        increment = 1;
+        multiplier = 1;
+        callback(mod, increment, seed, multiplier);
+        return;
+      }
       increment = coprime;
-      utilities.getPrimeFactorsOf(mod, function(modFactors) {
+      var modFactors = utilities.getPrimeFactorsOf(mod);
+        //Special cases
+        if (modFactors.length == 0) {
+          increment = 1;
+          multiplier = 1;
+          callback(mod, increment, seed, multiplier);
+          return;
+        }
         utilities.getModularlyCongruentToSet(1, modFactors, 1, mod-1, mod % 4 == 0, function(b) {
           multiplier = b;
           callback(mod, increment, seed, multiplier);
           return;
-        })
-      });
-    })
+        });
+    });
   },
   //The empty list upon which LinConGen acts
   linConGenList: [
@@ -116,55 +129,51 @@ var utilities = {
     return;
   },
   //Returns an array of the prime factors of a (does not repeat factors or list exponents)
-  getPrimeFactorsOf: function(a, callback) {
-    if (a == 0 || a == 1) {
-      callback([]);
-      return;
-    }
-    var primes = [];
-    utilities.getFactorizationOf(a, function(factors) {
-      for (var i = 0; i < factors.length; i++) {
-        utilities.isPrime(factors[i], function(primality) {
-          if (primality) {
-            primes.push(factors[i]);
-          }
-        });
-      }
-      callback(primes);
-      return;
-    });
+  getPrimeFactorsOf: function(a) {
+    var factors = [], i;
+        if (a < 2) {
+          return factors;
+        }
+        for (i = 2; i <= a; i++) {
+            while ((a % i) === 0) {
+                factors.push(i);
+                a /= i;
+            }
+        }
+        return factors;
   },
   getPrimeFactorsOfUpTo: function(max, callback) {
     var pFactors = [];
     for (var i = 0; i < max; i++) {
-      utilities.getPrimeFactorsOf(i, function(factors) {
-        pFactors[i] = factors;
-      });
+      pFactors[i] = utilities.getPrimeFactorsOf(i);
     }
     callback(pFactors);
     return;
   },
-  //Returns a coprime integer to the given input between the max and min values given
-  getCoprimeTo(a, max, callback) {
+  //Returns a coprime integer to the given input up to the max value given
+  getCoprimeTo: function(a, max, callback) {
     var viable = [];
-    utilities.getPrimeFactorsOf(a, function(pFactorsA) {
-      utilities.getPrimeFactorsOfUpTo(max, function(pFactors) {
-        //Remove 0 and 1 from array -> no prime factors
-        pFactors.splice(0,2);
-        for (var i = 0; i < pFactors.length; i++) {
-          if (!pFactorsA.compare(pFactors[i])) {
-            //+2 to account for removing 0 and 1
-            viable.push(i + 2);
-          }
+    var pFactorsA = utilities.getPrimeFactorsOf(a);
+    utilities.getPrimeFactorsOfUpTo(max, function(pFactors) {
+      //Remove 0 and 1 from array -> no prime factors
+      pFactors.splice(0,2);
+      for (var i = 0; i < pFactors.length; i++) {
+        if (!pFactorsA.hasOverlap(pFactors[i])) {
+          //+2 to account for removing 0 and 1
+          viable.push(i + 2);
         }
-        var index = parseInt(Math.random() * (viable.length), 10);
-        callback(viable[index]);
+      }
+      if (viable.length == 0) {
+        callback(null);
         return;
-      });
+      }
+      var index = parseInt(Math.random() * (viable.length), 10);
+      callback(viable[index]);
+      return;
     });
   },
   //Checks if a and b are congruent modulo n; returns true if so, false if not
-  checkModularCongruence(a, b, n, callback) {
+  checkModularCongruence: function(a, b, n, callback) {
     if ((a - b) % n == 0) {
       //console.log(a + " is congruent to " + b + " mod " + n);
       callback(true);
@@ -174,9 +183,11 @@ var utilities = {
     callback(false);
     return;
   },
+  //Used to incrementally check though indices of possible values in modularly congruent to set function such that values aren't repeated needlessly
+  lastIndexGetModularlyCongruentToSet: null,
   //Returns a value a between min and max for which and a and b are congruent modulo the entire set of n, where n is an integer array
   //divByFour is a boolean which represents whether a must be divisible by 4
-  getModularlyCongruentToSet(b, n, min, max, divByFour, callback) {
+  getModularlyCongruentToSet: function(b, n, min, max, divByFour, callback) {
     var aPass = true;
     if (divByFour) {
       var possibleNums = utilities.getNumbersUpToDivisibleBy(max, 4);
@@ -186,7 +197,15 @@ var utilities = {
       }
       //Add first index to last to make it more likely to get the previous last index
       possibleNums.push(possibleNums[0]);
-      a = possibleNums[parseInt(Math.random() * (possibleNums.length - 1))];
+      if (utilities.lastIndexGetModularlyCongruentToSet) {
+        a = possibleNums[(utilities.lastIndexGetModularlyCongruentToSet + 1) % (possibleNums.length - 1)];
+        utilities.lastIndexGetModularlyCongruentToSet += 1;
+      }
+      else {
+        var num = parseInt(Math.random() * (possibleNums.length - 1));
+        a = possibleNums[num];
+        utilities.lastIndexGetModularlyCongruentToSet = num;
+      }
     }
     else {
       //Get lowest common multiple of all numbers in n
@@ -375,8 +394,8 @@ var utilities = {
   }
 }
 
-Array.prototype.compare = function(arr) {
-  return this.filter(function(item){ return arr.indexOf(item) > -1}) > 0;
+Array.prototype.hasOverlap = function(arr2) {
+    return this.filter(element => arr2.includes(element)).length != 0 ? true : false;
 }
 
 module.exports = utilities;

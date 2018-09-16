@@ -1,4 +1,8 @@
-<div class="container-fluid">
+{{#if fullwidth}}
+<div class="container-fluid" id="top-div">
+{{else}}
+<div class="container" id="top-div">
+{{/if}}
   <div class="row">
     <div class="col-lg-12 col-xs-12">
       {{#if examTimer}}
@@ -76,7 +80,7 @@
   <hr>
   <div class="row">
     <div class="col-lg-12 col-xs-12">
-      <button type="button" id="submit-exam-btn" class="btn btn-default active-color" disabled>Submit</button>
+      <button type="button" id="submit-exam-btn" class="btn btn-block active-color" disabled>Submit</button>
     </div>
   </div>
 </div>

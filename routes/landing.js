@@ -17,129 +17,129 @@ router.use(loadJS([
 ]))
 
 router.get("/", function(req, res, next) {
-  //Each exec card consists of a name, position, decaEvent, decaCluster, imgPath, numMedals and numPlaques
+  //Each exec card consists of a name, position, decaEvent, decaCluster, imgPath, numMedals and numPlasbques
   //the execCards array holds all the exec card objects
   res.locals.execCards = [
     {
-        name: "Sonali Puri",
+      name: "Mr. Rhoden",
+      position: "Chapter Advisor",
+      decaEvent: "Teacher",
+      decaCluster: "Advisor",
+      imgPath: "images/exec-images/sbOmari.jpg",
+      favQuote: "Synergy"
+    },
+    {
+        name: "Bani Arora",
         position: "President",
         decaEvent: "BLTDM",
         decaCluster: "Business Admin",
-        imgPath: "images/exec-images/anon.jpg",
-        favQuote: "Hi"
+        imgPath: "images/exec-images/sbBani.jpg",
+        favQuote: "Limitless"
       },
       {
-        name: "Bani Arora",
+        name: "Vanit Shah",
         position: "Vice President",
-        decaEvent: "AAM",
+        decaEvent: "BTDM",
         decaCluster: "Marketing",
-        imgPath: "images/exec-images/anon.jpg",
-        favQuote: "-"
+        imgPath: "images/exec-images/sbVanit.jpg",
+        favQuote: "Breathtaking"
       },
       {
-        name: "Maanav Dalal",
+        name: "Aashna Agarwal",
+        position: "VP of Comms",
+        decaEvent: "BFS",
+        decaCluster: "Finance",
+        imgPath: "images/exec-images/aashna.jpg",
+        favQuote: "Memorable"
+      },
+      {
+        name: "Kabisan T.",
         position: "VP of Comms",
         decaEvent: "BSM",
         decaCluster: "Marketing",
-        imgPath: "images/exec-images/anon.jpg",
-        favQuote: "Aesthetic"
-      },
-      {
-        name: "Kabisan Tanedran",
-        position: "VP of Comms",
-        decaEvent: "BSM",
-        decaCluster: "Marketing",
-        imgPath: "images/exec-images/anon.jpg",
-        favQuote: "-"
-      },
-      {
-        name: "Dhvani Doshi",
-        position: "VP of Education",
-        decaEvent: "BLTDM",
-        decaCluster: "Business Admin",
-        imgPath: "images/exec-images/anon.jpg",
-        favQuote: "Growth"
+        imgPath: "images/exec-images/sbKabisan.jpg",
+        favQuote: "Professional"
       },
       {
         name: "Kavya Kadi",
         position: "VP of Education",
         decaEvent: "MCS",
         decaCluster: "Marketing",
-        imgPath: "images/exec-images/Kavya.png",
+        imgPath: "images/exec-images/sbKavya.jpg",
         favQuote: "Life-Changing"
       },
       {
-        name: "Khubi Shah",
-        position: "VP of Operations",
-        decaEvent: "PFL",
+        name: "Anish Mahto",
+        position: "VP of Education",
+        decaEvent: "FTDM",
         decaCluster: "Finance",
-        imgPath: "images/exec-images/anon.jpg",
-        favQuote: "-"
+        imgPath: "images/exec-images/anish.jpg",
+        favQuote: "Exciting"
+      },
+      {
+        name: "Purva Vyas",
+        position: "VP of Education",
+        decaEvent: "BLTDM",
+        decaCluster: "Business Admin",
+        imgPath: "images/exec-images/sbPurva.jpg",
+        favQuote: "Inspiring"
       },
       {
         name: "Richard Li",
         position: "VP of Finance",
-        decaEvent: "PFL",
+        decaEvent: "FOR",
         decaCluster: "Finance",
-        imgPath: "images/exec-images/anon.jpg",
-        favQuote: "-"
+        imgPath: "images/exec-images/sbRichard.jpg",
+        favQuote: "Rewarding"
       },
     {
-      name: "Tanzim Pathan",
+      name: "Hannah Tang",
+      position: "VP of Finance",
+      decaEvent: "BFS",
+      decaCluster: "Finance",
+      imgPath: "images/exec-images/hannah.jpg",
+      favQuote: "Boisterous"
+    },
+    {
+      name: "Sharon Chatha",
       position: "Writtens Director",
-      decaEvent: "HTPS",
-      decaCluster: "Hospitality",
-      imgPath: "images/exec-images/anon.jpg",
-      favQuote: "Memorable"
+      decaEvent: "IMCP",
+      decaCluster: "Writtens",
+      imgPath: "images/exec-images/sharon.jpg",
+      favQuote: "Exhilerating"
     },
     {
-      name: "Poonam Parmar",
-      position: "Business Associate",
+      name: "Poonum Parmar",
+      position: "Writtens Director",
       decaEvent: "BOR",
+      decaCluster: "Writtens",
+      imgPath: "images/exec-images/sbPoonum.jpg",
+      favQuote: "Powerful"
+    },
+    {
+      name: "Yasmine Ahmed",
+      position: "Business Associate",
+      decaEvent: "MTDM",
       decaCluster: "Business Admin",
-      imgPath: "images/exec-images/anon.jpg",
-      favQuote: "Eye-opening"
+      imgPath: "images/exec-images/yasmine.jpg",
+      favQuote: "Heart-racing"
     },
     {
-      name: "Dalraj Dhillon",
+      name: "Jai Betala",
       position: "Business Associate",
-      decaEvent: "PMK",
-      decaCluster: "Marketing",
-      imgPath: "images/exec-images/anon.jpg",
-      favQuote: "-"
-    },
-    {
-      name: "Purva Vyas",
-      position: "Business Associate",
-      decaEvent: "PMK",
-      decaCluster: "Marketing",
-      imgPath: "images/exec-images/Purva.png",
-      favQuote: "-"
+      decaEvent: "PFL",
+      decaCluster: "Finance",
+      imgPath: "images/exec-images/jai.jpg",
+      favQuote: "Enthralling"
     },
       {
-        name: "Hina Rani",
-        position: "Edu (Marketing)",
-        decaEvent: "MCS",
-        decaCluster: "Marketing",
-        imgPath: "images/exec-images/Hina.png",
-        favQuote: "Inspiring"
-      },
-      {
-        name: "Vanit Shah",
-        position: "Edu (Principles)",
-        decaEvent: "MTDM",
+        name: "Arnav Paruthi",
+        position: "Business Associate",
+        decaEvent: "HRM",
         decaCluster: "Business Admin",
-        imgPath: "images/exec-images/anon.jpg",
-        favQuote: "-"
+        imgPath: "images/exec-images/arnav.jpg",
+        favQuote: "Fun"
       },
-      {
-        name: "Rashi R.",
-        position: "Edu (Hospitality)",
-        decaEvent: "TTDM",
-        decaCluster: "Hospitality",
-        imgPath: "images/exec-images/anon.jpg",
-        favQuote: "-"
-      }
   ]
 
   res.render("landing");

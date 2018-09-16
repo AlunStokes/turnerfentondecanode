@@ -12,6 +12,7 @@
       </div>
       <div class="control-group">
         <input type="email" class="login-field text thin" value="{{registrant.email}}" placeholder="email" id="email" name="email" autocomplete="off" data-validation="required email">
+        <p>Please do not use emails with the suffix "outlook.com"</p>
       </div>
       <div class="control-group">
         <input type="email" class="login-field text thin" value="{{registrant.email}}" placeholder="email (confirm)" id="email-confirm" name="emailConfirm" autocomplete="off" data-validation="required email">
@@ -24,6 +25,14 @@
       </div>
       <div class="control-group">
         <input type="password" class="login-field text thin" value="" placeholder="password (confirm)" id="password-confirm" name="passwordConfirm" autocomplete="off" data-validation="required">
+      </div>
+      <div class="control-group">
+        <select class="text thin" name="programName">
+          <option class="text thin" value="academic" {{#if registrant.academic}}selected="selected"{{/if}}>academic</option>
+          <option class="text thin" value="ib" {{#if registrant.ib}}selected="selected"{{/if}}>ib</option>
+          <option class="text thin" value="french immersion" {{#if registrant.frenchImmersion}}selected="selected"{{/if}}>french immersion</option>
+          <option class="text thin" value="vocational" {{#if registrant.vocational}}selected="selected"{{/if}}>vocational</option>
+        </select>
       </div>
       <div class="control-group">
         <select class="text thin" name="grade">

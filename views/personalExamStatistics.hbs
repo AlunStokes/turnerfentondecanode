@@ -1,4 +1,15 @@
-<div class="container-fluid">
+{{#if fullwidth}}
+<div class="container-fluid" id="top-div">
+{{else}}
+<div class="container" id="top-div">
+{{/if}}
+
+  <div class="row">
+    <div class="col-lg-4 col-xs-12">
+      <h1 class="text thin large left dark">{{name}}</h1>
+      <br>
+    </div>
+  </div>
 
   <div class="row">
     {{>cards/userClusterProficiencyCard}}
