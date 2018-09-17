@@ -50,7 +50,7 @@ router.get("/", function(req, res, next) {
         decaEvent: "BFS",
         decaCluster: "Finance",
         imgPath: "images/exec-images/aashna.jpg",
-        favQuote: "Memorable"
+        favQuote: "Distinguished"
       },
       {
         name: "Kabisan T.",
