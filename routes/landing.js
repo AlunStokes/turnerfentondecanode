@@ -97,7 +97,7 @@ router.get("/", function(req, res, next) {
       position: "VP of Finance",
       decaEvent: "BFS",
       decaCluster: "Finance",
-      imgPath: "images/exec-images/hannah.jpg",
+      imgPath: "images/exec-images/hannah.JPG",
       favQuote: "Boisterous"
     },
     {
@@ -105,7 +105,7 @@ router.get("/", function(req, res, next) {
       position: "Writtens Director",
       decaEvent: "IMCP",
       decaCluster: "Writtens",
-      imgPath: "images/exec-images/sharon.jpg",
+      imgPath: "images/exec-images/sharon.JPG",
       favQuote: "Exhilerating"
     },
     {
@@ -121,7 +121,7 @@ router.get("/", function(req, res, next) {
       position: "Business Associate",
       decaEvent: "MTDM",
       decaCluster: "Business Admin",
-      imgPath: "images/exec-images/yasmine.jpg",
+      imgPath: "images/exec-images/yasmine.JPG",
       favQuote: "Heart-racing"
     },
     {
@@ -129,7 +129,7 @@ router.get("/", function(req, res, next) {
       position: "Business Associate",
       decaEvent: "PFL",
       decaCluster: "Finance",
-      imgPath: "images/exec-images/jai.jpg",
+      imgPath: "images/exec-images/jai.JPG",
       favQuote: "Enthralling"
     },
       {
