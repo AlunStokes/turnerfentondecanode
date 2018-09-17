@@ -113,7 +113,7 @@ router.get("/", function(req, res, next) {
       position: "Writtens Director",
       decaEvent: "BOR",
       decaCluster: "Writtens",
-      imgPath: "images/exec-images/sbPoonum.jpg",
+      imgPath: "images/exec-images/poonum.JPG",
       favQuote: "Powerful"
     },
     {
@@ -137,7 +137,7 @@ router.get("/", function(req, res, next) {
         position: "Business Associate",
         decaEvent: "HRM",
         decaCluster: "Business Admin",
-        imgPath: "images/exec-images/arnav.jpg",
+        imgPath: "images/exec-images/arnav.JPG",
         favQuote: "Fun"
       },
   ]
