@@ -106,7 +106,7 @@ router.get("/", function(req, res, next) {
       decaEvent: "IMCP",
       decaCluster: "Writtens",
       imgPath: "images/exec-images/sharon.JPG",
-      favQuote: "Exhilerating"
+      favQuote: "Exhilarating"
     },
     {
       name: "Poonum Parmar",
