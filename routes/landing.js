@@ -106,21 +106,21 @@ router.get("/", function(req, res, next) {
       decaEvent: "IMCP",
       decaCluster: "Writtens",
       imgPath: "images/exec-images/sharon.JPG",
-      favQuote: "Exhilarating"
+      favQuote: "Exhilerating"
     },
     {
       name: "Poonum Parmar",
       position: "Writtens Director",
       decaEvent: "BOR",
       decaCluster: "Writtens",
-      imgPath: "images/exec-images/poonum.JPG",
+      imgPath: "images/exec-images/sbPoonum.jpg",
       favQuote: "Powerful"
     },
     {
       name: "Yasmine Ahmed",
       position: "Business Associate",
-      decaEvent: "HTPS",
-      decaCluster: "Writtens",
+      decaEvent: "MTDM",
+      decaCluster: "Business Admin",
       imgPath: "images/exec-images/yasmine.JPG",
       favQuote: "Heart-racing"
     },
