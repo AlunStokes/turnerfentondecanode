@@ -119,8 +119,8 @@ router.get("/", function(req, res, next) {
     {
       name: "Yasmine Ahmed",
       position: "Business Associate",
-      decaEvent: "MTDM",
-      decaCluster: "Business Admin",
+      decaEvent: "HTPS",
+      decaCluster: "Writtens",
       imgPath: "images/exec-images/yasmine.JPG",
       favQuote: "Heart-racing"
     },
