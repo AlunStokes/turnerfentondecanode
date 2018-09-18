@@ -137,7 +137,7 @@ router.get("/", function(req, res, next) {
         position: "Business Associate",
         decaEvent: "HRM",
         decaCluster: "Business Admin",
-        imgPath: "images/exec-images/arnav.JPG",
+        imgPath: "images/exec-images/arnav.jpg",
         favQuote: "Fun"
       },
   ]
