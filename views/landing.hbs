@@ -28,7 +28,8 @@
       {{#if loggedIn}}
         <h1 class="text large thin light center" id="welcome-text">Welcome, {{firstName}}</h1>
         <h1 class="text medium thin light center underlined" id="welcome-subtitle"><a href="home">go to your dashboard</a></h1>
-        <h1 class="text large thin light center">or, <a href="logout">logout</a></h1>
+        <h1 class="text large thin light center">, <a href="logout">logout</a></h1>
+        <h1 class="text large thin light center">or <a ref="https://docs.google.com/forms/d/e/1FAIpQLSenicYTpptgxNCqRJm4ZUstBoHUim60ED9MZkiuUh32LGKFgA/viewform">sign up for interviews</a></h1>
       {{else}}
         {{>loginForm}}
       {{/if}}

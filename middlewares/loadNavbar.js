@@ -58,13 +58,6 @@ module.exports = function(route) {
             ]
           },
           {
-            link: "design-timeline",
-            title: "Design Timeline",
-            alias: [
-              "design-timeline"
-            ]
-          },
-          {
             link: "home",
             title: "Home",
             alias: [
