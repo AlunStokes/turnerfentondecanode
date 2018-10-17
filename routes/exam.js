@@ -4,6 +4,7 @@ var router = express.Router();
 //Middlewares
 var loadJS = require("../middlewares/loadJS");
 var loadExam = require("../middlewares/loadExam");
+var tabID;
 
 //Load default back middlewares
 router.use(require("./back"));
