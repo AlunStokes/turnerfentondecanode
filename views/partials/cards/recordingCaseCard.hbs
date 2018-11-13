@@ -4,13 +4,13 @@
       <div class="row">
         <div class="col-xs-7">
           <p class="text dark left small">
-              <i class="fa fa-pencil active-color"></i>
+              <i class="fa fa-bullhorn active-color"></i>
             &nbsp;
             Record your case study
           </p>
         </div>
         <div class="card-btn-right-div">
-          <button type="button" class="btn btn-default card-btn-right active-color" id="https://online-voice-recorder.com/">Record</button>
+          <a href="https://online-voice-recorder.com/" type="button" class="btn btn-default card-btn-right active-color">Record</a>
         </div>
       </div>
       <div class="footer">
@@ -18,12 +18,3 @@
     </div>
   </div>
 </div>
-
-<!--Load corresponding modal -->
-{{>modals/startExamModal}}
-
-<script>
-  $("https://online-voice-recorder.com/").on('click', function() {
-    $("https://online-voice-recorder.com/").modal('show');
-  });
-</script>
