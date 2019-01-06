@@ -80,6 +80,7 @@ $(document).ready(function() {
         return;
       }
       var answers = data.answers;
+      var answerExplanations = data.answerExplanations;
       var numCorrect = 0;
       submitExamBtn.prop('disabled', true);
       $("input:radio").attr("disabled", "disabled");
@@ -95,7 +96,10 @@ $(document).ready(function() {
             givenAnswers[i] +
             '<br />' +
             '<p>Correct Answer: </p>' +
-            answers[i]);
+            answers[i]
+            + '</p>Explanation: </p>' +
+            answerExplanations[i]);
+
           }
         }
         $("#score").html(numCorrect + '/' + answers.length + " answered correctly");

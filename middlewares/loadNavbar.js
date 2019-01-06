@@ -11,14 +11,6 @@ module.exports = function(route) {
       case "front":
       if (!res.locals.loggedIn) {
         res.locals.navbarEntries = [
-
-          {
-            link: "design-timeline",
-            title: "Design Timeline",
-            alias: [
-              "design-timeline"
-            ]
-          },
           /*{
             link: "reset-password",
             title: "Reset Password",
@@ -55,13 +47,6 @@ module.exports = function(route) {
             title: "Logout",
             alias: [
               "logout"
-            ]
-          },
-          {
-            link: "design-timeline",
-            title: "Design Timeline",
-            alias: [
-              "design-timeline"
             ]
           },
           {

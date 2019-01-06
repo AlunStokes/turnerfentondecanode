@@ -6,6 +6,7 @@ var questionAreaAdded;
 var examCluster = "mix";
 var examUnlocked = true;
 var examShowScore = true;
+var examShowAnswerExplanations = true;
 examShowTimer = true;
 var examName;
 

@@ -3,7 +3,7 @@ var db = require("../db");
 
 var Utilities = require("./utilities");
 
-var exam = function() {
+var examAnswers = function() {
 
 }
 
