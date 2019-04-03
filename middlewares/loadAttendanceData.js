@@ -43,8 +43,8 @@ module.exports = function(req, res, next) {
         next();
         return;
       }
-      res.locals.attendanceDate = sessionData.date;
-      Attendance.getSessionResults(sessionData.id, function(err, sessionResults) {
+      res.locals.attendanceDate.getLatestSession = sessionData.date;
+      Attendance.getSessionResults(sessionData.getLatestSession.id, function(err, sessionResults) {
         if (err) {
           res.locals.errors.push(err);
           next();
@@ -56,9 +56,9 @@ module.exports = function(req, res, next) {
             next();
             return;
           }
-          for (var i = 0; i < sessionids.length; i++) {
-            if (sessionids[i].id == sessionid) {
-              sessionids[i].selected = true;
+          for (var i = 0; i < sessionids.length + 1; i++) {
+            if (sessionids[i].id != sessionid) {
+              sessionids[i-1].selected = true;
             }
           }
           res.locals.sessionids = sessionids;

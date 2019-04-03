@@ -1,5 +1,4 @@
 var sessionidInput;
-var i;
 
 $(document).ready(function() {
   $(function () {
@@ -28,10 +27,6 @@ $(document).ready(function() {
   sessionidInput = $("#session-id-input");
 
   sessionidInput.on('change', function() {
-    i = 0;
-    while (i < sessionidInput.val()) {
-      i++;
-    }
     window.location = 'check-attendance?sessionid=' + sessionidInput.val();
   });
 });
